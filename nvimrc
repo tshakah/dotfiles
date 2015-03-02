@@ -9,34 +9,34 @@ set nocompatible
 
 """ Automatically make needed files and folders on first run
 """ If you don't run *nix you're on your own (as in remove this) {{{
-    call system("mkdir -p $HOME/.vim/{swap,undo}")
-    if !filereadable($HOME . "/.vimrc.plugins") | call system("touch $HOME/.vimrc.plugins") | endif
-    if !filereadable($HOME . "/.vimrc.first") | call system("touch $HOME/.vimrc.first") | endif
-    if !filereadable($HOME . "/.vimrc.last") | call system("touch $HOME/.vimrc.last") | endif
+    call system("mkdir -p $HOME/.nvim/{swap,undo}")
+    if !filereadable($HOME . "/.nvimrc.plugins") | call system("touch $HOME/.nvimrc.plugins") | endif
+    if !filereadable($HOME . "/.nvimrc.first") | call system("touch $HOME/.nvimrc.first") | endif
+    if !filereadable($HOME . "/.nvimrc.last") | call system("touch $HOME/.nvimrc.last") | endif
 """ }}}
 """ Vundle plugin manager {{{
     """ Automatically setting up Vundle, taken from
     """ http://www.erikzaadi.com/2012/03/19/auto-installing-vundle-from-your-vimrc/ {{{
         let has_vundle=1
-        if !filereadable($HOME."/.vim/bundle/Vundle.vim/README.md")
+        if !filereadable($HOME."/.nvim/bundle/Vundle.vim/README.md")
             echo "Installing Vundle..."
             echo ""
-            silent !mkdir -p $HOME/.vim/bundle
-            silent !git clone https://github.com/gmarik/Vundle.vim $HOME/.vim/bundle/Vundle.vim
+            silent !mkdir -p $HOME/.nvim/bundle
+            silent !git clone https://github.com/gmarik/Vundle.vim $HOME/.nvim/bundle/Vundle.vim
             let has_vundle=0
         endif
     """ }}}
     """ Initialize Vundle {{{
         filetype off                                " required to init
-        set rtp+=$HOME/.vim/bundle/Vundle.vim       " include vundle
+        set rtp+=$HOME/.nvim/bundle/Vundle.vim       " include vundle
         call vundle#begin()                         " init vundle
     """ }}}
     """ Github repos, uncomment to disable a plugin {{{
     Plugin 'gmarik/Vundle.vim'
 
     """ Local plugins (and only plugins in this file!) {{{{
-        if filereadable($HOME."/.vimrc.plugins")
-            source $HOME/.vimrc.plugins
+        if filereadable($HOME."/.nvimrc.plugins")
+            source $HOME/.nvimrc.plugins
         endif
     """ }}}
 
@@ -120,8 +120,8 @@ set nocompatible
 """ }}}
 """ Local leading config, only use for prerequisites as it will be
 """ overwritten by anything below {{{{
-    if filereadable($HOME."/.vimrc.first")
-        source $HOME/.vimrc.first
+    if filereadable($HOME."/.nvimrc.first")
+        source $HOME/.nvimrc.first
     endif
 """ }}}
 """ User interface {{{
@@ -207,7 +207,6 @@ set nocompatible
     set shortmess+=I                                " disable startup message
     set splitbelow                                  " splits go below w/focus
     set splitright                                  " vsplits go right w/focus
-    set ttyfast                                     " for faster redraws etc
     set ttymouse=xterm2                             " experimental
     """ Search and replace {{{
         set gdefault                                " default s//g (global)
@@ -235,7 +234,7 @@ set nocompatible
     set nobackup                                    " disable backups
     """ Persistent undo. Requires Vim 7.3 {{{
         if has('persistent_undo') && exists("&undodir")
-            set undodir=$HOME/.vim/undo/            " where to store undofiles
+            set undodir=$HOME/.nvim/undo/            " where to store undofiles
             set undofile                            " enable undofile
             set undolevels=500                      " max undos stored
             set undoreload=10000                    " buffer stored undos
@@ -244,7 +243,7 @@ set nocompatible
     """ Swap files, unless vim is invoked using sudo. Inspired by tejr's vimrc
     """ https://github.com/tejr/dotfiles/blob/master/vim/vimrc {{{
         if !strlen($SUDO_USER)
-            set directory^=$HOME/.vim/swap//        " default cwd, // full path
+            set directory^=$HOME/.nvim/swap//        " default cwd, // full path
             set swapfile                            " enable swap files
             set updatecount=50                      " update swp after 50chars
             """ Don't swap tmp, mount or network dirs {{{
@@ -289,8 +288,8 @@ set nocompatible
         let mapleader=","
 
         " Quickly edit/source .vimrc
-        noremap <leader>ve :edit $HOME/.vimrc<CR>
-        noremap <leader>vs :source $HOME/.vimrc<CR>
+        noremap <leader>ve :edit $HOME/.nvimrc<CR>
+        noremap <leader>vs :source $HOME/.nvimrc<CR>
 
         " Yank(copy) to system clipboard
         noremap <leader>y "+y
@@ -623,8 +622,8 @@ set nocompatible
     " Startify, the fancy start page
     let g:ctrlp_reuse_window = 'startify' " don't split in startify
     let g:startify_bookmarks = [
-        \ $HOME . "/.vimrc", $HOME . "/.vimrc.first",
-        \ $HOME . "/.vimrc.last", $HOME . "/.vimrc.plugins"
+        \ $HOME . "/.nvimrc", $HOME . "/.nvimrc.first",
+        \ $HOME . "/.nvimrc.last", $HOME . "/.nvimrc.plugins"
         \ ]
     let g:startify_custom_header = [
         \ '   Author:      Tim Sæterøy',
@@ -661,7 +660,7 @@ set nocompatible
     let jshint2_save = 1
 
     let g:racer_cmd = "~/source/racer/target/release/racer"
-    let $RUST_SRC_PATH = "~/source/rust/src"
+    let $RUST_SRC_PATH = "~/source/rust-lang/src"
 
     " Automatically remove preview window after autocomplete (mainly for clang_complete)
     augroup RemovePreview
@@ -671,7 +670,7 @@ set nocompatible
     augroup END
 """ }}}
 """ Local ending config, will overwrite anything above. Generally use this. {{{{
-    if filereadable($HOME."/.vimrc.last")
-        source $HOME/.vimrc.last
+    if filereadable($HOME."/.nvimrc.last")
+        source $HOME/.nvimrc.last
     endif
 """ }}}

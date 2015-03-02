@@ -115,3 +115,10 @@ fi
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"
+export PATH="$HOME/source/testbed/racer/bin:$PATH"
+export RUST_SRC_PATH=/home/dan/source/rustlang/src
+export TRUSTED_IP=10.0.2.2
+
+if [ -n "$DISPLAY" -a "$TERM" == "xterm" ]; then
+    export TERM=xterm-256color
+fi
