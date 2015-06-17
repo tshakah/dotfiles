@@ -9,11 +9,10 @@
 #
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
-set $mod Mod1
+set $mod Mod4
 setxkbmap -layout gb
-exec --no-startup-id /usr/lib/gnome-settings-daemon/gnome-settings-daemon
 exec --no-startup-id xsetroot -solid "#333333"
-exec gsettings set org.gnome.settings-daemon.plugins.cursor active false
+exec --no-startup-id xrandr --output HDMI-0 --auto --left-of HDMI-1
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below. ISO 10646 = Unicode
@@ -25,14 +24,14 @@ font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
 # font pango:DejaVu Sans Mono 10
 
 # Use Mouse+$mod to drag floating windows to their wanted position
-floating_modifier $mod
+floating_modifier Mod1
 
 # Hide borders
 hide_edge_borders both
 #new_window none
 
 # start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec urxvt
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -40,7 +39,7 @@ bindsym $mod+Shift+q kill
 # open power menu
 set $mode_system System (h) hibernate, (r) reboot, (Shift+s) shutdown
 mode "$mode_system" {
-    bindsym h exec sudo pm-hibernate; mode "default"
+  bindsym h exec sudo pm-hibernate; mode "default"
     bindsym r exec sudo 'shutdown -r now'; mode "default"
     bindsym Shift+s exec sudo 'shutdown -h now'; mode "default"
 
@@ -49,8 +48,6 @@ mode "$mode_system" {
     bindsym Escape mode "default"
 }
 bindsym $mod+p mode "$mode_system"
-
-exec /usr/libexec/gnome-settings-daemon
 
 # start dmenu (a program launcher)
 bindsym $mod+d exec dmenu_run
@@ -142,26 +139,26 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
-        # These bindings trigger as soon as you enter the resize mode
+  # These bindings trigger as soon as you enter the resize mode
 
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
-        bindsym j resize shrink width 10 px or 10 ppt
-        bindsym k resize grow height 10 px or 10 ppt
-        bindsym l resize shrink height 10 px or 10 ppt
-        bindsym semicolon resize grow width 10 px or 10 ppt
+  # Pressing left will shrink the window’s width.
+  # Pressing right will grow the window’s width.
+  # Pressing up will shrink the window’s height.
+  # Pressing down will grow the window’s height.
+  bindsym j resize shrink width 10 px or 10 ppt
+    bindsym k resize grow height 10 px or 10 ppt
+    bindsym l resize shrink height 10 px or 10 ppt
+    bindsym semicolon resize grow width 10 px or 10 ppt
 
-        # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
+    # same bindings, but for the arrow keys
+    bindsym Left resize shrink width 10 px or 10 ppt
+    bindsym Down resize grow height 10 px or 10 ppt
+    bindsym Up resize shrink height 10 px or 10 ppt
+    bindsym Right resize grow width 10 px or 10 ppt
 
-        # back to normal: Enter or Escape
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
 }
 
 bindsym $mod+r mode "resize"
@@ -169,17 +166,60 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
+  strip_workspace_numbers yes
   position top
-  status_command i3status
-  mode hide
-  modifier Mod1
-  #font -misc-fixed-medium-r-normal--8-120-75-75-C-70-iso10646-1
-  font pango:DejaVu Sans Mono, Ionicons, FontAwesome 8
-  colors {
-    background #000000
-    statusline #33aaff
-    focused_workspace #11aaff #005500
-    active_workspace #11aaff #005500
-    urgent_workspace #ffffff #990000
-  }
+    status_command i3status
+    mode hide
+    modifier Mod1
+    #font -misc-fixed-medium-r-normal--8-120-75-75-C-70-iso10646-1
+    font pango:DejaVu Sans Mono, Ionicons, FontAwesome 8
+    colors {
+      background          $bg
+        statusline          $fg
+        separator           $bg
+        focused_workspace   $ia        $bg        $ia
+        active_workspace    $gn        $ac        $tx
+        inactive_workspace  $bg        $ia        $tx
+        urgent_workspace    $yw        $bg        $yw
+    }
 }
+
+# scrot & pinta - root
+bindsym Print exec scrot -e 'mv $f /tmp/ && pinta /tmp/$f'
+# # scrot & pinta - select window or rectangle
+bindsym Mod1+Print exec scrot -s -e 'mv $f /tmp/ && pinta /tmp/$f'
+
+# ceeriously styled i3
+set $bg     #2c2c2e
+set $fg     #9f9f9f
+set $hi     #efef8f
+set $ac     #a0afa0
+set $tx     #040404
+set $ia     #8f8f8f
+set $be     #8faf9f
+set $yw     #f8f893
+set $gn     #88b090
+set $rd     #e89393
+set $id     #666666
+set $ce     #ceecee
+
+# set some nice colors      border  background  text    indicator
+client.focused              $id     $ac         $tx     $id
+client.unfocused            $bg     $bg         $ia     $id
+client.focused_inactive     $bg     $bg         $ac     $id
+client.urgent               $yw     $yw         $tx     $id
+
+#border & indicator are ignored
+#client.placeholder          $bg     $bg         $bg     $bg
+
+for_window [class="Nautilus" instance="file_progress"] floating enable
+for_window [class="Pavucontrol" instance="pavucontrol" title="Volume Control"] floating enable; resize shrink righ ppt
+
+exec firefox
+exec --no-startup-id bing-daily-wallpaper
+exec --no-startup-id urxvt
+exec --no-startup-id thunderbird
+exec --no-startup-id skype
+exec --no-startup-id nm-applet
+exec --no-startup-id pasystray
+exec --no-startup-id unity-settings-daemon

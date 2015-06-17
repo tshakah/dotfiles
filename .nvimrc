@@ -304,6 +304,9 @@ set nocompatible
         map <C-j> <C-d>
         map <C-k> <C-u>
 
+        " Save when ESC (well, ctrl-c) is pressed twice
+        map <C-c><C-c> :w<CR>
+
         " Treat wrapped lines as normal lines
         nnoremap j gj
         nnoremap k gk
