@@ -53,8 +53,9 @@ set nocompatible
     " Easy... motions... yeah.
     Plugin 'Lokaltog/vim-easymotion'
 
-    " Glorious colorscheme
+    " Glorious colorschemes
     Plugin 'nanotech/jellybeans.vim'
+    Plugin 'tshakah/gruvbox'
 
     " Super easy commenting, toggle comments etc
     Plugin 'scrooloose/nerdcommenter'
@@ -108,6 +109,12 @@ set nocompatible
     " RACER!
     Plugin 'phildawes/racer'
 
+    " Unimpaired vim!
+    Plugin 'tpope/vim-unimpaired'
+
+    " Undo tree
+    Plugin 'mbbill/undotree'
+
     " Finish Vundle stuff
     call vundle#end()
 
@@ -129,7 +136,7 @@ set nocompatible
         filetype plugin indent on                   " detect file plugin+indent
         syntax on                                   " syntax highlighting
         set background=dark                         " we're using a dark bg
-        colorscheme jellybeans                      " colorscheme from plugin
+        colorscheme gruvbox                         " colorscheme from plugin
         """ .txt w/highlight, plaintex is useless, markdown for .md {{{
             augroup FileTypeRules
                 autocmd!
@@ -311,6 +318,9 @@ set nocompatible
         nnoremap j gj
         nnoremap k gk
 
+        " Open undo tree
+        nnoremap <F5> :UndotreeToggle<CR>
+
         " Working ci(, works for both breaklined, inline and multiple ()
         nnoremap ci( %ci(
 
@@ -460,6 +470,7 @@ set nocompatible
         function! XTermPasteBegin()
             set pastetoggle=<Esc>[201~
             set paste
+            set copyindent
             return ""
         endfunction
 
@@ -471,7 +482,7 @@ set nocompatible
 """ Plugin settings {{{
     """ Lightline {{{
         let g:lightline = {
-            \ 'colorscheme': 'jellybeans',
+            \ 'colorscheme': 'gruvbox',
             \ 'active': {
             \     'left': [
             \         ['mode', 'paste'],
@@ -486,14 +497,16 @@ set nocompatible
             \ },
             \ 'component': {
             \     'paste': '%{&paste?"!":""}',
-            \     'readonly': '%{&readonly?"":""}'
+            \     'readonly': '%{&readonly?"":""}',
+            \     'bufferline': '%{bufferline#refresh_status()}%{MyBufferline()[0]}'.
+            \                   '%#LightLineLeft_active_1#%{g:bufferline_status_info.current}'.
+            \                   '%#LightLineLeft_active_2#%{MyBufferline()[2]}'
             \ },
             \ 'component_function': {
             \     'mode'         : 'MyMode',
             \     'fugitive'     : 'MyFugitive',
             \     'readonly'     : 'MyReadonly',
             \     'ctrlpmark'    : 'CtrlPMark',
-            \     'bufferline'   : 'MyBufferline',
             \     'fileformat'   : 'MyFileformat',
             \     'fileencoding' : 'MyFileencoding',
             \     'filetype'     : 'MyFiletype'
@@ -568,9 +581,9 @@ set nocompatible
                 let whalf = (w - strlen(c)) / 2
                 let aa = alen > whalf && blen > whalf ? a[:whalf] : alen + blen < w - clen || alen < whalf ? a : a[:(w - clen - blen)]
                 let bb = alen > whalf && blen > whalf ? b[-(whalf):] : alen + blen < w - clen || blen < whalf ? b : b[-(w - clen - alen):]
-                return (strlen(bb) < strlen(b) ? '...' : '') . bb . c . aa . (strlen(aa) < strlen(a) ? '...' : '')
+              return [(strlen(bb) < strlen(b) ? '...' : '') . bb, c, aa . (strlen(aa) < strlen(a) ? '...' : '')]
             else
-                return b . c . a
+              return [b, c, a]
             endif
         endfunction
 
@@ -657,7 +670,7 @@ set nocompatible
     let g:netrw_list_hide = '^\.$'
     let g:netrw_liststyle = 3
 
-    let g:solarized_termcolors=256
+    let g:solarized_termcolors = 256
 
     let jshint2_save = 1
 
