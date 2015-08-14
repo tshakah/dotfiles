@@ -10,126 +10,91 @@ set nocompatible
 """ Automatically make needed files and folders on first run
 """ If you don't run *nix you're on your own (as in remove this) {{{
     call system("mkdir -p $HOME/.nvim/{swap,undo}")
-    if !filereadable($HOME . "/.nvimrc.plugins") | call system("touch $HOME/.nvimrc.plugins") | endif
-    if !filereadable($HOME . "/.nvimrc.first") | call system("touch $HOME/.nvimrc.first") | endif
-    if !filereadable($HOME . "/.nvimrc.last") | call system("touch $HOME/.nvimrc.last") | endif
 """ }}}
-""" Vundle plugin manager {{{
-    """ Automatically setting up Vundle, taken from
-    """ http://www.erikzaadi.com/2012/03/19/auto-installing-vundle-from-your-vimrc/ {{{
-        let has_vundle=1
-        if !filereadable($HOME."/.nvim/bundle/Vundle.vim/README.md")
-            echo "Installing Vundle..."
-            echo ""
-            silent !mkdir -p $HOME/.nvim/bundle
-            silent !git clone https://github.com/gmarik/Vundle.vim $HOME/.nvim/bundle/Vundle.vim
-            let has_vundle=0
-        endif
-    """ }}}
-    """ Initialize Vundle {{{
-        filetype off                                " required to init
-        set rtp+=$HOME/.nvim/bundle/Vundle.vim       " include vundle
-        call vundle#begin()                         " init vundle
-    """ }}}
-    """ Github repos, uncomment to disable a plugin {{{
-    Plugin 'gmarik/Vundle.vim'
+    call plug#begin("~/.nvim/plugged")
 
-    """ Local plugins (and only plugins in this file!) {{{{
-        if filereadable($HOME."/.nvimrc.plugins")
-            source $HOME/.nvimrc.plugins
-        endif
-    """ }}}
+    """ Github repos, uncomment to disable a plugin {{{
+    Plug 'tpope/vim-sensible'
+
+    Plug 'Shougo/deoplete.nvim'
 
     " <Tab> everything!
-    Plugin 'ervandew/supertab'
+    Plug 'ervandew/supertab'
 
     " Fuzzy finder (files, mru, etc)
-    Plugin 'kien/ctrlp.vim'
+    Plug 'kien/ctrlp.vim'
 
     " A pretty statusline, bufferline integration
-    Plugin 'itchyny/lightline.vim'
-    Plugin 'bling/vim-bufferline'
+    Plug 'itchyny/lightline.vim'
+    Plug 'bling/vim-bufferline'
 
     " Easy... motions... yeah.
-    Plugin 'Lokaltog/vim-easymotion'
+    Plug 'Lokaltog/vim-easymotion'
 
     " Glorious colorschemes
-    Plugin 'nanotech/jellybeans.vim'
-    Plugin 'tshakah/gruvbox'
+    Plug 'nanotech/jellybeans.vim'
+    Plug 'tshakah/gruvbox'
+    Plug 'flazz/vim-colorschemes'
 
     " Super easy commenting, toggle comments etc
-    Plugin 'scrooloose/nerdcommenter'
+    Plug 'scrooloose/nerdcommenter'
 
     " Autoclose (, " etc
-    Plugin 'Townk/vim-autoclose'
+    Plug 'Townk/vim-autoclose'
 
     " Git wrapper inside Vim
-    Plugin 'tpope/vim-fugitive'
+    Plug 'tpope/vim-fugitive'
 
     " Handle surround chars like ''
-    Plugin 'tpope/vim-surround'
+    Plug 'tpope/vim-surround'
 
     " Align your = etc.
-    Plugin 'vim-scripts/Align'
+    Plug 'vim-scripts/Align'
 
     " Snippets like textmate
-    Plugin 'MarcWeber/vim-addon-mw-utils'
-    Plugin 'tomtom/tlib_vim'
-    Plugin 'honza/vim-snippets'
-    Plugin 'garbas/vim-snipmate'
+    Plug 'MarcWeber/vim-addon-mw-utils'
+    Plug 'tomtom/tlib_vim'
+    Plug 'honza/vim-snippets'
+    Plug 'garbas/vim-snipmate'
 
     " A fancy start screen, shows MRU etc.
-    Plugin 'mhinz/vim-startify'
+    Plug 'mhinz/vim-startify'
 
     " Vim signs (:h signs) for modified lines based off VCS (e.g. Git)
-    Plugin 'airblade/vim-gitgutter'
+    Plug 'airblade/vim-gitgutter'
 
     " Awesome syntax checker.
     " REQUIREMENTS: See :h syntastic-intro
-    Plugin 'scrooloose/syntastic'
-    Plugin 'wting/rust.vim'
-    Plugin 'Shutnik/jshint2.vim'
+    Plug 'scrooloose/syntastic'
+    Plug 'wting/rust.vim'
 
     " Functions, class data etc.
     " REQUIREMENTS: (exuberant)-ctags
-    Plugin 'majutsushi/tagbar'
+    Plug 'majutsushi/tagbar'
 
     " Detect whitespace
-    Plugin 'ntpeters/vim-better-whitespace'
+    Plug 'ntpeters/vim-better-whitespace'
 
     " Code analysis
-    Plugin 'ngmy/vim-rubocop'
+    Plug 'ngmy/vim-rubocop'
 
     " End completion
-    Plugin 'tpope/vim-endwise'
+    Plug 'tpope/vim-endwise'
 
     " Shell commands
-    Plugin 'tpope/vim-eunuch'
+    Plug 'tpope/vim-eunuch'
 
     " RACER!
-    Plugin 'phildawes/racer'
+    Plug 'phildawes/racer'
 
     " Unimpaired vim!
-    Plugin 'tpope/vim-unimpaired'
+    Plug 'tpope/vim-unimpaired'
 
     " Undo tree
-    Plugin 'mbbill/undotree'
+    Plug 'mbbill/undotree'
 
-    " Finish Vundle stuff
-    call vundle#end()
-
-    """ Installing plugins the first time, quits when done {{{
-        if has_vundle == 0
-            :silent! PluginInstall
-            :qa
-        endif
-    """ }}}
-""" }}}
-""" Local leading config, only use for prerequisites as it will be
-""" overwritten by anything below {{{{
-    if filereadable($HOME."/.nvimrc.first")
-        source $HOME/.nvimrc.first
-    endif
+    " Finish plugin stuff
+    call plug#end()
 """ }}}
 """ User interface {{{
     """ Syntax highlighting {{{
@@ -214,7 +179,6 @@ set nocompatible
     set shortmess+=I                                " disable startup message
     set splitbelow                                  " splits go below w/focus
     set splitright                                  " vsplits go right w/focus
-    set ttymouse=xterm2                             " experimental
     """ Search and replace {{{
         set gdefault                                " default s//g (global)
         set incsearch                               " "live"-search
@@ -298,6 +262,17 @@ set nocompatible
         noremap <leader>ve :edit $HOME/.nvimrc<CR>
         noremap <leader>vs :source $HOME/.nvimrc<CR>
 
+        " Terminal mode & window navigation
+        :tnoremap <C-c> <C-\><C-n>
+        :tnoremap <A-h> <C-\><C-n><C-w>h
+        :tnoremap <A-j> <C-\><C-n><C-w>j
+        :tnoremap <A-k> <C-\><C-n><C-w>k
+        :tnoremap <A-l> <C-\><C-n><C-w>l
+        :nnoremap <A-h> <C-w>h
+        :nnoremap <A-j> <C-w>j
+        :nnoremap <A-k> <C-w>k
+        :nnoremap <A-l> <C-w>l
+
         " Yank(copy) to system clipboard
         noremap <leader>y "+y
 
@@ -338,6 +313,8 @@ set nocompatible
         nnoremap gr :bdelete<CR>
         nnoremap gf <C-^>
 
+        let g:deoplete#enable_at_startup = 1
+
         let g:bufferline_echo = 0
 
         " Easy motion mapping
@@ -363,39 +340,6 @@ set nocompatible
 
     """ }}}
     """ Functions or fancy binds {{{{
-        """ Toggle syntax highlighting {{{
-            function! ToggleSyntaxHighlighthing()
-                if exists("g:syntax_on")
-                    syntax off
-                else
-                    syntax on
-                    call CustomHighlighting()
-                endif
-            endfunction
-
-            nnoremap <leader>s :call ToggleSyntaxHighlighthing()<CR>
-        """ }}}
-        """ Highlight characters past 79, toggle with <leader>h
-        """ You might want to override this function and its variables with
-        """ your own in .vimrc.last which might set for example colorcolumn or
-        """ even the textwidth. See https://github.com/timss/vimconf/pull/4 {{{
-            let g:overlength_enabled = 0
-            highlight OverLength ctermbg=238 guibg=#444444
-
-            function! ToggleOverLength()
-                if g:overlength_enabled == 0
-                    match OverLength /\%79v.*/
-                    let g:overlength_enabled = 1
-                    echo 'OverLength highlighting turned on'
-                else
-                    match
-                    let g:overlength_enabled = 0
-                    echo 'OverLength highlighting turned off'
-                endif
-            endfunction
-
-            nnoremap <leader>h :call ToggleOverLength()<CR>
-        """ }}}
         """ Toggle relativenumber using <leader>r {{{
             function! NumberToggle()
                 if(&relativenumber == 1)
@@ -462,21 +406,6 @@ set nocompatible
     """ Plugins {{{
         " Toggle tagbar (definitions, functions etc.)
         map <F2> :TagbarToggle<CR>
-
-        " Intelligent paste
-        let &t_SI .= "\<Esc>[?2004h"
-        let &t_EI .= "\<Esc>[?2004l"
-        inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
-        function! XTermPasteBegin()
-            set pastetoggle=<Esc>[201~
-            set paste
-            set copyindent
-            return ""
-        endfunction
-
-        " Syntastic - toggle error list. Probably should be toggleable.
-        noremap <silent><leader>lo :Errors<CR>
-        noremap <silent><leader>lc :lcl<CR>
     """ }}}
 """ }}}
 """ Plugin settings {{{
@@ -661,9 +590,14 @@ set nocompatible
     let g:syntastic_cpp_check_header = 1
     let g:syntastic_cpp_compiler_options = ' -std=c++0x'
     let g:syntastic_mode_map = {
-        \ 'mode': 'passive',
+        \ 'mode': 'active',
         \ 'active_filetypes':
-            \ ['c', 'cpp', 'perl', 'python'] }
+            \ ['c', 'cpp', 'perl', 'python', 'ruby', 'javascript'] }
+
+    let g:syntastic_ruby_checkers = ['rubocop', 'mri']
+
+    let g:syntastic_check_on_open = 1
+    let g:syntastic_check_on_wq = 0
 
     " Netrw - the bundled (network) file and directory browser
     let g:netrw_banner = 0
@@ -672,10 +606,10 @@ set nocompatible
 
     let g:solarized_termcolors = 256
 
-    let jshint2_save = 1
+    let g:syntastic_javascript_checkers = ['eslint']
 
     let g:racer_cmd = "~/source/racer/target/release/racer"
-    let $RUST_SRC_PATH = "/home/dan/source/rust-lang/src"
+    let $RUST_SRC_PATH = $HOME."/source/rust/src"
 
     " Automatically remove preview window after autocomplete (mainly for clang_complete)
     augroup RemovePreview
@@ -683,9 +617,4 @@ set nocompatible
         autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
         autocmd InsertLeave * if pumvisible() == 0|pclose|endif
     augroup END
-""" }}}
-""" Local ending config, will overwrite anything above. Generally use this. {{{{
-    if filereadable($HOME."/.nvimrc.last")
-        source $HOME/.nvimrc.last
-    endif
 """ }}}
