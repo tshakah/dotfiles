@@ -49,7 +49,7 @@ set nocompatible
     Plug 'tpope/vim-surround'
 
     " Align your = etc.
-    Plug 'vim-scripts/Align'
+    Plug 'orbisvicis/tabular'
 
     " Snippets like textmate
     Plug 'MarcWeber/vim-addon-mw-utils'
@@ -130,7 +130,7 @@ set nocompatible
                 highlight LineNr ctermbg=NONE
                 highlight SignColumn ctermbg=NONE
                 highlight SignColumn guibg=#151515
-                highlight CursorLine ctermbg=235
+                highlight CursorLine ctermbg=237
             endfunction
 
             call CustomHighlighting()
@@ -617,4 +617,8 @@ set nocompatible
         autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
         autocmd InsertLeave * if pumvisible() == 0|pclose|endif
     augroup END
+
+    if filereadable("coverage.vim")
+      source coverage.vim
+    endif
 """ }}}
