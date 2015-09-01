@@ -9,7 +9,7 @@
 #
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
-set $mod Mod4
+set $mod Mod1
 setxkbmap -layout gb
 exec --no-startup-id xsetroot -solid "#333333"
 exec --no-startup-id xrandr --output HDMI-0 --auto --left-of HDMI-1
@@ -35,19 +35,6 @@ bindsym $mod+Return exec urxvt
 
 # kill focused window
 bindsym $mod+Shift+q kill
-
-# open power menu
-set $mode_system System (h) hibernate, (r) reboot, (Shift+s) shutdown
-mode "$mode_system" {
-  bindsym h exec sudo pm-hibernate; mode "default"
-    bindsym r exec sudo 'shutdown -r now'; mode "default"
-    bindsym Shift+s exec sudo 'shutdown -h now'; mode "default"
-
-    # back to normal: Enter or Escape
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-bindsym $mod+p mode "$mode_system"
 
 # start dmenu (a program launcher)
 bindsym $mod+d exec dmenu_run
