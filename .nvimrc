@@ -259,8 +259,8 @@ set nocompatible
         let mapleader=","
 
         " Quickly edit/source .vimrc
-        noremap <leader>ve :edit $HOME/.config/init.vim<CR>
-        noremap <leader>vs :source $HOME/.config/init.vim<CR>
+        noremap <leader>ve :edit $HOME/source/dotfiles/.nvimrc<CR>
+        noremap <leader>vs :source $HOME/.config/nvim/init.vim<CR>
 
         " Terminal mode & window navigation
         :tnoremap <C-c> <C-\><C-n>
