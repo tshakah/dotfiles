@@ -9,9 +9,9 @@ set nocompatible
 
 """ Automatically make needed files and folders on first run
 """ If you don't run *nix you're on your own (as in remove this) {{{
-    call system("mkdir -p $HOME/.nvim/{swap,undo}")
+    call system("mkdir -p $HOME/.config/nvim/{swap,undo}")
 """ }}}
-    call plug#begin("~/.nvim/plugged")
+    call plug#begin("~/.config/nvim/plugged")
 
     """ Github repos, uncomment to disable a plugin {{{
     Plug 'tpope/vim-sensible'
@@ -205,7 +205,7 @@ set nocompatible
     set nobackup                                    " disable backups
     """ Persistent undo. Requires Vim 7.3 {{{
         if has('persistent_undo') && exists("&undodir")
-            set undodir=$HOME/.nvim/undo/            " where to store undofiles
+            set undodir=$HOME/.config/nvim/undo/            " where to store undofiles
             set undofile                            " enable undofile
             set undolevels=500                      " max undos stored
             set undoreload=10000                    " buffer stored undos
@@ -214,7 +214,7 @@ set nocompatible
     """ Swap files, unless vim is invoked using sudo. Inspired by tejr's vimrc
     """ https://github.com/tejr/dotfiles/blob/master/vim/vimrc {{{
         if !strlen($SUDO_USER)
-            set directory^=$HOME/.nvim/swap//        " default cwd, // full path
+            set directory^=$HOME/.config/nvim/swap//        " default cwd, // full path
             set swapfile                            " enable swap files
             set updatecount=50                      " update swp after 50chars
             """ Don't swap tmp, mount or network dirs {{{
@@ -259,8 +259,8 @@ set nocompatible
         let mapleader=","
 
         " Quickly edit/source .vimrc
-        noremap <leader>ve :edit $HOME/.nvimrc<CR>
-        noremap <leader>vs :source $HOME/.nvimrc<CR>
+        noremap <leader>ve :edit $HOME/.config/init.vim<CR>
+        noremap <leader>vs :source $HOME/.config/init.vim<CR>
 
         " Terminal mode & window navigation
         :tnoremap <C-c> <C-\><C-n>
@@ -312,8 +312,6 @@ set nocompatible
         nnoremap gN :bprevious<CR>
         nnoremap gr :bdelete<CR>
         nnoremap gf <C-^>
-
-        let g:deoplete#enable_at_startup = 1
 
         let g:bufferline_echo = 0
 
@@ -565,10 +563,6 @@ set nocompatible
 
     " Startify, the fancy start page
     let g:ctrlp_reuse_window = 'startify' " don't split in startify
-    let g:startify_bookmarks = [
-        \ $HOME . "/.nvimrc", $HOME . "/.nvimrc.first",
-        \ $HOME . "/.nvimrc.last", $HOME . "/.nvimrc.plugins"
-        \ ]
     let g:startify_custom_header = [
         \ '   Author:      Tim Sæterøy',
         \ '   Homepage:    http://thevoid.no',
@@ -607,6 +601,7 @@ set nocompatible
     let g:solarized_termcolors = 256
 
     let g:syntastic_javascript_checkers = ['eslint']
+    let g:deoplete#enable_at_startup = 1
 
     let g:racer_cmd = "~/source/racer/target/release/racer"
     let $RUST_SRC_PATH = $HOME."/source/rust/src"
