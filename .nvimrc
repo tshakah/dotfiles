@@ -93,6 +93,14 @@ set nocompatible
     " Undo tree
     Plug 'mbbill/undotree'
 
+    " Elixir
+    Plug 'elixir-lang/vim-elixir'
+    Plug 'thinca/vim-ref'
+    Plug 'awetzel/elixir.nvim', { 'do': 'yes \| ./install.sh' }
+
+    " Twig
+    Plug 'qbbr/vim-twig'
+
     " Finish plugin stuff
     call plug#end()
 """ }}}
@@ -236,11 +244,11 @@ set nocompatible
     set ignorecase                                  " by default ignore case
     set nrformats+=alpha                            " incr/decr letters C-a/-x
     set shiftround                                  " be clever with tabs
-    set shiftwidth=2                                " default 8
+    set shiftwidth=2                                " default 2
     set smartcase                                   " sensitive with uppercase
     set smarttab                                    " tab to 0,4,8 etc.
     set softtabstop=2                               " "tab" feels like <tab>
-    set tabstop=2                                   " replace <TAB> w/4 spaces
+    set tabstop=2                                   " replace <TAB> w/2 spaces
     """ Only auto-comment newline for block comments {{{
         augroup AutoBlockComment
             autocmd! FileType c,cpp setlocal comments -=:// comments +=f://
