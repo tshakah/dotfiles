@@ -24,7 +24,7 @@ font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
 # font pango:DejaVu Sans Mono 10
 
 # Use Mouse+$mod to drag floating windows to their wanted position
-floating_modifier Mod1
+floating_modifier Mod4
 
 # Hide borders
 hide_edge_borders both
@@ -202,11 +202,8 @@ client.urgent               $yw     $yw         $tx     $id
 for_window [class="Nautilus" instance="file_progress"] floating enable
 for_window [class="Pavucontrol" instance="pavucontrol" title="Volume Control"] floating enable; resize shrink righ ppt
 
-exec firefox
 exec --no-startup-id bing-daily-wallpaper
 exec --no-startup-id urxvt
-exec --no-startup-id thunderbird
-exec --no-startup-id skype
 exec --no-startup-id nm-applet
 exec --no-startup-id pasystray
 exec --no-startup-id unity-settings-daemon
