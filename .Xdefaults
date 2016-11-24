@@ -64,13 +64,17 @@ URxvt*borderless: 1
 URxvt*font: xft:inconsolata:size=13:antialias=true
 URxvt*boldFont: xft:inconsolata:size=13:antialias=true
 
-URxvt.keysym.Shift-Control-V: perl:clipboard:paste
 URxvt.iso14755: False
-
-URxvt.perl-ext-common : default,clipboard,matcher
-URxvt.urlLauncher     : firefox
-URxvt.matcher.button  : 1
+URxvt.perl-ext-common: default,selection-to-clipboard,pasta
+URxvt.urlLauncher: firefox
+URxvt.matcher.button: 1
 URxvt.matcher.rend.0: Uline Bold fg5
+URxvt.perl-ext: default,url-select
+URxvt.keysym.M-u: perl:url-select:select_next
+URxvt.keysym.Control-Shift-V: perl:pasta:paste
+URxvt.url-select.launcher: firefox
+URxvt.url-select.underline: true
+URxvt.clipboard.autocopy: true
 
 URxvt.scrollBar: false
 
@@ -85,3 +89,6 @@ URxvt*scrollTtyKeypress: true
 
 XTerm*bellIsUrgent: true
 URxvt*urgentOnBell: true
+
+Xcursor.theme: Adwaita
+URxvt.keysym.C-k: echo -ne '\\033c'\n

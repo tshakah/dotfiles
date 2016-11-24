@@ -18,25 +18,27 @@ values."
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
    '(
+     yaml
+     markdown
+     sql
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
+     floobits
      auto-completion
-     ;; better-defaults
+     better-defaults
      emacs-lisp
      php
      html
      git
      ;; markdown
-     ;; org
+     org
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
-     ;; spell-checking
      syntax-checking
-     php-auto-yasnippets
      version-control
      javascript
      )
@@ -265,7 +267,7 @@ you should place your code here."
   (unless (file-exists-p (concat spacemacs-cache-directory "undo"))
     (make-directory (concat spacemacs-cache-directory "undo")))
 
-  ;; (spacemacs/set-leader-keys "SPC" 'avy-goto-char-timer)
+  (spacemacs/set-leader-keys "SPC" 'avy-goto-char-timer)
 
   (require 'web-mode)
   (add-to-list 'auto-mode-alist '("\\.tmpl\\'" . web-mode))
@@ -283,6 +285,9 @@ you should place your code here."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (yaml-mode mmm-mode markdown-toc markdown-mode gh-md floobits sql-indent vlf powerline spinner org json-snatcher json-reformat multiple-cursors js2-mode hydra parent-mode projectile haml-mode fringe-helper git-gutter+ git-gutter pos-tip flycheck pkg-info epl flx git-commit with-editor smartparens iedit anzu evil goto-chg undo-tree highlight f php-mode diminish web-completion-data s dash-functional tern company bind-map bind-key yasnippet packed dash helm avy helm-core async auto-complete popup package-build uuidgen pug-mode org-projectile pcache org-download mwim livid-mode skewer-mode simple-httpd link-hint hide-comnt git-link flyspell-correct-helm flyspell-correct eyebrowse evil-visual-mark-mode evil-unimpaired evil-ediff dumb-jump column-enforce-mode toc-org org-repo-todo org-present org-pomodoro alert log4e gntp org-plus-contrib org-bullets htmlize helm-flyspell gnuplot auto-dictionary smeargle orgit magit-gitflow helm-gitignore request gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger evil-magit magit magit-popup ws-butler window-numbering which-key web-mode web-beautify volatile-highlights vi-tilde-fringe use-package tagedit spacemacs-theme spaceline smooth-scrolling slim-mode scss-mode sass-mode restart-emacs rainbow-delimiters quelpa popwin phpunit phpcbf php-extras php-auto-yasnippets persp-mode pcre2el paradox page-break-lines open-junk-file neotree move-text macrostep lorem-ipsum linum-relative leuven-theme less-css-mode json-mode js2-refactor js-doc jade-mode info+ indent-guide ido-vertical-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag gruvbox-theme google-translate golden-ratio git-gutter-fringe git-gutter-fringe+ geben flycheck-pos-tip flx-ido fill-column-indicator fancy-battery expand-region exec-path-from-shell evil-visualstar evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-args evil-anzu eval-sexp-fu emmet-mode elisp-slime-nav drupal-mode diff-hl define-word company-web company-tern company-statistics company-quickhelp coffee-mode clean-aindent-mode buffer-move bracketed-paste auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
  '(standard-indent 2)
  '(tab-width 2))
 (custom-set-faces
