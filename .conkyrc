@@ -10,9 +10,18 @@ use_spacer none
 TEXT
 
 ${if_mpd_playing}♫  ${mpd_artist} -  ${mpd_title} ${endif}      \
-   ${downspeedf wlp3s0} | ${upspeedf wlp3s0}      \
-  ${wireless_link_qual_perc wlp3s0}  ${wireless_essid wlp3s0}      \
+   ${downspeedf enp2s0f0} | ${upspeedf enp2s0f0}      \
+  ${wireless_link_qual_perc wlp3s0b1}  ${wireless_essid wlp3s0b1}      \
    ${hwmon 1 temp 1} | ${hwmon 1 temp 3}      \
   ${exec amixer get Master -c 0 -M | grep -oE "[[:digit:]]*%"}      \
   ${time %a %b %d}      \
-  ${time %H:%M}    
+  ${time %H:%M}      \
+${if_match ${battery_percent BAT0} <= 5}  ${else}\
+${if_match ${battery_percent BAT0} <= 25}  ${else}\
+${if_match ${battery_percent BAT0} <= 50}  ${else}\
+${if_match ${battery_percent BAT0} <= 75}  ${else}\
+  \
+${endif}\
+${endif}\
+${endif}\
+${endif}${battery_percent BAT0}%
