@@ -16,13 +16,29 @@ set nocompatible
     """ Github repos, uncomment to disable a plugin {{{
     Plug 'tpope/vim-sensible'
 
-    Plug 'Shougo/deoplete.nvim'
+    Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
+
+    " Multi-entry selection UI.
+    Plug 'Shougo/denite.nvim'
+
+    " Completion with deoplete.
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+
+    " Showing function signature and inline doc.
+    Plug 'Shougo/echodoc.vim'
 
     " <Tab> everything!
     Plug 'ervandew/supertab'
 
     " Fuzzy finder (files, mru, etc)
-    Plug 'kien/ctrlp.vim'
+    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+    Plug 'junegunn/fzf.vim'
+    Plug 'airblade/vim-rooter'
+    Plug 'Shougo/denite.nvim'
+    Plug 'scrooloose/nerdtree'
+
+    " Better line numbers
+    Plug 'myusuf3/numbers.vim'
 
     " A pretty statusline, bufferline integration
     Plug 'itchyny/lightline.vim'
@@ -44,6 +60,11 @@ set nocompatible
 
     " Git wrapper inside Vim
     Plug 'tpope/vim-fugitive'
+
+    " PHP
+    Plug 'joonty/vdebug'
+    Plug 'lvht/phpcd.vim', { 'for': 'php', 'do': 'composer install' }
+    Plug 'StanAngeloff/php.vim'
 
     " Handle surround chars like ''
     Plug 'tpope/vim-surround'
@@ -67,6 +88,8 @@ set nocompatible
     " REQUIREMENTS: See :h syntastic-intro
     Plug 'scrooloose/syntastic'
     Plug 'wting/rust.vim'
+
+    Plug 'NLKNguyen/vim-lisp-syntax'
 
     " Functions, class data etc.
     " REQUIREMENTS: (exuberant)-ctags
@@ -147,7 +170,6 @@ set nocompatible
     """ Interface general {{{
         set cursorline                              " hilight cursor line
         set more                                    " ---more--- like less
-        set number                                  " line numbers
         set scrolloff=3                             " lines above/below cursor
         set showcmd                                 " show cmds being typed
         set title                                   " window title
@@ -206,7 +228,6 @@ set nocompatible
     """ }}}
 """ }}}
 """ Files {{{
-    set autochdir                                   " always use curr. dir.
     set autoread                                    " refresh if changed
     set confirm                                     " confirm changed files
     set noautowrite                                 " never autowrite
@@ -295,22 +316,22 @@ set nocompatible
         map <C-k> <C-u>
 
         " Save when ESC (well, ctrl-c) is pressed twice
-        map <C-c><C-c> :w<CR>
+        map <Esc><Esc> :w<CR>
 
         " Treat wrapped lines as normal lines
         nnoremap j gj
         nnoremap k gk
 
-        " Open undo tree
-        nnoremap <F5> :UndotreeToggle<CR>
-
-        " Working ci(, works for both breaklined, inline and multiple ()
-        nnoremap ci( %ci(
-
         " We don't need any help!
         inoremap <F1> <nop>
         nnoremap <F1> <nop>
         vnoremap <F1> <nop>
+
+        " Open undo tree
+        nnoremap <F1> :UndotreeToggle<CR>
+
+        " Working ci(, works for both breaklined, inline and multiple ()
+        nnoremap ci( %ci(
 
         " Disable annoying ex mode (Q)
         map Q <nop>
@@ -321,12 +342,31 @@ set nocompatible
         nnoremap gr :bdelete<CR>
         nnoremap gf <C-^>
 
+
+        let g:vdebug_keymap_defaults = {
+        \    "run" : "<F5>",
+        \    "run_to_cursor" : "<F9>",
+        \    "step_over" : "<F2>",
+        \    "step_into" : "<F3>",
+        \    "step_out" : "<F4>",
+        \    "close" : "<F6>",
+        \    "detach" : "<F7>",
+        \    "set_breakpoint" : "<F10>",
+        \    "get_context" : "<F11>",
+        \    "eval_under_cursor" : "<F12>",
+        \    "eval_visual" : "<Leader>e"
+        \}
+
         let g:bufferline_echo = 0
 
         " Easy motion mapping
         let g:EasyMotion_do_mapping = 0
         let g:EasyMotion_startofline = 0 " keep cursor colum when JK motion
         let g:EasyMotion_smartcase = 1
+
+        nmap <C-p> :Files<CR>
+
+        let g:rooter_patterns = ['Rakefile', '.git/', '.hg/']
 
         nmap <Space>s <Plug>(easymotion-s2)
         map  / <Plug>(easymotion-sn)
@@ -421,8 +461,7 @@ set nocompatible
             \ 'active': {
             \     'left': [
             \         ['mode', 'paste'],
-            \         ['readonly', 'fugitive'],
-            \         ['ctrlpmark', 'bufferline']
+            \         ['readonly', 'fugitive']
             \     ],
             \     'right': [
             \         ['lineinfo'],
@@ -441,7 +480,6 @@ set nocompatible
             \     'mode'         : 'MyMode',
             \     'fugitive'     : 'MyFugitive',
             \     'readonly'     : 'MyReadonly',
-            \     'ctrlpmark'    : 'CtrlPMark',
             \     'fileformat'   : 'MyFileformat',
             \     'fileencoding' : 'MyFileencoding',
             \     'filetype'     : 'MyFiletype'
@@ -473,7 +511,6 @@ set nocompatible
         function! MyMode()
             let fname = expand('%:t')
             return fname == '__Tagbar__' ? 'Tagbar' :
-                    \ fname == 'ControlP' ? 'CtrlP' :
                     \ winwidth('.') > 60 ? lightline#mode() : ''
         endfunction
 
@@ -491,16 +528,6 @@ set nocompatible
 
         function! MyReadonly()
             return &ft !~? 'help' && &readonly ? '≠' : '' " or ⭤
-        endfunction
-
-        function! CtrlPMark()
-            if expand('%:t') =~ 'ControlP'
-                call lightline#link('iR'[g:lightline.ctrlp_regex])
-                return lightline#concatenate([g:lightline.ctrlp_prev, g:lightline.ctrlp_item
-                    \ , g:lightline.ctrlp_next], 0)
-            else
-                return ''
-            endif
         endfunction
 
         function! MyBufferline()
@@ -534,23 +561,6 @@ set nocompatible
             return winwidth('.') > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
         endfunction
 
-        let g:ctrlp_status_func = {
-            \ 'main': 'CtrlPStatusFunc_1',
-            \ 'prog': 'CtrlPStatusFunc_2',
-            \ }
-
-        function! CtrlPStatusFunc_1(focus, byfname, regex, prev, item, next, marked)
-            let g:lightline.ctrlp_regex = a:regex
-            let g:lightline.ctrlp_prev = a:prev
-            let g:lightline.ctrlp_item = a:item
-            let g:lightline.ctrlp_next = a:next
-            return lightline#statusline(0)
-        endfunction
-
-        function! CtrlPStatusFunc_2(str)
-            return lightline#statusline(0)
-        endfunction
-
         let g:tagbar_status_func = 'TagbarStatusFunc'
 
         function! TagbarStatusFunc(current, sort, fname, ...) abort
@@ -570,17 +580,12 @@ set nocompatible
     """ }}}
 
     " Startify, the fancy start page
-    let g:ctrlp_reuse_window = 'startify' " don't split in startify
     let g:startify_custom_header = [
         \ '   Author:      Tim Sæterøy',
         \ '   Homepage:    http://thevoid.no',
         \ '   Source:      http://github.com/timss/vimconf',
         \ ''
         \ ]
-
-    " CtrlP - don't recalculate files on start (slow)
-    let g:ctrlp_clear_cache_on_exit = 0
-    let g:ctrlp_working_path_mode = 'ra'
 
     " TagBar
     let g:tagbar_left = 0
@@ -610,6 +615,8 @@ set nocompatible
 
     let g:syntastic_javascript_checkers = ['eslint']
     let g:deoplete#enable_at_startup = 1
+    let g:deoplete#ignore_sources = get(g:, 'deoplete#ignore_sources', {})
+		let g:deoplete#ignore_sources.php = ['omni']
 
     let g:racer_cmd = "~/source/racer/target/release/racer"
     let $RUST_SRC_PATH = $HOME."/source/rust/src"
