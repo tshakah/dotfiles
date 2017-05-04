@@ -10,10 +10,6 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
-# Start rbenv
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
-
 # why would you type 'cd dir' if you could just type 'dir'?
 setopt AUTO_CD
 
@@ -48,8 +44,11 @@ setopt ZLE
 setopt NO_HUP
 
 # only fools wouldn't do this ;-)
-export EDITOR="vi"
-export VISUAL="vi"
+export EDITOR="nvim"
+export VISUAL="nvim"
+export ALTERNATE_EDITOR="nvim"
+alias vi='nvim'
+alias rg='rg -S'
 
 setopt IGNORE_EOF
 
@@ -88,5 +87,40 @@ bindkey "\eOP" run-help
 # oh wow!  This is killer...  try it!
 bindkey -M vicmd "q" push-line
 
-# it's like, space AND completion.  Gnarlbot.
+# it's like, space AND completion. Gnarlbot.
 bindkey -M viins ' ' magic-space
+
+autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
+add-zsh-hook chpwd chpwd_recent_dirs
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $HOME/.phpbrew/bashrc
+
+bindkey -v
+
+function zle-line-init zle-keymap-select {
+    VIM_PROMPT="%{$fg_bold[yellow]%} [% NORMAL]% %{$reset_color%}"
+    RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/} $EPS1"
+    zle reset-prompt
+}
+
+zle -N zle-line-init
+zle -N zle-keymap-select
+export KEYTIMEOUT=10
+
+bindkey fd vi-cmd-mode
+
+# --files: List files that would be searched but do not search
+# --no-ignore: Do not respect .gitignore, etc...
+# --hidden: Search hidden files and folders
+# --follow: Follow symlinks
+# --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
+
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+eval "$(rbenv init -)"
+
+bindkey "^W" backward-kill-word
+bindkey "^H" backward-delete-char      # Control-h also deletes the previous char
+bindkey "^U" backward-kill-line
