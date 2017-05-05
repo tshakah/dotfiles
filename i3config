@@ -11,8 +11,7 @@
 
 set $mod Mod1
 setxkbmap -layout gb
-exec --no-startup-id xsetroot -solid "#333333"
-exec --no-startup-id xrandr --output HDMI1 --auto --right-of LVDS1 --mode 1920x1080
+exec --no-startup-id xsetroot -solid "#252525"
 exec compton -b
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -49,6 +48,9 @@ bindsym --release $mod+Shift+s exec "scrot -s '%Y-%m-%d::%T.png' -e 'mv $f ~/'"
 
 # Volume control
 bindsym --release $mod+v exec pavucontrol
+
+# Task manager
+bindsym --release $mod+Control+Delete exec gnome-system-monitor
 
 # change focus
 bindsym $mod+j focus left
@@ -94,20 +96,21 @@ bindsym $mod+Shift+space floating toggle
 # change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
 
-# toggle the bar
-bindsym $mod+m bar mode toggle
-
 # focus the parent container
 bindsym $mod+a focus parent
 
 # focus the child container
 #bindsym $mod+d focus child
+set $ws1 "1:  "
+set $ws2 "2:  "
+set $ws3 "3:  "
+set $ws4 "4:  "
 
 # switch to workspace
-bindsym $mod+1 workspace 1
-bindsym $mod+2 workspace 2
-bindsym $mod+3 workspace 3
-bindsym $mod+4 workspace 4
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
 bindsym $mod+5 workspace 5
 bindsym $mod+6 workspace 6
 bindsym $mod+7 workspace 7
@@ -116,10 +119,10 @@ bindsym $mod+9 workspace 9
 bindsym $mod+0 workspace 10
 
 # move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace 1
-bindsym $mod+Shift+2 move container to workspace 2
-bindsym $mod+Shift+3 move container to workspace 3
-bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
 bindsym $mod+Shift+5 move container to workspace 5
 bindsym $mod+Shift+6 move container to workspace 6
 bindsym $mod+Shift+7 move container to workspace 7
@@ -164,52 +167,48 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 bar {
   strip_workspace_numbers yes
-  position top
+  position bottom
   status_command conky -c ~/.conkyrc
   mode hide
   modifier Mod1
   font pango:open sans 8
   colors {
-    background #454545
-    statusline #ffffff
-    separator #51c4d4
+    set $background1 #282a2e
+    set $background2 #3c3836
+    set $color1 #db3f3f
+    set $color2 #a89984
 
-    focused_workspace  #ecedee #ecedee #454545
-    active_workspace   #ecedee #ecedee #454545
-    inactive_workspace #454545 #454545 #ffffff
-    urgent_workspace   #454545 #454545 #ffffff
+    background $background1
+    statusline $fbf1c7
+    separator  $color1
+
+    focused_workspace  $background1 $background2 $color1
+    active_workspace   $background1 $background1 $color2
+    inactive_workspace $background1 $background1 $color2
+    urgent_workspace   $background1 $background2 #db3f3f
   }
 }
 
-# ceeriously styled i3
-set $bg     #2c2c2e
-set $fg     #9f9f9f
-set $hi     #efef8f
-set $ac     #b0babb
-set $tx     #040404
-set $ia     #8f8f8f
-set $be     #8faf9f
-set $yw     #f8f893
-set $gn     #88b090
-set $rd     #e89393
-set $id     #666666
-set $ce     #ceecee
+set $bg-color            #458588
+set $inactive-bg-color   #454849
+set $text-color          #fbf1c7
+set $inactive-text-color #a89884
+set $urgent-bg-color     #db3f3f
 
-# set some nice colors      border  background  text    indicator
-client.focused              $ac     $ac         $tx     $id
-client.unfocused            $bg     $bg         $ia     $id
-client.focused_inactive     $bg     $bg         $ac     $id
-client.urgent               $yw     $yw         $tx     $id
-
-#border & indicator are ignored
-#client.placeholder          $bg     $bg         $bg     $bg
+# window colors
+#                       border              background         text                 indicator
+client.focused          $bg-color           $bg-color          $text-color          $bg-color
+client.unfocused        $inactive-bg-color  $inactive-bg-color $inactive-text-color $inactive-bg-color
+client.focused_inactive $inactive-bg-color  $inactive-bg-color $inactive-text-color $inactive-bg-color
+client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color          $urgent-bg-color
 
 for_window [class="Nautilus" instance="file_progress"] floating enable
+for_window [class="Gnome-system-monitor"] floating enable; resize shrink righ ppt
 for_window [class="Pavucontrol" instance="pavucontrol" title="Volume Control"] floating enable; resize shrink righ ppt
 
 exec --no-startup-id i3-sensible-terminal
 exec --no-startup-id firefox
-exec --no-startup-id thunderbird
+exec --no-startup-id emacs
 exec --no-startup-id nm-applet
 exec --no-startup-id pasystray
 exec gnome-settings-daemon
