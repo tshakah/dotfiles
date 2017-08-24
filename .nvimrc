@@ -13,16 +13,17 @@ set nocompatible
 """ }}}
     call plug#begin("~/.config/nvim/plugged")
 
-    """ Github repos, uncomment to disable a plugin {{{
+    Plug 'floobits/floobits-neovim', { 'do': ':UpdateRemotePlugins' }
+
+    """ Github repos, uncomment to disable a plugin
     Plug 'tpope/vim-sensible'
+    Plug 'Shougo/denite.nvim'
+    Plug 'jeetsukumaran/vim-filebeagle'
 
     Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
+    Plug 'roxma/LanguageServer-php-neovim',  {'do': 'composer install && composer run-script parse-stubs'}
 
-    " Multi-entry selection UI.
-    Plug 'Shougo/denite.nvim'
-
-    " Completion with deoplete.
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    Plug 'roxma/nvim-completion-manager'
 
     " Showing function signature and inline doc.
     Plug 'Shougo/echodoc.vim'
@@ -31,11 +32,12 @@ set nocompatible
     Plug 'ervandew/supertab'
 
     " Fuzzy finder (files, mru, etc)
+    "Plug 'lotabout/skim', { 'dir': '~/.skim', 'do': './install' }
+    "Plug 'lotabout/skim.vim'
     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-    Plug 'junegunn/fzf.vim'
+    Plug 'IngoHeimbach/fzf.vim'
     Plug 'airblade/vim-rooter'
     Plug 'Shougo/denite.nvim'
-    Plug 'scrooloose/nerdtree'
 
     " Better line numbers
     Plug 'myusuf3/numbers.vim'
@@ -48,9 +50,7 @@ set nocompatible
     Plug 'Lokaltog/vim-easymotion'
 
     " Glorious colorschemes
-    Plug 'nanotech/jellybeans.vim'
     Plug 'tshakah/gruvbox'
-    Plug 'flazz/vim-colorschemes'
 
     " Super easy commenting, toggle comments etc
     Plug 'scrooloose/nerdcommenter'
@@ -63,14 +63,11 @@ set nocompatible
 
     " PHP
     Plug 'joonty/vdebug'
-    Plug 'lvht/phpcd.vim', { 'for': 'php', 'do': 'composer install' }
     Plug 'StanAngeloff/php.vim'
+    Plug 'janko-m/vim-test'
 
     " Handle surround chars like ''
     Plug 'tpope/vim-surround'
-
-    " Align your = etc.
-    Plug 'orbisvicis/tabular'
 
     " Snippets like textmate
     Plug 'MarcWeber/vim-addon-mw-utils'
@@ -91,10 +88,6 @@ set nocompatible
 
     Plug 'NLKNguyen/vim-lisp-syntax'
 
-    " Functions, class data etc.
-    " REQUIREMENTS: (exuberant)-ctags
-    Plug 'majutsushi/tagbar'
-
     " Detect whitespace
     Plug 'ntpeters/vim-better-whitespace'
 
@@ -113,8 +106,11 @@ set nocompatible
     " Unimpaired vim!
     Plug 'tpope/vim-unimpaired'
 
+    Plug 'dyng/ctrlsf.vim'
+    Plug 'terryma/vim-multiple-cursors'
+
     " Undo tree
-    Plug 'mbbill/undotree'
+    Plug 'simnalamburt/vim-mundo'
 
     " Elixir
     Plug 'elixir-lang/vim-elixir'
@@ -124,8 +120,21 @@ set nocompatible
     " Twig
     Plug 'qbbr/vim-twig'
 
+    Plug 'gregsexton/MatchTag'
+    Plug 'qpkorr/vim-bufkill'
+    Plug 'tpope/tpope-vim-abolish'
+    Plug 'haya14busa/vim-asterisk'
+    Plug 'junegunn/goyo.vim'
+    Plug 'junegunn/limelight.vim'
+    Plug 'wikitopian/hardmode'
+    Plug 'takac/vim-hardtime'
+
+    Plug 'pangloss/vim-javascript'
+    Plug 'ternjs/tern_for_vim'
+
     " Finish plugin stuff
     call plug#end()
+
 """ }}}
 """ User interface {{{
     """ Syntax highlighting {{{
@@ -168,7 +177,7 @@ set nocompatible
         """ }}}
     """ }}}
     """ Interface general {{{
-        set cursorline                              " hilight cursor line
+        set cursorline                              " highlight cursor line
         set more                                    " ---more--- like less
         set scrolloff=3                             " lines above/below cursor
         set showcmd                                 " show cmds being typed
@@ -265,11 +274,11 @@ set nocompatible
     set ignorecase                                  " by default ignore case
     set nrformats+=alpha                            " incr/decr letters C-a/-x
     set shiftround                                  " be clever with tabs
-    set shiftwidth=2                                " default 2
+    set shiftwidth=4                                " default 2
     set smartcase                                   " sensitive with uppercase
     set smarttab                                    " tab to 0,4,8 etc.
-    set softtabstop=2                               " "tab" feels like <tab>
-    set tabstop=2                                   " replace <TAB> w/2 spaces
+    set softtabstop=4                               " "tab" feels like <tab>
+    set tabstop=4                                   " replace <TAB> w/2 spaces
     """ Only auto-comment newline for block comments {{{
         augroup AutoBlockComment
             autocmd! FileType c,cpp setlocal comments -=:// comments +=f://
@@ -281,11 +290,74 @@ set nocompatible
             set formatoptions+=j
         endif
     """ }}}
+
+    " Similarly, we can apply it to fzf#vim#grep. To use ripgrep instead of ag:
+    command! -bang -nargs=* Rg
+      \ call fzf#vim#grep(
+      \   "rg -S --column --line-number --no-heading --color=always --glob '!.hg/*' ".shellescape(<q-args>), 1,
+      \   <bang>0 ? fzf#vim#with_preview('up:60%')
+      \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+      \   <bang>0)
+
+" Customize fzf colors to match your color scheme
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
+
+let g:fzf_history_dir = '~/.local/share/fzf-history'
+
+let $FZF_DEFAULT_COMMAND="rg -S --files --hidden --follow --glob '!.hg/*'"
+
+" Likewise, Files command with preview window
+command! -bang -nargs=? -complete=dir Files
+  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+
+function! s:buflist()
+  redir => ls
+  silent ls
+  redir END
+  return split(ls, '\n')
+endfunction
+
+function! s:bufopen(e)
+  execute 'buffer' matchstr(a:e, '^[ 0-9]*')
+endfunction
+
+nnoremap <silent> <Leader><Enter> :call fzf#run({
+\   'source':  reverse(<sid>buflist()),
+\   'sink':    function('<sid>bufopen'),
+\   'options': '+m',
+\   'down':    len(<sid>buflist()) + 2
+\ })<CR>
+
+execute "set colorcolumn=" . join(range(121,335), ',')
+highlight ColorColumn ctermbg=235
+
+set grepprg=rg\ --vimgrep
+
+let g:fzf_layout = { 'down': '~40%' }
+
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit' }
+
 """ }}}
 """ Keybindings {{{
     """ General {{{
         " Remap <leader>
-        let mapleader=","
+        let mapleader=" "
+        let g:ctrlsf_ackprg = 'rg'
 
         " Quickly edit/source .vimrc
         noremap <leader>ve :edit $HOME/source/dotfiles/.nvimrc<CR>
@@ -301,6 +373,15 @@ set nocompatible
         :nnoremap <A-j> <C-w>j
         :nnoremap <A-k> <C-w>k
         :nnoremap <A-l> <C-w>l
+
+        autocmd FileType php LanguageClientStart
+        let g:LanguageClient_autoStart = 1
+
+        nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+        nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+        nnoremap <silent> ge :call LanguageClient_textDocument_rename()<CR>
+
+        nnoremap <silent> <leader>/ :CtrlSF -smartcase 
 
         " Yank(copy) to system clipboard
         noremap <leader>y "+y
@@ -328,7 +409,21 @@ set nocompatible
         vnoremap <F1> <nop>
 
         " Open undo tree
-        nnoremap <F1> :UndotreeToggle<CR>
+        nnoremap <F1> :MundoToggle<CR>
+        nnoremap <F2> :e .<CR>
+
+        let g:mundo_width=35
+        let g:mundo_preview_height=15
+        let g:mundo_preview_bottom=1
+
+        let g:hardtime_default_on = 1
+        let g:hardtime_timeout = 500
+        let g:hardtime_allow_different_key = 1
+        let g:hardtime_maxcount = 2
+
+        set timeoutlen=400
+
+        let g:limelight_conceal_ctermfg = 'gray'
 
         " Working ci(, works for both breaklined, inline and multiple ()
         nnoremap ci( %ci(
@@ -337,11 +432,26 @@ set nocompatible
         map Q <nop>
 
         " Buffers, preferred over tabs now with bufferline.
-        nnoremap gn :bnext<CR>
-        nnoremap gN :bprevious<CR>
-        nnoremap gr :bdelete<CR>
-        nnoremap gf <C-^>
+        nnoremap bn :BF<CR>
+        nnoremap bN :BB<CR>
+        nnoremap br :BD<CR>
+        nnoremap bf <C-^>
 
+        map *   <Plug>(asterisk-*)
+        map #   <Plug>(asterisk-#)
+        map g*  <Plug>(asterisk-g*)
+        map g#  <Plug>(asterisk-g#)
+        map z*  <Plug>(asterisk-z*)
+        map gz* <Plug>(asterisk-gz*)
+        map z#  <Plug>(asterisk-z#)
+        map gz# <Plug>(asterisk-gz#)
+
+        xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
+
+        function! ExecuteMacroOverVisualRange()
+            echo "@".getcmdline()
+            execute ":'<,'>normal @".nr2char(getchar())
+        endfunction
 
         let g:vdebug_keymap_defaults = {
         \    "run" : "<F5>",
@@ -351,7 +461,7 @@ set nocompatible
         \    "step_out" : "<F4>",
         \    "close" : "<F6>",
         \    "detach" : "<F7>",
-        \    "set_breakpoint" : "<F10>",
+        \    "toggle_breakpoint" : "<F10>",
         \    "get_context" : "<F11>",
         \    "eval_under_cursor" : "<F12>",
         \    "eval_visual" : "<Leader>e"
@@ -377,8 +487,8 @@ set nocompatible
           " These `n` & `N` mappings are options. You do not have to map `n` & `N` to EasyMotion.
           " Without these mappings, `n` & `N` works fine. (These mappings just provide
           " different highlight method and have some other features )
-        map  n <Plug>(easymotion-next)
-        map  N <Plug>(easymotion-prev)
+        map n <Plug>(easymotion-next)
+        map N <Plug>(easymotion-prev)
         map <Space>l <Plug>(easymotion-lineforward)
         map <Space>j <Plug>(easymotion-j)
         map <Space>k <Plug>(easymotion-k)
@@ -449,10 +559,6 @@ set nocompatible
             augroup END
         """ }}}
     """ }}}
-    """ Plugins {{{
-        " Toggle tagbar (definitions, functions etc.)
-        map <F2> :TagbarToggle<CR>
-    """ }}}
 """ }}}
 """ Plugin settings {{{
     """ Lightline {{{
@@ -508,24 +614,6 @@ set nocompatible
             \ "\<C-s>" : 'S-B',
             \ '?'      : '      ' }
 
-        function! MyMode()
-            let fname = expand('%:t')
-            return fname == '__Tagbar__' ? 'Tagbar' :
-                    \ winwidth('.') > 60 ? lightline#mode() : ''
-        endfunction
-
-        function! MyFugitive()
-            try
-                if expand('%:t') !~? 'Tagbar' && exists('*fugitive#head')
-                    let mark = '± '
-                    let _ = fugitive#head()
-                    return strlen(_) ? mark._ : ''
-                endif
-            catch
-            endtry
-            return ''
-        endfunction
-
         function! MyReadonly()
             return &ft !~? 'help' && &readonly ? '≠' : '' " or ⭤
         endfunction
@@ -561,13 +649,6 @@ set nocompatible
             return winwidth('.') > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
         endfunction
 
-        let g:tagbar_status_func = 'TagbarStatusFunc'
-
-        function! TagbarStatusFunc(current, sort, fname, ...) abort
-            let g:lightline.fname = a:fname
-            return lightline#statusline(0)
-        endfunction
-
         function! s:syntastic()
             SyntasticCheck
             call lightline#update()
@@ -587,11 +668,6 @@ set nocompatible
         \ ''
         \ ]
 
-    " TagBar
-    let g:tagbar_left = 0
-    let g:tagbar_width = 30
-    set tags=tags;/
-
     " Syntastic - This is largely up to your own usage, and override these
     "             changes if be needed. This is merely an exemplification.
     let g:syntastic_cpp_check_header = 1
@@ -599,24 +675,17 @@ set nocompatible
     let g:syntastic_mode_map = {
         \ 'mode': 'active',
         \ 'active_filetypes':
-            \ ['c', 'cpp', 'perl', 'python', 'ruby', 'javascript'] }
+            \ ['c', 'cpp', 'perl', 'python', 'ruby', 'javascript', 'php'] }
 
     let g:syntastic_ruby_checkers = ['rubocop', 'mri']
 
     let g:syntastic_check_on_open = 1
-    let g:syntastic_check_on_wq = 0
+    let g:syntastic_check_on_wq = 1
 
-    " Netrw - the bundled (network) file and directory browser
-    let g:netrw_banner = 0
-    let g:netrw_list_hide = '^\.$'
-    let g:netrw_liststyle = 3
+    let g:syntastic_php_checkers=['php', 'phpcs', 'phpstan', 'phpmd']
+    let g:syntastic_php_phpcs_args='--standard=PSR2 -n'
 
-    let g:solarized_termcolors = 256
-
-    let g:syntastic_javascript_checkers = ['eslint']
-    let g:deoplete#enable_at_startup = 1
-    let g:deoplete#ignore_sources = get(g:, 'deoplete#ignore_sources', {})
-		let g:deoplete#ignore_sources.php = ['omni']
+    let g:syntastic_javascript_checkers = ['jshint']
 
     let g:racer_cmd = "~/source/racer/target/release/racer"
     let $RUST_SRC_PATH = $HOME."/source/rust/src"
