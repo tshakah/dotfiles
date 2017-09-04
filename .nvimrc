@@ -684,6 +684,10 @@ let g:fzf_action = {
 
     let g:syntastic_php_checkers=['php', 'phpcs', 'phpstan', 'phpmd']
     let g:syntastic_php_phpcs_args='--standard=PSR2 -n'
+    let g:syntastic_php_phpstan_post_args='--level 7'
+    let g:syntastic_php_phpmd_post_args='cleancode,codesize,controversial,design,naming,unusedcode'
+    let g:syntastic_aggregate_errors = 1
+    let g:syntastic_always_populate_loc_list = 1
 
     let g:syntastic_javascript_checkers = ['jshint']
 
