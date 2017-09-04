@@ -316,7 +316,7 @@ let g:fzf_colors =
 
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 
-let $FZF_DEFAULT_COMMAND="rg -S --files --hidden --follow --glob '!.hg/*'"
+let $FZF_DEFAULT_COMMAND='rg -S --files --follow --hidden --glob "!.hg/*"'
 
 " Likewise, Files command with preview window
 command! -bang -nargs=? -complete=dir Files
