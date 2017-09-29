@@ -44,7 +44,7 @@ set nocompatible
 
     " A pretty statusline, bufferline integration
     Plug 'itchyny/lightline.vim'
-    Plug 'bling/vim-bufferline'
+    Plug 'mgee/lightline-bufferline'
 
     " Easy... motions... yeah.
     Plug 'Lokaltog/vim-easymotion'
@@ -656,7 +656,7 @@ let g:fzf_action = {
 
         augroup AutoSyntastic
             autocmd!
-            autocmd BufWritePost *.c,*.cpp,*.perl,*py call s:syntastic()
+            autocmd BufWritePost *.php,*.c,*.cpp,*.perl,*py call s:syntastic()
         augroup END
     """ }}}
 
