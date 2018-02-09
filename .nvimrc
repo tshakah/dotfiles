@@ -60,6 +60,7 @@ set nocompatible
 
     " Git wrapper inside Vim
     Plug 'tpope/vim-fugitive'
+    Plug 'ludovicchabant/vim-lawrencium'
 
     " PHP
     Plug 'joonty/vdebug'
@@ -129,8 +130,16 @@ set nocompatible
     Plug 'wikitopian/hardmode'
     Plug 'takac/vim-hardtime'
 
+    Plug 'OmniSharp/omnisharp-vim'
+    Plug 'OrangeT/vim-csharp'
+
     Plug 'pangloss/vim-javascript'
     Plug 'ternjs/tern_for_vim'
+
+    Plug 'vim-scripts/dbext.vim'
+    Plug 'shmup/vim-sql-syntax'
+
+    Plug 'sunaku/vim-dasht'
 
     " Finish plugin stuff
     call plug#end()
@@ -279,6 +288,10 @@ set nocompatible
     set smarttab                                    " tab to 0,4,8 etc.
     set softtabstop=4                               " "tab" feels like <tab>
     set tabstop=4                                   " replace <TAB> w/2 spaces
+    set foldmethod=syntax
+    set foldnestmax=10
+    set nofoldenable
+    set foldlevel=2
     """ Only auto-comment newline for block comments {{{
         augroup AutoBlockComment
             autocmd! FileType c,cpp setlocal comments -=:// comments +=f://
@@ -299,6 +312,9 @@ set nocompatible
       \           : fzf#vim#with_preview('right:50%:hidden', '?'),
       \   <bang>0)
 
+" MySQL
+let g:dbext_default_profile_hope = 'type=MYSQL:user=root:passwd=password:dbname=hope01'
+
 " Customize fzf colors to match your color scheme
 let g:fzf_colors =
 \ { 'fg':      ['fg', 'Normal'],
@@ -316,7 +332,7 @@ let g:fzf_colors =
 
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 
-let $FZF_DEFAULT_COMMAND='rg -S --files --follow --hidden --glob "!.hg/*"'
+let $FZF_DEFAULT_COMMAND='rg -S --files --follow --hidden'
 
 " Likewise, Files command with preview window
 command! -bang -nargs=? -complete=dir Files
@@ -333,7 +349,7 @@ function! s:bufopen(e)
   execute 'buffer' matchstr(a:e, '^[ 0-9]*')
 endfunction
 
-nnoremap <silent> <Leader><Enter> :call fzf#run({
+nnoremap <silent> <Leader>o :call fzf#run({
 \   'source':  reverse(<sid>buflist()),
 \   'sink':    function('<sid>bufopen'),
 \   'options': '+m',
@@ -359,6 +375,17 @@ let g:fzf_action = {
         let mapleader=" "
         let g:ctrlsf_ackprg = 'rg'
 
+        nnoremap <Leader><Leader>k :Dasht<Space>
+        nnoremap <silent> <Leader>K :call Dasht([expand('<cword>'), expand('<cWORD>')])<Return>
+
+        let g:dasht_filetype_docsets = {}
+
+        let g:dasht_filetype_docsets['elixir'] = ['erlang']
+        let g:dasht_filetype_docsets['php'] = ['phpunit', 'doctrine_orm']
+        let g:dasht_filetype_docsets['twig'] = ['html', 'sass', 'css', 'js', 'bootstrap']
+        let g:dasht_filetype_docsets['js'] = ['vuejs', 'jquery', 'jquery_ui', 'momentjs']
+        let g:dasht_filetype_docsets['handlebars'] = ['html']
+
         " Quickly edit/source .vimrc
         noremap <leader>ve :edit $HOME/source/dotfiles/.nvimrc<CR>
         noremap <leader>vs :source $HOME/.config/nvim/init.vim<CR>
@@ -381,7 +408,7 @@ let g:fzf_action = {
         nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
         nnoremap <silent> ge :call LanguageClient_textDocument_rename()<CR>
 
-        nnoremap <silent> <leader>/ :CtrlSF -smartcase 
+        nnoremap <silent> <leader>/ :CtrlSF -smartcase
 
         " Yank(copy) to system clipboard
         noremap <leader>y "+y
@@ -419,7 +446,7 @@ let g:fzf_action = {
         let g:hardtime_default_on = 1
         let g:hardtime_timeout = 500
         let g:hardtime_allow_different_key = 1
-        let g:hardtime_maxcount = 2
+        let g:hardtime_maxcount = 3
 
         set timeoutlen=400
 
@@ -478,7 +505,6 @@ let g:fzf_action = {
 
         let g:rooter_patterns = ['Rakefile', '.git/', '.hg/']
 
-        nmap <Space>s <Plug>(easymotion-s2)
         map  / <Plug>(easymotion-sn)
         nmap / <Plug>(easymotion-sn)
         xmap / <Esc><Plug>(easymotion-sn)\v%V
@@ -672,6 +698,7 @@ let g:fzf_action = {
     "             changes if be needed. This is merely an exemplification.
     let g:syntastic_cpp_check_header = 1
     let g:syntastic_cpp_compiler_options = ' -std=c++0x'
+    let g:syntastic_cs_checkers = ['syntax', 'semantic', 'issues']
     let g:syntastic_mode_map = {
         \ 'mode': 'active',
         \ 'active_filetypes':
@@ -683,9 +710,9 @@ let g:fzf_action = {
     let g:syntastic_check_on_wq = 1
 
     let g:syntastic_php_checkers=['php', 'phpcs', 'phpstan', 'phpmd']
-    let g:syntastic_php_phpcs_args='--standard=PSR2 -n'
+    let g:syntastic_php_phpcs_args='--standard=SHAKA -n'
     let g:syntastic_php_phpstan_post_args='--level 7'
-    let g:syntastic_php_phpmd_post_args='cleancode,codesize,controversial,design,naming,unusedcode'
+    let g:syntastic_php_phpmd_post_args=expand('<sfile>:p:h')."/source/dotfiles/phpmd-ruleset.xml"
     let g:syntastic_aggregate_errors = 1
     let g:syntastic_always_populate_loc_list = 1
 
