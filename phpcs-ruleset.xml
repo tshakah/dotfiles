@@ -36,6 +36,7 @@
     <rule ref="SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly">
         <properties>
             <property name="allowPartialUses" value="true"/>
+            <property name="searchAnnotations" value="true"/>
             <property name="allowFullyQualifiedExceptions" value="true"/>
         </properties>
     </rule>
