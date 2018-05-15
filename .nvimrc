@@ -17,13 +17,13 @@ set nocompatible
 
     """ Github repos, uncomment to disable a plugin
     Plug 'tpope/vim-sensible'
-    Plug 'Shougo/denite.nvim'
-    Plug 'jeetsukumaran/vim-filebeagle'
+    "Plug 'Shougo/denite.nvim'
 
     Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
     Plug 'roxma/LanguageServer-php-neovim',  {'do': 'composer install && composer run-script parse-stubs'}
 
-    Plug 'roxma/nvim-completion-manager'
+    "Plug 'roxma/nvim-completion-manager'
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
     " Showing function signature and inline doc.
     Plug 'Shougo/echodoc.vim'
@@ -31,13 +31,16 @@ set nocompatible
     " <Tab> everything!
     Plug 'ervandew/supertab'
 
+    Plug 'tpope/vim-repeat'
+    Plug 'wellle/targets.vim'
+    Plug 'haya14busa/incsearch.vim'
+
     " Fuzzy finder (files, mru, etc)
     "Plug 'lotabout/skim', { 'dir': '~/.skim', 'do': './install' }
     "Plug 'lotabout/skim.vim'
     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
     Plug 'IngoHeimbach/fzf.vim'
     Plug 'airblade/vim-rooter'
-    Plug 'Shougo/denite.nvim'
 
     " Better line numbers
     Plug 'myusuf3/numbers.vim'
@@ -61,6 +64,7 @@ set nocompatible
     " Git wrapper inside Vim
     Plug 'tpope/vim-fugitive'
     Plug 'ludovicchabant/vim-lawrencium'
+    Plug 'haya14busa/incsearch.vim'
 
     " PHP
     Plug 'joonty/vdebug'
@@ -80,7 +84,8 @@ set nocompatible
     Plug 'mhinz/vim-startify'
 
     " Vim signs (:h signs) for modified lines based off VCS (e.g. Git)
-    Plug 'airblade/vim-gitgutter'
+    "Plug 'airblade/vim-gitgutter'
+    Plug 'mhinz/vim-signify'
 
     " Awesome syntax checker.
     " REQUIREMENTS: See :h syntastic-intro
@@ -129,7 +134,6 @@ set nocompatible
     Plug 'haya14busa/vim-asterisk'
     Plug 'junegunn/goyo.vim'
     Plug 'junegunn/limelight.vim'
-    Plug 'wikitopian/hardmode'
     Plug 'takac/vim-hardtime'
 
     Plug 'OmniSharp/omnisharp-vim'
@@ -149,6 +153,7 @@ set nocompatible
 """ }}}
 """ User interface {{{
     """ Syntax highlighting {{{
+        filetype plugin on
         filetype plugin indent on                   " detect file plugin+indent
         syntax on                                   " syntax highlighting
         set background=dark                         " we're using a dark bg
@@ -159,6 +164,7 @@ set nocompatible
                 autocmd BufNewFile,BufRead *.txt set ft=sh tw=79
                 autocmd BufNewFile,BufRead *.tex set ft=tex tw=79
                 autocmd BufNewFile,BufRead *.md set ft=markdown tw=79
+                autocmd BufNewFile,BufRead *.endfile set filetype=endfile
             augroup END
         """ }}}
         """ 256 colors for maximum jellybeans bling. See commit log for info {{{
@@ -188,6 +194,7 @@ set nocompatible
         """ }}}
     """ }}}
     """ Interface general {{{
+        set inccommand=split
         set cursorline                              " highlight cursor line
         set more                                    " ---more--- like less
         set scrolloff=3                             " lines above/below cursor
@@ -309,7 +316,7 @@ set nocompatible
     " Similarly, we can apply it to fzf#vim#grep. To use ripgrep instead of ag:
     command! -bang -nargs=* Rg
       \ call fzf#vim#grep(
-      \   "rg -S --column --line-number --no-heading --color=always --glob '!.hg/*' ".shellescape(<q-args>), 1,
+      \   "rg -S --column --line-number --no-heading --color=always --glob '!.hg' --glob '!.git' ".shellescape(<q-args>), 1,
       \   <bang>0 ? fzf#vim#with_preview('up:60%')
       \           : fzf#vim#with_preview('right:50%:hidden', '?'),
       \   <bang>0)
@@ -334,7 +341,7 @@ let g:fzf_colors =
 
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 
-let $FZF_DEFAULT_COMMAND='rg -S --files --follow --hidden'
+let $FZF_DEFAULT_COMMAND="rg -S --files --follow --hidden  --glob '!.hg' --glob '!.git' --glob '!vendor'"
 
 " Likewise, Files command with preview window
 command! -bang -nargs=? -complete=dir Files
@@ -380,6 +387,10 @@ let g:fzf_action = {
         nnoremap <Leader><Leader>k :Dasht<Space>
         nnoremap <silent> <Leader>K :call Dasht([expand('<cword>'), expand('<cWORD>')])<Return>
 
+        map /  <Plug>(incsearch-forward)
+        map ?  <Plug>(incsearch-backward)
+        map g/ <Plug>(incsearch-stay)
+
         let g:dasht_filetype_docsets = {}
 
         let g:dasht_filetype_docsets['elixir'] = ['erlang']
@@ -403,7 +414,6 @@ let g:fzf_action = {
         :nnoremap <A-k> <C-w>k
         :nnoremap <A-l> <C-w>l
 
-        autocmd FileType php LanguageClientStart
         let g:LanguageClient_autoStart = 1
 
         nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
@@ -420,6 +430,9 @@ let g:fzf_action = {
         nmap <C-down> ]e
         vmap <C-up> [egv
         vmap <C-down> ]egv
+
+        nmap <silent> t<C-n> :TestNearest<CR>
+        nmap <silent> t<C-f> :TestFile<CR>
 
         " Scroll up/down lines from 'scroll' option, default half a screen
         map <C-j> <C-d>
@@ -507,20 +520,62 @@ let g:fzf_action = {
 
         let g:rooter_patterns = ['Rakefile', '.git/', '.hg/']
 
-        map  / <Plug>(easymotion-sn)
-        nmap / <Plug>(easymotion-sn)
-        xmap / <Esc><Plug>(easymotion-sn)\v%V
-        omap / <Plug>(easymotion-tn)
-        nnoremap g/ /
-          " These `n` & `N` mappings are options. You do not have to map `n` & `N` to EasyMotion.
-          " Without these mappings, `n` & `N` works fine. (These mappings just provide
-          " different highlight method and have some other features )
-        map n <Plug>(easymotion-next)
-        map N <Plug>(easymotion-prev)
-        map <Space>l <Plug>(easymotion-lineforward)
-        map <Space>j <Plug>(easymotion-j)
-        map <Space>k <Plug>(easymotion-k)
-        map <Space>h <Plug>(easymotion-linebackward)
+        augroup incsearch-easymotion
+        autocmd!
+        autocmd User IncSearchEnter autocmd! incsearch-easymotion-impl
+        augroup END
+        augroup incsearch-easymotion-impl
+        autocmd!
+        augroup END
+
+        function! IncsearchEasyMotion() abort
+        autocmd incsearch-easymotion-impl User IncSearchExecute :silent! call EasyMotion#Search(0, 2, 0)
+        return "\<CR>"
+        endfunction
+        let g:incsearch_cli_key_mappings = {
+        \   "\<Space>": {
+        \       'key': 'IncsearchEasyMotion()',
+        \       'noremap': 1,
+        \       'expr': 1
+        \   }
+        \ }
+
+        " Search for selected text.
+        " http://vim.wikia.com/wiki/VimTip171
+        let s:save_cpo = &cpo | set cpo&vim
+        if !exists('g:VeryLiteral')
+        let g:VeryLiteral = 0
+        endif
+        function! s:VSetSearch(cmd)
+        let old_reg = getreg('"')
+        let old_regtype = getregtype('"')
+        normal! gvy
+        if @@ =~? '^[0-9a-z,_]*$' || @@ =~? '^[0-9a-z ,_]*$' && g:VeryLiteral
+            let @/ = @@
+        else
+            let pat = escape(@@, a:cmd.'\')
+            if g:VeryLiteral
+            let pat = substitute(pat, '\n', '\\n', 'g')
+            else
+            let pat = substitute(pat, '^\_s\+', '\\s\\+', '')
+            let pat = substitute(pat, '\_s\+$', '\\s\\*', '')
+            let pat = substitute(pat, '\_s\+', '\\_s\\+', 'g')
+            endif
+            let @/ = '\V'.pat
+        endif
+        normal! gV
+        call setreg('"', old_reg, old_regtype)
+        endfunction
+        vnoremap <silent> * :<C-U>call <SID>VSetSearch('/')<CR>/<C-R>/<CR>
+        vnoremap <silent> # :<C-U>call <SID>VSetSearch('?')<CR>?<C-R>/<CR>
+        vmap <kMultiply> *
+        nmap <silent> <Plug>VLToggle :let g:VeryLiteral = !g:VeryLiteral
+        \\| echo "VeryLiteral " . (g:VeryLiteral ? "On" : "Off")<CR>
+        if !hasmapto("<Plug>VLToggle")
+        nmap <unique> <Leader>vl <Plug>VLToggle
+        endif
+        let &cpo = s:save_cpo | unlet s:save_cpo
+
 
     """ }}}
     """ Functions or fancy binds {{{{
@@ -581,7 +636,7 @@ let g:fzf_action = {
 
             augroup StripTrailingWhitespace
                 autocmd!
-                autocmd FileType c,cpp,conf,css,html,perl,python,sh
+                autocmd FileType c,cpp,conf,css,html,perl,python,sh,php
                             \ autocmd BufWritePre <buffer> :call
                             \ <SID>StripTrailingWhitespace()
             augroup END
@@ -689,12 +744,8 @@ let g:fzf_action = {
     """ }}}
 
     " Startify, the fancy start page
-    let g:startify_custom_header = [
-        \ '   Author:      Tim Sæterøy',
-        \ '   Homepage:    http://thevoid.no',
-        \ '   Source:      http://github.com/timss/vimconf',
-        \ ''
-        \ ]
+    let g:startify_change_to_vcs_root = 1
+    let g:startify_fortune_use_unicode = 1
 
     " Syntastic - This is largely up to your own usage, and override these
     "             changes if be needed. This is merely an exemplification.
@@ -734,4 +785,15 @@ let g:fzf_action = {
     if filereadable("coverage.vim")
       source coverage.vim
     endif
+
+    if !exists('g:vdebug_options')
+      let g:vdebug_options = {}
+    endif
+
+    let g:vdebug_options.break_on_open = 0
+    let g:vdebug_options.watch_window_style = 'compact'
+    let g:vdebug_options.watch_window_height = 50
+    let g:vdebug_options.status_window_height = 5
+
+    let g:deoplete#enable_at_startup = 1
 """ }}}
