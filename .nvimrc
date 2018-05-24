@@ -25,6 +25,8 @@ set nocompatible
     "Plug 'roxma/nvim-completion-manager'
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
+    Plug 'padawan-php/deoplete-padawan', { 'do': 'composer install' }
+
     " Showing function signature and inline doc.
     Plug 'Shougo/echodoc.vim'
 
@@ -33,7 +35,6 @@ set nocompatible
 
     Plug 'tpope/vim-repeat'
     Plug 'wellle/targets.vim'
-    Plug 'haya14busa/incsearch.vim'
 
     " Fuzzy finder (files, mru, etc)
     "Plug 'lotabout/skim', { 'dir': '~/.skim', 'do': './install' }
@@ -50,7 +51,10 @@ set nocompatible
     Plug 'mgee/lightline-bufferline'
 
     " Easy... motions... yeah.
-    Plug 'Lokaltog/vim-easymotion'
+    Plug 'easymotion/vim-easymotion'
+    Plug 'haya14busa/incsearch.vim'
+    Plug 'haya14busa/incsearch-fuzzy.vim'
+    Plug 'haya14busa/incsearch-easymotion.vim'
 
     " Glorious colorschemes
     Plug 'tshakah/gruvbox'
@@ -64,7 +68,6 @@ set nocompatible
     " Git wrapper inside Vim
     Plug 'tpope/vim-fugitive'
     Plug 'ludovicchabant/vim-lawrencium'
-    Plug 'haya14busa/incsearch.vim'
 
     " PHP
     Plug 'joonty/vdebug'
@@ -77,8 +80,7 @@ set nocompatible
     " Snippets like textmate
     Plug 'MarcWeber/vim-addon-mw-utils'
     Plug 'tomtom/tlib_vim'
-    Plug 'honza/vim-snippets'
-    Plug 'garbas/vim-snipmate'
+    Plug 'sirver/ultisnips'
 
     " A fancy start screen, shows MRU etc.
     Plug 'mhinz/vim-startify'
@@ -134,7 +136,7 @@ set nocompatible
     Plug 'haya14busa/vim-asterisk'
     Plug 'junegunn/goyo.vim'
     Plug 'junegunn/limelight.vim'
-    Plug 'takac/vim-hardtime'
+    Plug 'phux/vim-hardtime'
 
     Plug 'OmniSharp/omnisharp-vim'
     Plug 'OrangeT/vim-csharp'
@@ -146,6 +148,8 @@ set nocompatible
     Plug 'shmup/vim-sql-syntax'
 
     Plug 'sunaku/vim-dasht'
+
+    Plug 'mechatroner/rainbow_csv'
 
     " Finish plugin stuff
     call plug#end()
@@ -384,14 +388,37 @@ let g:fzf_action = {
         let mapleader=" "
         let g:ctrlsf_ackprg = 'rg'
 
-        nnoremap <Leader><Leader>k :Dasht<Space>
-        nnoremap <silent> <Leader>K :call Dasht([expand('<cword>'), expand('<cWORD>')])<Return>
+        nnoremap <silent> + :exe "resize " . (winheight(0) * 3/2)<CR>
+        nnoremap <silent> - :exe "resize " . (winheight(0) * 2/3)<CR>
 
-        map /  <Plug>(incsearch-forward)
+        nnoremap <Leader>d :Dasht<Space>
+        nnoremap <silent> <Leader>D :call Dasht([expand('<cword>'), expand('<cWORD>')])<Return>
+
+        map <Leader>l <Plug>(easymotion-lineforward)
+        map <Leader>j <Plug>(easymotion-j)
+        map <Leader>k <Plug>(easymotion-k)
+        map <Leader>h <Plug>(easymotion-linebackward)
+
+        let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
+
+        noremap <silent><expr> <Space>/ incsearch#go(<SID>config_easyfuzzymotion())
         map ?  <Plug>(incsearch-backward)
         map g/ <Plug>(incsearch-stay)
 
+        function! s:config_easyfuzzymotion(...) abort
+        return extend(copy({
+        \   'converters': [incsearch#config#fuzzyword#converter()],
+        \   'modules': [incsearch#config#easymotion#module({'overwin': 1})],
+        \   'keymap': {"\<CR>": '<Over>(easymotion)'},
+        \   'is_expr': 0,
+        \   'is_stay': 1
+        \ }), get(a:, 1, {}))
+        endfunction
+
+        noremap <silent><expr> <Space>/ incsearch#go(<SID>config_easyfuzzymotion())
+
         let g:dasht_filetype_docsets = {}
+        let g:deoplete#sources#padawan#add_parentheses = 0
 
         let g:dasht_filetype_docsets['elixir'] = ['erlang']
         let g:dasht_filetype_docsets['php'] = ['phpunit', 'doctrine_orm']
@@ -419,6 +446,10 @@ let g:fzf_action = {
         nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
         nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
         nnoremap <silent> ge :call LanguageClient_textDocument_rename()<CR>
+
+        let g:LanguageClient_serverCommands = {
+        \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
+        \ }
 
         nnoremap <silent> <leader>/ :CtrlSF -smartcase
 
@@ -462,6 +493,10 @@ let g:fzf_action = {
         let g:hardtime_timeout = 500
         let g:hardtime_allow_different_key = 1
         let g:hardtime_maxcount = 3
+        let g:hardtime_motion_with_count_resets = 1
+
+        set diffopt+=iwhite
+        set diffexpr=""
 
         set timeoutlen=400
 
@@ -519,64 +554,6 @@ let g:fzf_action = {
         nmap <C-p> :Files<CR>
 
         let g:rooter_patterns = ['Rakefile', '.git/', '.hg/']
-
-        augroup incsearch-easymotion
-        autocmd!
-        autocmd User IncSearchEnter autocmd! incsearch-easymotion-impl
-        augroup END
-        augroup incsearch-easymotion-impl
-        autocmd!
-        augroup END
-
-        function! IncsearchEasyMotion() abort
-        autocmd incsearch-easymotion-impl User IncSearchExecute :silent! call EasyMotion#Search(0, 2, 0)
-        return "\<CR>"
-        endfunction
-        let g:incsearch_cli_key_mappings = {
-        \   "\<Space>": {
-        \       'key': 'IncsearchEasyMotion()',
-        \       'noremap': 1,
-        \       'expr': 1
-        \   }
-        \ }
-
-        " Search for selected text.
-        " http://vim.wikia.com/wiki/VimTip171
-        let s:save_cpo = &cpo | set cpo&vim
-        if !exists('g:VeryLiteral')
-        let g:VeryLiteral = 0
-        endif
-        function! s:VSetSearch(cmd)
-        let old_reg = getreg('"')
-        let old_regtype = getregtype('"')
-        normal! gvy
-        if @@ =~? '^[0-9a-z,_]*$' || @@ =~? '^[0-9a-z ,_]*$' && g:VeryLiteral
-            let @/ = @@
-        else
-            let pat = escape(@@, a:cmd.'\')
-            if g:VeryLiteral
-            let pat = substitute(pat, '\n', '\\n', 'g')
-            else
-            let pat = substitute(pat, '^\_s\+', '\\s\\+', '')
-            let pat = substitute(pat, '\_s\+$', '\\s\\*', '')
-            let pat = substitute(pat, '\_s\+', '\\_s\\+', 'g')
-            endif
-            let @/ = '\V'.pat
-        endif
-        normal! gV
-        call setreg('"', old_reg, old_regtype)
-        endfunction
-        vnoremap <silent> * :<C-U>call <SID>VSetSearch('/')<CR>/<C-R>/<CR>
-        vnoremap <silent> # :<C-U>call <SID>VSetSearch('?')<CR>?<C-R>/<CR>
-        vmap <kMultiply> *
-        nmap <silent> <Plug>VLToggle :let g:VeryLiteral = !g:VeryLiteral
-        \\| echo "VeryLiteral " . (g:VeryLiteral ? "On" : "Off")<CR>
-        if !hasmapto("<Plug>VLToggle")
-        nmap <unique> <Leader>vl <Plug>VLToggle
-        endif
-        let &cpo = s:save_cpo | unlet s:save_cpo
-
-
     """ }}}
     """ Functions or fancy binds {{{{
         """ Toggle relativenumber using <leader>r {{{
@@ -590,41 +567,12 @@ let g:fzf_action = {
 
             nnoremap <leader>r :call NumberToggle()<CR>
         """ }}}
-        """ Toggle text wrapping, wrap on whole words
-        """ For more info see: http://stackoverflow.com/a/2470885/1076493 {{{
-            function! WrapToggle()
-                if &wrap
-                    set list
-                    set nowrap
-                else
-                    set nolist
-                    set wrap
-                endif
-            endfunction
-
-            nnoremap <leader>w :call WrapToggle()<CR>
-        """ }}}
         """ Remove multiple empty lines {{{
             function! DeleteMultipleEmptyLines()
                 g/^\_$\n\_^$/d
             endfunction
 
             nnoremap <leader>ld :call DeleteMultipleEmptyLines()<CR>
-        """ }}}
-        """ Split to relative header/source {{{
-            function! SplitRelSrc()
-                let s:fname = expand("%:t:r")
-
-                if expand("%:e") == "h"
-                    set nosplitright
-                    exe "vsplit" fnameescape(s:fname . ".cpp")
-                    set splitright
-                elseif expand("%:e") == "cpp"
-                    exe "vsplit" fnameescape(s:fname . ".h")
-                endif
-            endfunction
-
-            nnoremap <leader>le :call SplitRelSrc()<CR>
         """ }}}
         """ Strip trailing whitespace, return to cursor at save {{{
             function! <SID>StripTrailingWhitespace()
@@ -796,4 +744,13 @@ let g:fzf_action = {
     let g:vdebug_options.status_window_height = 5
 
     let g:deoplete#enable_at_startup = 1
+
+    command! PadawanStart call deoplete#sources#padawan#StartServer()
+    command! PadawanStop call deoplete#sources#padawan#StopServer()
+    command! PadawanRestart call deoplete#sources#padawan#RestartServer()
+    command! PadawanInstall call deoplete#sources#padawan#InstallServer()
+    command! PadawanUpdate call deoplete#sources#padawan#UpdatePadawan()
+    command! -bang PadawanGenerate call deoplete#sources#padawan#Generate(<bang>0)
+
+    autocmd BufReadPost *.rs setlocal filetype=rust
 """ }}}
