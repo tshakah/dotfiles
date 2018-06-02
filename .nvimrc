@@ -53,7 +53,8 @@ let g:mundo_preview_bottom=1
 
 
 " Search
-Plug 'junegunn/fzf'
+Plug 'lotabout/skim', { 'dir': '~/.skim', 'do': './install' }
+Plug 'lotabout/skim.vim'
 
 
 " PHP
