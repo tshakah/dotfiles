@@ -70,7 +70,7 @@ set nocompatible
     Plug 'ludovicchabant/vim-lawrencium'
 
     " PHP
-    Plug 'joonty/vdebug'
+    Plug 'vim-vdebug/vdebug'
     Plug 'StanAngeloff/php.vim'
     Plug 'janko-m/vim-test'
 
