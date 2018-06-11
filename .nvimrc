@@ -37,7 +37,7 @@ let g:AutoPairsMapCR=0
 let g:neosnippet#enable_completed_snippet = 1
 imap <expr><TAB> pumvisible() ? "\<C-n>" : (neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>")
 imap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
-imap <expr><CR> pumvisible() ? deoplete#mappings#close_popup() : "\<CR>\<Plug>AutoPairsReturn"
+imap <expr><CR> pumvisible() ? deoplete#mappings#close_popup() : "\<CR>"
 autocmd InsertLeave * if pumvisible() == 0 | pclose | endif
 
 
