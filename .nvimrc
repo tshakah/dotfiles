@@ -43,7 +43,8 @@ autocmd InsertLeave * if pumvisible() == 0 | pclose | endif
 
 " UI
 Plug 'tshakah/gruvbox'
-
+Plug 'myusuf3/numbers.vim'
+inoremap <C-c> <Esc>
 
 Plug 'simnalamburt/vim-mundo'
 nnoremap <F1> :MundoToggle<CR>
@@ -53,9 +54,24 @@ let g:mundo_preview_bottom=1
 
 
 " Search
-Plug 'lotabout/skim', { 'dir': '~/.skim', 'do': './install' }
-Plug 'lotabout/skim.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'IngoHeimbach/fzf.vim'
 
+let g:fzf_history_dir = '~/.local/share/fzf-history'
+let $FZF_DEFAULT_COMMAND="rg -S --files --follow --hidden  --glob '!.hg' --glob '!.git' --glob '!vendor'"
+
+let g:fzf_layout = { 'down': '~40%' }
+
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit' }
+
+" Likewise, Files command with preview window
+command! -bang -nargs=? -complete=dir Files
+  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+
+nmap <C-p> :Files<CR>
 
 " PHP
 Plug 'StanAngeloff/php.vim', {'for': 'php'}
