@@ -20,7 +20,6 @@
     <rule ref="SlevomatCodingStandard.Commenting.ForbiddenAnnotations"/>
     <rule ref="SlevomatCodingStandard.Commenting.InlineDocCommentDeclaration"/>
 
-    <rule ref="SlevomatCodingStandard.ControlStructures.DisallowEmpty"/>
     <rule ref="SlevomatCodingStandard.ControlStructures.AssignmentInCondition"/>
     <rule ref="SlevomatCodingStandard.ControlStructures.DisallowEqualOperators"/>
     <rule ref="SlevomatCodingStandard.ControlStructures.DisallowYodaComparison"/>
@@ -82,6 +81,7 @@
                 @group,
                 @env
             "/>
+            <property name="enableVoidTypeHint" value="false"/>
         </properties>
     </rule>
 
