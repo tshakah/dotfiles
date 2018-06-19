@@ -22,7 +22,6 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ 'do': 'bash install.sh',
     \ }
 
-
 Plug 'Shougo/echodoc.vim'
 Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
@@ -42,8 +41,10 @@ autocmd InsertLeave * if pumvisible() == 0 | pclose | endif
 
 
 " UI
+Plug 'terryma/vim-multiple-cursors'
 Plug 'tshakah/gruvbox'
 Plug 'myusuf3/numbers.vim'
+" Fix for C-c not resetting the numbers
 inoremap <C-c> <Esc>
 
 Plug 'simnalamburt/vim-mundo'
@@ -53,30 +54,60 @@ let g:mundo_preview_height=15
 let g:mundo_preview_bottom=1
 
 
-" Search
+" Search and navigation
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'IngoHeimbach/fzf.vim'
 
+set smartcase
+set incsearch
+set ignorecase " by default ignore case
+let g:fzf_layout = { 'down': '~40%' }
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 let $FZF_DEFAULT_COMMAND="rg -S --files --follow --hidden  --glob '!.hg' --glob '!.git' --glob '!vendor'"
-
-let g:fzf_layout = { 'down': '~40%' }
-
 let g:fzf_action = {
   \ 'ctrl-t': 'tab split',
   \ 'ctrl-x': 'split',
   \ 'ctrl-v': 'vsplit' }
+set splitbelow
+set splitright
 
-" Likewise, Files command with preview window
+" Files command with preview window
 command! -bang -nargs=? -complete=dir Files
   \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 
 nmap <C-p> :Files<CR>
 
+
+" Syntax
+Plug 'vim-syntastic/syntastic'
+let g:syntastic_check_on_wq = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_aggregate_errors = 1
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_mode_map = {
+    \ 'mode': 'active',
+    \ 'active_filetypes':
+        \ ['ruby', 'javascript', 'php'] }
+
+let g:syntastic_ruby_checkers = ['rubocop', 'mri']
+let g:syntastic_php_checkers=['php', 'phpcs', 'phpstan', 'phpmd']
+let g:syntastic_php_phpcs_args='--standard=SHAKA -n'
+let g:syntastic_php_phpstan_post_args='--level 7'
+let g:syntastic_php_phpmd_post_args="/home/elishahastings/source/dotfiles/phpmd-ruleset.xml"
+let g:syntastic_javascript_checkers = ['eslint']
+let g:elm_syntastic_show_warnings = 1
+
+
 " PHP
 Plug 'StanAngeloff/php.vim', {'for': 'php'}
 Plug 'vim-vdebug/vdebug'
-
+if !exists('g:vdebug_options')
+    let g:vdebug_options = {}
+endif
+let g:vdebug_options.break_on_open = 0
+let g:vdebug_options.watch_window_style = 'compact'
+let g:vdebug_options.watch_window_height = 30
+let g:vdebug_options.status_window_height = 5
 
 Plug 'padawan-php/deoplete-padawan', { 'do': 'composer install' }
 command! PadawanStart call deoplete#sources#padawan#StartServer()
@@ -85,6 +116,14 @@ command! PadawanRestart call deoplete#sources#padawan#RestartServer()
 command! PadawanInstall call deoplete#sources#padawan#InstallServer()
 command! PadawanUpdate call deoplete#sources#padawan#UpdatePadawan()
 command! -bang PadawanGenerate call deoplete#sources#padawan#Generate(<bang>0)
+
+
+" Twig
+Plug 'evidens/vim-twig'
+
+
+" Markdown
+Plug 'JamshedVesuna/vim-markdown-preview'
 
 
 call plug#end()
@@ -96,16 +135,31 @@ call plug#end()
 set hidden
 
 " General UI
+set title " Show buffer name in title
 set nowrap
-set incsearch
 set cursorline
 set noshowmode
 set shortmess+=c
 set listchars=tab:>\
+set backspace=indent,eol,start " smart backspace
+
+" Whitespace
+set autoindent " preserve indentation
+set cinkeys-=0# " don't force # indentation
+set expandtab " no real tabs
+set shiftround " be clever with tabs
+set shiftwidth=4 " default 2
+set smarttab " tab to 0,4,8 etc.
+set softtabstop=4 " "tab" feels like <tab>
+set tabstop=4 " replace <TAB> w/2 spaces
 
 " Theme
 set background=dark
 colorscheme gruvbox 
+
+" Change background at 120 characters
+execute "set colorcolumn=" . join(range(121,335), ',')
+highlight ColorColumn ctermbg=235
 
 " Syntax highlighting
 syntax on
@@ -185,7 +239,6 @@ set undoreload=10000 " buffer stored undos
     "Plug 'ludovicchabant/vim-lawrencium'
 
     "" PHP
-    "Plug 'joonty/vdebug'
     "Plug 'StanAngeloff/php.vim'
     "Plug 'janko-m/vim-test'
 
