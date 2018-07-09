@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <ruleset name="SHAKA">
+    <file>/home/elishahastings/source/tools/slevomat-cs/SlevomatCodingStandard/ruleset.xml</file>
     <!-- Include PSR2 -->
     <rule ref="PSR2"/>
 
