@@ -55,9 +55,11 @@ let g:mundo_preview_bottom=1
 
 
 " Search and navigation
+Plug 'dyng/ctrlsf.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'IngoHeimbach/fzf.vim'
 
+let mapleader="\<SPACE>"
 set smartcase
 set incsearch
 set ignorecase " by default ignore case
@@ -77,37 +79,47 @@ command! -bang -nargs=? -complete=dir Files
 
 nmap <C-p> :Files<CR>
 
+function! s:buflist()
+  redir => ls
+  silent ls
+  redir END
+  return split(ls, '\n')
+endfunction
+
+function! s:bufopen(e)
+  execute 'buffer' matchstr(a:e, '^[ 0-9]*')
+endfunction
+
+nnoremap <silent> <Leader><Enter> :call fzf#run({
+\   'source':  reverse(<sid>buflist()),
+\   'sink':    function('<sid>bufopen'),
+\   'options': '+m',
+\   'down':    len(<sid>buflist()) + 2
+\ })<CR>
+
 
 " Syntax
-Plug 'vim-syntastic/syntastic'
-let g:syntastic_check_on_wq = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_aggregate_errors = 1
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_mode_map = {
-    \ 'mode': 'active',
-    \ 'active_filetypes':
-        \ ['ruby', 'javascript', 'php'] }
+Plug 'neomake/neomake'
+autocmd! BufWritePost * Neomake
+autocmd! BufReadPost * Neomake
+let g:neomake_elixir_enabled_makers = ['mix', 'credo']
+let g:neomake_php_phpcs_args_standard = "SHAKA"
+let g:neomake_phpstan_level = 7
+let g:neomake_php_phpmd_args = ['%:p', 'text', '/home/elishahastings/source/dotfiles/phpmd-ruleset.xml']
 
-let g:syntastic_ruby_checkers = ['rubocop', 'mri']
-let g:syntastic_php_checkers=['php', 'phpcs', 'phpstan', 'phpmd']
-let g:syntastic_php_phpcs_args='--standard=SHAKA -n'
-let g:syntastic_php_phpstan_post_args='--level 7'
-let g:syntastic_php_phpmd_post_args="/home/elishahastings/source/dotfiles/phpmd-ruleset.xml"
-let g:syntastic_javascript_checkers = ['eslint']
-let g:elm_syntastic_show_warnings = 1
+
+" Language support
+Plug 'sheerun/vim-polyglot'
 
 
 " PHP
-Plug 'StanAngeloff/php.vim', {'for': 'php'}
 Plug 'vim-vdebug/vdebug'
 if !exists('g:vdebug_options')
     let g:vdebug_options = {}
 endif
 let g:vdebug_options.break_on_open = 0
-let g:vdebug_options.watch_window_style = 'compact'
-let g:vdebug_options.watch_window_height = 30
-let g:vdebug_options.status_window_height = 5
+let g:vdebug_options.watch_window_height = 10
+let g:vdebug_options.status_window_height = 4
 
 Plug 'padawan-php/deoplete-padawan', { 'do': 'composer install' }
 command! PadawanStart call deoplete#sources#padawan#StartServer()
@@ -118,8 +130,8 @@ command! PadawanUpdate call deoplete#sources#padawan#UpdatePadawan()
 command! -bang PadawanGenerate call deoplete#sources#padawan#Generate(<bang>0)
 
 
-" Twig
-Plug 'evidens/vim-twig'
+" Elixir
+Plug 'slashmili/alchemist.vim'
 
 
 " Markdown
@@ -128,11 +140,12 @@ Plug 'JamshedVesuna/vim-markdown-preview'
 
 call plug#end()
 
-"----------"
+""""""""""""
 " Settings "
-"----------"
+""""""""""""
+
 " Buffers
-set hidden
+set hidden " let modified buffers be hidden
 
 " General UI
 set title " Show buffer name in title
@@ -178,9 +191,8 @@ set undofile " enable undofile
 set undolevels=500 " max undos stored
 set undoreload=10000 " buffer stored undos
 
-" Settings
-
 " Commands
+call neomake#configure#automake('nrwi', 500)
 
     "Plug 'floobits/floobits-neovim', { 'do': ':UpdateRemotePlugins' }
 
