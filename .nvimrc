@@ -1,11 +1,13 @@
-"-----------------------------------------------"
-" Author:       Tim Sæterøy                     "
-" Homepage:     http://thevoid.no               "
-" Source:       http://github.com/timss/vimconf "
-"-----------------------------------------------"
+"--------------------------------------------------"
+" Author:       Elisha Hastings                    "
+" Homepage:     http://muckypupcreations.com       "
+" Source:       http://github.com/tshakah/dotfiles "
+"--------------------------------------------------"
 
 " vimconf is not vi-compatible
 set nocompatible
+
+let mapleader="\<SPACE>"
 
 " Automatically make needed files and folders on first run
 call system("mkdir -p $HOME/.config/nvim/{swap,undo}")
@@ -41,8 +43,17 @@ autocmd InsertLeave * if pumvisible() == 0 | pclose | endif
 
 
 " UI
+Plug 'tpope/vim-eunuch'
+Plug 'haya14busa/vim-asterisk'
+Plug 'tpope/vim-sensible'
+Plug 'tommcdo/vim-exchange'
+Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tshakah/gruvbox'
+
+Plug 'FooSoft/vim-argwrap'
+nnoremap <silent> <leader>a :ArgWrap<CR>
+
 Plug 'myusuf3/numbers.vim'
 " Fix for C-c not resetting the numbers
 inoremap <C-c> <Esc>
@@ -59,7 +70,6 @@ Plug 'dyng/ctrlsf.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'IngoHeimbach/fzf.vim'
 
-let mapleader="\<SPACE>"
 set smartcase
 set incsearch
 set ignorecase " by default ignore case
@@ -106,6 +116,12 @@ let g:neomake_elixir_enabled_makers = ['mix', 'credo']
 let g:neomake_php_phpcs_args_standard = "SHAKA"
 let g:neomake_phpstan_level = 7
 let g:neomake_php_phpmd_args = ['%:p', 'text', '/home/elishahastings/source/dotfiles/phpmd-ruleset.xml']
+
+
+" VCS and remote stuff
+Plug 'floobits/floobits-neovim', { 'do': ':UpdateRemotePlugins' }
+Plug 'tpope/vim-fugitive'
+Plug 'ludovicchabant/vim-lawrencium'
 
 
 " Language support
@@ -194,38 +210,18 @@ set undoreload=10000 " buffer stored undos
 " Commands
 call neomake#configure#automake('nrwi', 500)
 
-    "Plug 'floobits/floobits-neovim', { 'do': ':UpdateRemotePlugins' }
+" Yank(copy) to system clipboard                                                                                                                                                  
+noremap <leader>y "+y 
+
 
     """" Github repos, uncomment to disable a plugin
-    "Plug 'tpope/vim-sensible'
     ""Plug 'Shougo/denite.nvim'
-
-    "Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
-    "Plug 'roxma/LanguageServer-php-neovim',  {'do': 'composer install && composer run-script parse-stubs'}
-
-    ""Plug 'roxma/nvim-completion-manager'
-    "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-
-    "Plug 'padawan-php/deoplete-padawan', { 'do': 'composer install' }
-
-    "" Showing function signature and inline doc.
-    "Plug 'Shougo/echodoc.vim'
 
     "" <Tab> everything!
     "Plug 'ervandew/supertab'
 
     "Plug 'tpope/vim-repeat'
     "Plug 'wellle/targets.vim'
-
-    "" Fuzzy finder (files, mru, etc)
-    ""Plug 'lotabout/skim', { 'dir': '~/.skim', 'do': './install' }
-    ""Plug 'lotabout/skim.vim'
-    "Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-    "Plug 'IngoHeimbach/fzf.vim'
-    "Plug 'airblade/vim-rooter'
-
-    "" Better line numbers
-    "Plug 'myusuf3/numbers.vim'
 
     "" A pretty statusline, bufferline integration
     "Plug 'itchyny/lightline.vim'
@@ -237,30 +233,14 @@ call neomake#configure#automake('nrwi', 500)
     "Plug 'haya14busa/incsearch-fuzzy.vim'
     "Plug 'haya14busa/incsearch-easymotion.vim'
 
-    "" Glorious colorschemes
-    "Plug 'tshakah/gruvbox'
-
     "" Super easy commenting, toggle comments etc
     "Plug 'scrooloose/nerdcommenter'
 
     "" Autoclose (, " etc
     "Plug 'Townk/vim-autoclose'
 
-    "" Git wrapper inside Vim
-    "Plug 'tpope/vim-fugitive'
-    "Plug 'ludovicchabant/vim-lawrencium'
-
-    "" PHP
-    "Plug 'StanAngeloff/php.vim'
-    "Plug 'janko-m/vim-test'
-
     "" Handle surround chars like ''
     "Plug 'tpope/vim-surround'
-
-    "" Snippets like textmate
-    "Plug 'MarcWeber/vim-addon-mw-utils'
-    "Plug 'tomtom/tlib_vim'
-    "Plug 'sirver/ultisnips'
 
     "" A fancy start screen, shows MRU etc.
     "Plug 'mhinz/vim-startify'
@@ -268,11 +248,6 @@ call neomake#configure#automake('nrwi', 500)
     "" Vim signs (:h signs) for modified lines based off VCS (e.g. Git)
     ""Plug 'airblade/vim-gitgutter'
     "Plug 'mhinz/vim-signify'
-
-    "" Awesome syntax checker.
-    "" REQUIREMENTS: See :h syntastic-intro
-    "Plug 'scrooloose/syntastic'
-    "Plug 'wting/rust.vim'
 
     "Plug 'NLKNguyen/vim-lisp-syntax'
 
@@ -285,20 +260,11 @@ call neomake#configure#automake('nrwi', 500)
     "" End completion
     "Plug 'tpope/vim-endwise'
 
-    "" Shell commands
-    "Plug 'tpope/vim-eunuch'
-
     "" RACER!
     "Plug 'phildawes/racer'
 
     "" Unimpaired vim!
     "Plug 'tpope/vim-unimpaired'
-
-    "Plug 'dyng/ctrlsf.vim'
-    "Plug 'terryma/vim-multiple-cursors'
-
-    "" Undo tree
-    "Plug 'simnalamburt/vim-mundo'
 
     "" Elixir
     "Plug 'elixir-lang/vim-elixir'
@@ -307,13 +273,9 @@ call neomake#configure#automake('nrwi', 500)
 
     "Plug 'elmcast/elm-vim'
 
-    "" Twig
-    "Plug 'qbbr/vim-twig'
-
     "Plug 'gregsexton/MatchTag'
     "Plug 'qpkorr/vim-bufkill'
     "Plug 'tpope/tpope-vim-abolish'
-    "Plug 'haya14busa/vim-asterisk'
     "Plug 'junegunn/goyo.vim'
     "Plug 'junegunn/limelight.vim'
     "Plug 'phux/vim-hardtime'
