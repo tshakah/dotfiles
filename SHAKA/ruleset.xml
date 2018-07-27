@@ -90,6 +90,7 @@
                 @group,
                 @env
             "/>
+            <property name="enableVoidTypeHint" value="false"/>
         </properties>
     </rule>
 
