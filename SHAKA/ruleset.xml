@@ -13,15 +13,17 @@
     <!-- Include a selection of the Slevomat standard -->
     <rule ref="SlevomatCodingStandard.Arrays.TrailingArrayComma"/>
 
+    <rule ref="SlevomatCodingStandard.Classes.TraitUseSpacing"/>
+    <rule ref="SlevomatCodingStandard.Classes.TraitUseDeclaration"/>
     <rule ref="SlevomatCodingStandard.Classes.UnusedPrivateElements"/>
     <rule ref="SlevomatCodingStandard.Classes.SuperfluousInterfaceNaming"/>
     <rule ref="SlevomatCodingStandard.Classes.SuperfluousExceptionNaming"/>
+    <rule ref="SlevomatCodingStandard.Classes.ModernClassNameReferenceSniff"/>
     <rule ref="SlevomatCodingStandard.Classes.SuperfluousAbstractClassNaming"/>
 
     <rule ref="SlevomatCodingStandard.Commenting.ForbiddenAnnotations"/>
     <rule ref="SlevomatCodingStandard.Commenting.InlineDocCommentDeclaration"/>
 
-    <rule ref="SlevomatCodingStandard.ControlStructures.DisallowEmpty"/>
     <rule ref="SlevomatCodingStandard.ControlStructures.AssignmentInCondition"/>
     <rule ref="SlevomatCodingStandard.ControlStructures.DisallowEqualOperators"/>
     <rule ref="SlevomatCodingStandard.ControlStructures.DisallowYodaComparison"/>
@@ -31,6 +33,12 @@
     <rule ref="SlevomatCodingStandard.Exceptions.DeadCatch"/>
     <rule ref="SlevomatCodingStandard.Exceptions.ReferenceThrowableOnly"/>
 
+    <rule ref="SlevomatCodingStandard.Variables.UnusedVariable"/>
+
+    <rule ref="SlevomatCodingStandard.Functions.UnusedParameter"/>
+    <rule ref="SlevomatCodingStandard.Functions.UnusedInheritedVariablePassedToClosure"/>
+
+    <rule ref="SlevomatCodingStandard.Namespaces.UselessAlias"/>
     <rule ref="SlevomatCodingStandard.Namespaces.DisallowGroupUse"/>
     <rule ref="SlevomatCodingStandard.Namespaces.MultipleUsesPerLine"/>
     <rule ref="SlevomatCodingStandard.Namespaces.NamespaceDeclaration"/>
@@ -46,11 +54,6 @@
         <properties>
             <property name="linesCountBeforeNamespace" value="1"/>
             <property name="linesCountAfterNamespace" value="1"/>
-        </properties>
-    </rule>
-    <rule ref="SlevomatCodingStandard.Namespaces.AlphabeticallySortedUses">
-        <properties>
-            <property name="caseSensitive" value="true"/>
         </properties>
     </rule>
     <rule ref="SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly">
@@ -88,6 +91,7 @@
 
     <rule ref="SlevomatCodingStandard.PHP.TypeCast"/>
     <rule ref="SlevomatCodingStandard.PHP.ShortList"/>
+    <rule ref="SlevomatCodingStandard.PHP.UselessSemicolon"/>
 
     <rule ref="SlevomatCodingStandard.Commenting.EmptyComment"/>
     <rule ref="SlevomatCodingStandard.Commenting.InlineDocCommentDeclaration"/>
