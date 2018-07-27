@@ -18,7 +18,7 @@
     <rule ref="SlevomatCodingStandard.Classes.UnusedPrivateElements"/>
     <rule ref="SlevomatCodingStandard.Classes.SuperfluousInterfaceNaming"/>
     <rule ref="SlevomatCodingStandard.Classes.SuperfluousExceptionNaming"/>
-    <rule ref="SlevomatCodingStandard.Classes.ModernClassNameReferenceSniff"/>
+    <rule ref="SlevomatCodingStandard.Classes.ModernClassNameReference"/>
     <rule ref="SlevomatCodingStandard.Classes.SuperfluousAbstractClassNaming"/>
 
     <rule ref="SlevomatCodingStandard.Commenting.ForbiddenAnnotations"/>
