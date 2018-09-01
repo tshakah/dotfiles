@@ -147,6 +147,7 @@ Plug 'IngoHeimbach/fzf.vim'
 set smartcase
 set incsearch
 set ignorecase " by default ignore case
+let g:fzf_files_options = '--color "border:#6699cc,info:#fabd2f" --preview "highlight -O ansi --force {} 2> /dev/null"'
 let g:fzf_layout = { 'down': '~40%' }
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 let $FZF_DEFAULT_COMMAND="rg -S --files --follow --hidden  --glob '!.hg' --glob '!.git' --glob '!vendor'"
