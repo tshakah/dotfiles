@@ -197,6 +197,12 @@ let g:neomake_php_phpmd_args = ['%:p', 'text', '/home/elishahastings/source/dotf
 Plug 'floobits/floobits-neovim', { 'do': ':UpdateRemotePlugins' }
 Plug 'tpope/vim-fugitive'
 Plug 'ludovicchabant/vim-lawrencium'
+Plug 'sjl/splice.vim'
+let g:splice_prefix = "`"
+let g:splice_initial_layout_grid = 1
+let g:splice_initial_diff_grid = 1
+let g:splice_initial_scrollbind_grid = 1
+let g:splice_initial_scrollbind_compare = 1
 
 
 " Language support
@@ -331,7 +337,6 @@ let g:lightline = {
 
     "" Vim signs (:h signs) for modified lines based off VCS (e.g. Git)
     ""Plug 'airblade/vim-gitgutter'
-    "Plug 'mhinz/vim-signify'
 
     "Plug 'NLKNguyen/vim-lisp-syntax'
 
