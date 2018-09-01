@@ -4,6 +4,11 @@
 " Source:       http://github.com/tshakah/dotfiles "
 "--------------------------------------------------"
 
+" vim doesn't like fish :(
+if &shell =~# 'fish$'
+    set shell=zsh
+endif
+
 " vimconf is not vi-compatible
 set nocompatible
 
