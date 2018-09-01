@@ -52,6 +52,10 @@ autocmd InsertLeave * if pumvisible() == 0 | pclose | endif
 
 
 " UI
+Plug 'ntpeters/vim-better-whitespace'
+let g:better_whitespace_enabled=1
+let g:strip_whitespace_on_save=1
+
 Plug 'itchyny/lightline.vim' " Config below
 Plug 'mgee/lightline-bufferline'
 Plug 'tpope/vim-eunuch'
@@ -328,7 +332,6 @@ let g:lightline = {
   \     'gitbranch': 'fugitive#head',
   \   }
   \ }
-
 
     """" Github repos, uncomment to disable a plugin
     ""Plug 'Shougo/denite.nvim'
