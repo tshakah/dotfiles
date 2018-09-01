@@ -28,6 +28,10 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
     \ 'do': 'bash install.sh',
     \ }
+Plug 'roxma/LanguageServer-php-neovim',  {'do': 'composer install && composer run-script parse-stubs'}
+nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+nnoremap <F7> :call LanguageClient_contextMenu()<CR>
 
 Plug 'Shougo/echodoc.vim'
 Plug 'Shougo/neosnippet.vim'
@@ -189,7 +193,7 @@ set tabstop=4 " replace <TAB> w/2 spaces
 
 " Theme
 set background=dark
-colorscheme gruvbox 
+colorscheme gruvbox
 
 " Change background at 120 characters
 execute "set colorcolumn=" . join(range(121,335), ',')
@@ -215,8 +219,30 @@ set undoreload=10000 " buffer stored undos
 " Commands
 call neomake#configure#automake('nrwi', 500)
 
-" Yank(copy) to system clipboard                                                                                                                                                  
-noremap <leader>y "+y 
+" Yank(copy) to system clipboard
+noremap <leader>y "+y
+
+" Lightline
+let g:lightline = {
+  \   'colorscheme': 'gruvbox',
+  \   'active': {
+  \     'left':[ [ 'mode', 'paste' ],
+  \              [ 'gitbranch', 'readonly', 'modified', 'buffers' ]
+  \     ]
+  \   },
+  \   'component': {
+  \     'lineinfo': ' %3l:%-2v',
+  \   },
+  \   'component_expand': {
+  \     'buffers': 'lightline#bufferline#buffers'
+  \   },
+  \   'component_type': {
+  \     'buffers': 'tabsel'
+  \   },
+  \   'component_function': {
+  \     'gitbranch': 'fugitive#head',
+  \   }
+  \ }
 
 
     """" Github repos, uncomment to disable a plugin
