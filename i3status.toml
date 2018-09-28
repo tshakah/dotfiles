@@ -1,0 +1,27 @@
+icons = "awesome"
+
+[theme]
+name = "gruvbox-dark"
+
+[[block]]
+block = "disk_space"
+path = "/"
+alias = "/"
+info_type = "available"
+unit = "GB"
+interval = 20
+
+[[block]]
+block = "sound"
+
+[[block]]
+block = "backlight"
+
+[[block]]
+block = "time"
+interval = 60
+format = "%a %F %R"
+
+[[block]]
+block = "battery"
+interval = 60
