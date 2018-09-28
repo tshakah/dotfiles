@@ -239,6 +239,14 @@ Plug 'slashmili/alchemist.vim'
 Plug 'JamshedVesuna/vim-markdown-preview'
 
 
+" CSV
+Plug 'chrisbra/csv.vim'
+
+
+" Elm
+Plug 'elmcast/elm-vim'
+
+
 call plug#end()
 
 """"""""""""
@@ -376,7 +384,6 @@ let g:lightline = {
     "Plug 'thinca/vim-ref'
     "Plug 'awetzel/elixir.nvim', { 'do': 'yes \| ./install.sh' }
 
-    "Plug 'elmcast/elm-vim'
 
     "Plug 'gregsexton/MatchTag'
     "Plug 'qpkorr/vim-bufkill'
