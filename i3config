@@ -10,9 +10,11 @@
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
 set $mod Mod1
+
 exec setxkbmap -layout gb
 exec --no-startup-id xsetroot -solid "#252525"
-exec compton -b
+exec mate-session
+exec dunst
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below. ISO 10646 = Unicode
@@ -21,7 +23,7 @@ font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
 # clear in small sizes. However, if you need a lot of unicode glyphs or
 # right-to-left text rendering, you should instead use pango for rendering and
 # chose a FreeType font, such as:
-font pango:DejaVu Sans Mono, Terminus Bold Semi-Condensed 7
+font pango:DejaVu Sans Mono for Powerline Book
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier Mod4
@@ -29,8 +31,8 @@ floating_modifier Mod4
 focus_follows_mouse no
 
 # Hide borders
-hide_edge_borders both
-#new_window none
+hide_edge_borders smart
+default_border pixel
 
 # start a terminal
 bindsym $mod+Return exec mate-terminal
@@ -50,10 +52,10 @@ bindsym --release $mod+Shift+s exec "scrot -s '%Y-%m-%d::%T.png' -e 'mv $f ~/'"
 bindsym --release Print exec "scrot -u '%Y-%m-%d::%T.png' -e 'mv $f ~/'"
 
 # Volume control
-bindsym --release $mod+v exec pavucontrol
+bindsym --release $mod+v exec mate-volume-control
 
 # Task manager
-bindsym --release $mod+Control+Delete exec gnome-system-monitor
+bindsym --release $mod+Control+Delete exec mate-system-monitor
 
 # change focus
 bindsym $mod+j focus left
@@ -80,7 +82,7 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
-bindsym $mod+Ctrl+h split h
+bindsym $mod+Control+h split h
 
 # split in vertical orientation
 bindsym $mod+v split v
@@ -165,8 +167,8 @@ bar {
   position bottom
   mode hide
   modifier Mod1
-  font pango:DejaVu Sans Mono, Terminus Bold Semi-Condensed 7
-  status_command i3status
+  font pango:DejaVu Sans Mono for Powerline Bold
+  status_command i3status-rs ~/.config/i3/status.toml
   colors {
     set $background1 #282a2e
     set $background2 #3c3836
@@ -198,26 +200,16 @@ client.focused_inactive $inactive-bg-color  $inactive-bg-color $inactive-text-co
 client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color          $urgent-bg-color
 
 for_window [class="Nautilus" instance="file_progress"] floating enable
-for_window [class="Gnome-system-monitor"] floating enable; resize shrink righ ppt
-for_window [class="Pavucontrol" instance="pavucontrol" title="Volume Control"] floating enable; resize shrink righ ppt
+for_window [class="Mate-system-monitor"] floating enable; resize shrink righ ppt
 for_window [window_role="pop-up"] floating enable
 for_window [window_role="task_dialog"] floating enable
 
-exec --no-startup-id alacritty
-exec --no-startup-id alacritty
-exec --no-startup-id alacritty
-exec --no-startup-id firefox-beta
 exec --no-startup-id nm-applet
-exec --no-startup-id pasystray
 exec --no-startup-id numlockx on
-exec --no-startup-id i3-battery-popup -n
 exec --no-startup-id syndaemon -i 0.5 -K -R -d
-exec --no-startup-id /usr/lib/gsd-xsettings
-exec gnome-session
 exec gnome-keyring-daemon
-exec /home/elishahastings/.screenlayout/work.sh
 
-set $Locker ~/.xlock/lock.sh && sleep 1
+set $Locker i3lock-fancy -p -- scrot -z && sleep 1
 
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
 mode "$mode_system" {
@@ -233,19 +225,4 @@ mode "$mode_system" {
     bindsym Escape mode "default"
 }
 
-bindsym $mod+Mod4+l mode "$mode_system"
-
-## Manual management of external displays
-# Set the shortcuts and what they do
-set $mode_display Ext Screen (h) HDMI ON, (n) HDMI OFF
-mode "$mode_display" {
-    bindsym h exec --no-startup-id xrandr --output HDMI1 --auto --above LVDS1, mode "default"
-    bindsym n exec --no-startup-id xrandr --auto, mode "default"
-
-    # back to normal: Enter or Escape
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-# Declare here the shortcut to bring the display selection menu
-bindsym $mod+x mode "$mode_display"
-
+bindsym $mod+Control+l mode "$mode_system"
