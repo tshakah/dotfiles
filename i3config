@@ -21,7 +21,7 @@ font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
 # clear in small sizes. However, if you need a lot of unicode glyphs or
 # right-to-left text rendering, you should instead use pango for rendering and
 # chose a FreeType font, such as:
-# font pango:DejaVu Sans Mono 10
+font pango:DejaVu Sans Mono, Terminus Bold Semi-Condensed 7
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier Mod4
@@ -33,7 +33,7 @@ hide_edge_borders both
 #new_window none
 
 # start a terminal
-bindsym $mod+Return exec alacritty
+bindsym $mod+Return exec mate-terminal
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -165,7 +165,7 @@ bar {
   position bottom
   mode hide
   modifier Mod1
-  font pango:open sans 8
+  font pango:DejaVu Sans Mono, Terminus Bold Semi-Condensed 7
   status_command i3status
   colors {
     set $background1 #282a2e
@@ -219,8 +219,6 @@ exec /home/elishahastings/.screenlayout/work.sh
 
 set $Locker ~/.xlock/lock.sh && sleep 1
 
-bindsym Mod1+Mod4+XF86Eject exec --no-startup-id $Locker
-
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
 mode "$mode_system" {
     bindsym l exec --no-startup-id $Locker, mode "default"
@@ -235,7 +233,7 @@ mode "$mode_system" {
     bindsym Escape mode "default"
 }
 
-bindsym $mod+Pause mode "$mode_system"
+bindsym $mod+Mod4+l mode "$mode_system"
 
 ## Manual management of external displays
 # Set the shortcuts and what they do
