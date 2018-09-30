@@ -13,8 +13,6 @@ set $mod Mod1
 
 exec setxkbmap -layout gb
 exec --no-startup-id xsetroot -solid "#252525"
-exec mate-session
-exec dunst
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below. ISO 10646 = Unicode
@@ -56,6 +54,9 @@ bindsym --release $mod+v exec mate-volume-control
 
 # Task manager
 bindsym --release $mod+Control+Delete exec mate-system-monitor
+
+bindsym XF86MonBrightnessUp exec light -A 5 # increase screen brightness
+bindsym XF86MonBrightnessDown exec light -U 5 # decrease screen brightness
 
 # change focus
 bindsym $mod+j focus left
@@ -204,7 +205,6 @@ for_window [class="Mate-system-monitor"] floating enable; resize shrink righ ppt
 for_window [window_role="pop-up"] floating enable
 for_window [window_role="task_dialog"] floating enable
 
-exec --no-startup-id nm-applet
 exec --no-startup-id numlockx on
 exec --no-startup-id syndaemon -i 0.5 -K -R -d
 exec gnome-keyring-daemon

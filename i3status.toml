@@ -25,3 +25,4 @@ format = "%a %F %R"
 [[block]]
 block = "battery"
 interval = 60
+
