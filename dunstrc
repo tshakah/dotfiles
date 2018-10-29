@@ -1,0 +1,51 @@
+{
+    global = {
+        font = "Roboto Mono For Powerline Regular 10";
+        markup = "full";
+        format = "<b>%s</b>\\n%b";
+        sort = "yes";
+        indicate_hidden = "yes";
+        alignment = "left";
+        bounce_freq = 0;
+        show_age_threshold = 60;
+        word_wrap = "yes";
+        ignore_newline = "no";
+        geometry = "300x5-20+20";
+        transparency = 0;
+        idle_threshold = 120;
+        monitor = 0;
+        follow = "keyboard";
+        sticky_history = "yes";
+        line_height = 0;
+        separator_height = 15;
+        padding = 8;
+        horizontal_padding = 8;
+        separator_color = "auto";
+        icon_position = "off";
+        frame_width = 1;
+    };
+    shortcuts = {
+        close = "ctrl+space";
+        close_all = "ctrl+shift+space";
+        history = "ctrl+grave";
+        context = "ctrl+shift+period";
+    };
+    urgency_low = {
+        background = "#3c3836";
+        foreground = "#bdae93";
+        frame_color = "#665c54";
+        timeout = 10;
+    };
+    urgency_normal = {
+        background = "#427b58";
+        foreground = "#ebdbb2";
+        frame_color = "#8ec07c";
+        timeout = 30;
+    };
+    urgency_critical = {
+        background = "#af3a03";
+        foreground = "#ebdbb2";
+        frame_color = "#fe8019";
+        timeout = 0;
+    };
+}
