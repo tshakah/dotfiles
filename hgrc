@@ -1,0 +1,20 @@
+[ui]
+interface = curses
+
+[extensions]
+churn =
+purge =
+transplant =
+strip =
+
+[merge-tools]
+splice.executable = mvim
+splice.args = -f $base $local $other $output -c 'SpliceInit'
+splice.premerge = keep
+splice.priority = 1
+
+[hooks]
+pretxncommit = ~/source/scripts/prepushphpcs.sh
+
+[ui]
+editor = ~/source/scripts/hg_verbose_commit.sh
