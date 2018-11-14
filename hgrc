@@ -6,6 +6,7 @@ churn =
 purge =
 transplant =
 strip =
+shelve =
 
 [merge-tools]
 splice.executable = mvim
