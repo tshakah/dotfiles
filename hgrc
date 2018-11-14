@@ -9,7 +9,7 @@ strip =
 shelve =
 
 [merge-tools]
-splice.executable = mvim
+splice.executable = nvim
 splice.args = -f $base $local $other $output -c 'SpliceInit'
 splice.premerge = keep
 splice.priority = 1
