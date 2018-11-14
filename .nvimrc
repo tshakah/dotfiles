@@ -288,10 +288,6 @@ set smarttab " tab to 0,4,8 etc.
 set softtabstop=4 " "tab" feels like <tab>
 set tabstop=4 " replace <TAB> w/2 spaces
 
-" Theme
-set background=dark
-colorscheme gruvbox
-
 " Change background at 120 characters
 execute "set colorcolumn=" . join(range(121,335), ',')
 highlight ColorColumn ctermbg=235
@@ -300,6 +296,13 @@ highlight ColorColumn ctermbg=235
 syntax on
 filetype plugin on
 filetype plugin indent on
+
+" Theme
+set background=dark
+colorscheme gruvbox
+if (has("termguicolors"))
+ set termguicolors
+endif
 
 " IO
 set autoread " refresh if changed
