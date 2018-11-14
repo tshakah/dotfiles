@@ -37,6 +37,8 @@ Plug 'Shougo/echodoc.vim'
 Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'Shougo/deoplete.nvim'
+let g:echodoc#enable_at_startup = 1
+let g:echodoc#type = "virtual"
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_smart_case = 1
 let g:deoplete#auto_complete_start_length = 1
@@ -45,6 +47,7 @@ let g:deoplete#sources = {}
 let g:deoplete#sources.php = ['padawan', 'neosnippet', 'tags', 'buffer']
 let g:AutoPairsMapCR=0
 let g:neosnippet#enable_completed_snippet = 1
+set completeopt-=preview
 imap <expr><TAB> pumvisible() ? "\<C-n>" : (neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>")
 imap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
 imap <expr><CR> pumvisible() ? deoplete#mappings#close_popup() : "\<CR>"
