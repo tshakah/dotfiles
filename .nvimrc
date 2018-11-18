@@ -61,13 +61,14 @@ let g:strip_whitespace_on_save=1
 
 Plug 'itchyny/lightline.vim' " Config below
 Plug 'mgee/lightline-bufferline'
+Plug 'shinchu/lightline-gruvbox.vim'
 Plug 'tpope/vim-eunuch'
 Plug 'haya14busa/vim-asterisk'
 Plug 'tpope/vim-sensible'
 Plug 'tommcdo/vim-exchange'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'terryma/vim-multiple-cursors'
-Plug 'tshakah/gruvbox'
+Plug 'morhetz/gruvbox'
 
 Plug 'FooSoft/vim-argwrap'
 nnoremap <silent> <leader>a :ArgWrap<CR>
@@ -154,7 +155,7 @@ Plug 'IngoHeimbach/fzf.vim'
 set smartcase
 set incsearch
 set ignorecase " by default ignore case
-let g:fzf_files_options = '--color "border:#6699cc,info:#fabd2f" --preview "highlight -O ansi --force {} 2> /dev/null"'
+let g:fzf_files_options = '--color "border:#6699cc,info:#fabd2f"'
 let g:fzf_layout = { 'down': '~40%' }
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 let $FZF_DEFAULT_COMMAND="rg -S --files --follow --hidden  --glob '!.hg' --glob '!.git' --glob '!vendor'"
@@ -224,6 +225,10 @@ endif
 let g:vdebug_options.break_on_open = 0
 let g:vdebug_options.watch_window_height = 10
 let g:vdebug_options.status_window_height = 4
+highlight DbgBreakptLine ctermbg=none ctermfg=none
+highlight DbgBreakptSign ctermbg=none ctermfg=green
+highlight DbgCurrentLine ctermbg=none ctermfg=none
+highlight DbgCurrentSign ctermbg=none ctermfg=red
 
 Plug 'padawan-php/deoplete-padawan', { 'do': 'composer install' }
 command! PadawanStart call deoplete#sources#padawan#StartServer()
@@ -303,9 +308,7 @@ filetype plugin indent on
 " Theme
 set background=dark
 colorscheme gruvbox
-if (has("termguicolors"))
- set termguicolors
-endif
+set termguicolors
 
 " IO
 set autoread " refresh if changed
