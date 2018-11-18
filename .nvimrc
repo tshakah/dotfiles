@@ -220,11 +220,16 @@ Plug 'sheerun/vim-polyglot'
 " PHP
 Plug 'vim-vdebug/vdebug'
 if !exists('g:vdebug_options')
-    let g:vdebug_options = {}
+    let g:vdebug_options = {
+      \   'window_commands': {
+      \     'DebuggerWatch': 'vertical belowright new +res',
+      \     'DebuggerStack': 'belowright new +res0',
+      \     'DebuggerStatus': 'belowright new +res0'
+      \   },
+      \ }
 endif
+let g:vdebug_options.watch_window_style = 'compact'
 let g:vdebug_options.break_on_open = 0
-let g:vdebug_options.watch_window_height = 10
-let g:vdebug_options.status_window_height = 4
 highlight DbgBreakptLine ctermbg=none ctermfg=none
 highlight DbgBreakptSign ctermbg=none ctermfg=green
 highlight DbgCurrentLine ctermbg=none ctermfg=none
