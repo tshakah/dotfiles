@@ -130,33 +130,41 @@
     <rule ref="SlevomatCodingStandard.PHP.TypeCast"/>
     <rule ref="SlevomatCodingStandard.PHP.ShortList"/>
     <rule ref="SlevomatCodingStandard.PHP.UselessSemicolon"/>
-    <rule ref="SlevomatCodingStandard.PHP.UselessParentheses"/>
+    <rule ref="SlevomatCodingStandard.PHP.UselessParentheses">
+        <properties>
+            <property name="ignoreComplexTernaryConditions" value="true"/>
+        </properties>
+    </rule>
 
     <rule ref="SlevomatCodingStandard.Commenting.EmptyComment"/>
     <rule ref="SlevomatCodingStandard.Commenting.InlineDocCommentDeclaration"/>
     <rule ref="SlevomatCodingStandard.Commenting.RequireOneLinePropertyDocComment"/>
     <rule ref="SlevomatCodingStandard.Commenting.DocCommentSpacing">
 		<properties>
+            <property name="linesCountBeforeFirstContent" value="0"/>
+            <property name="linesCountAfterLastContent" value="0"/>
+            <property name="linesCountBetweenDescriptionAndAnnotations" value="1"/>
+            <property name="linesCountBetweenAnnotationsGroups" value="1"/>
 			<property name="annotationsGroups" type="array">
 				<element value="
-					@Column\,
-					@Embedded\,
-					@ManyToMany\,
-					@OneToMany\,
-					@ManyToOne\,
-					@OneToOne\,
-					@JoinColumn\,
+					@Column,
+					@Embedded,
+					@ManyToMany,
+					@OneToMany,
+					@ManyToOne,
+					@OneToOne,
+					@JoinColumn,
 					@var,
 					@param,
 					@return,
 				"/>
 				<element value="
-					@env\,
-					@group\,
+					@env,
+					@group,
 				"/>
 				<element value="
-					@Entity\,
-					@Table\,
+					@Entity,
+					@Table,
 				"/>
 			</property>
 		</properties>
