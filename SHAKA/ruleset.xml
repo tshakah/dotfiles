@@ -50,6 +50,7 @@
         </properties>
     </rule>
     <rule ref="SlevomatCodingStandard.ControlStructures.EarlyExit">
+        <type>warning</type>
         <properties>
             <property name="ignoreStandaloneIfInScope" value="true"/>
         </properties>
