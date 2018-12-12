@@ -248,10 +248,6 @@ command! -bang PadawanGenerate call deoplete#sources#padawan#Generate(<bang>0)
 Plug 'slashmili/alchemist.vim'
 
 
-" Markdown
-Plug 'JamshedVesuna/vim-markdown-preview'
-
-
 " CSV
 Plug 'chrisbra/csv.vim'
 
