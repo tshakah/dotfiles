@@ -200,6 +200,21 @@ let g:neomake_php_phpcs_args_standard = "SHAKA"
 let g:neomake_phpstan_level = 7
 let g:neomake_php_phpmd_args = ['%:p', 'text', '/home/elishahastings/source/dotfiles/phpmd-ruleset.xml']
 
+Plug 'sbdchd/neoformat'
+let g:neoformat_php_phpcbf = {
+      \ 'exe': 'phpcbf',
+      \ 'args': [
+      \ '--standard=SHAKA-AUTOFIX',
+      \ '--extensions=php',
+      \ '%',
+      \ '||',
+      \ 'true'
+      \ ],
+      \ 'stdin': 1,
+      \ 'no_append': 1
+      \ }
+let g:neoformat_enabled_php = ['phpcbf']
+nnoremap <leader>nf :Neoformat<cr>
 
 " VCS and remote stuff
 Plug 'floobits/floobits-neovim', { 'do': ':UpdateRemotePlugins' }
