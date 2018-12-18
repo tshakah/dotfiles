@@ -15,7 +15,8 @@ splice.premerge = keep
 splice.priority = 1
 
 [hooks]
-pre-push = ~/source/scripts/prepushphpcs.sh
+commit = ~/source/scripts/post_commit_phpcs.sh
+pre-commit = ~/source/scripts/pre_commit_phpcbf.sh
 
 [ui]
 editor = ~/source/scripts/hg_verbose_commit.sh
