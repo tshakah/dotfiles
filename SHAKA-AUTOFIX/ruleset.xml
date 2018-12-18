@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<ruleset name="SHAKA">
+<ruleset name="SHAKA-AUTOFIX">
     <file>/home/elishahastings/source/tools/slevomat-cs/SlevomatCodingStandard/ruleset.xml</file>
     <!-- Include PSR2 -->
     <rule ref="PSR2"/>
@@ -7,24 +7,11 @@
     <!-- Double quotes only for interpolation -->
     <rule ref="Squiz.Strings.DoubleQuoteUsage.NotRequired"/>
 
-    <!-- Commented out code -->
-    <rule ref="Squiz.PHP.CommentedOutCode.Found"/>
-
     <!-- Include a selection of the Slevomat standard -->
     <rule ref="SlevomatCodingStandard.Arrays.TrailingArrayComma"/>
-    <rule ref="SlevomatCodingStandard.Arrays.DisallowImplicitArrayCreation"/>
 
     <rule ref="SlevomatCodingStandard.Classes.TraitUseDeclaration"/>
-    <rule ref="SlevomatCodingStandard.Classes.UnusedPrivateElements">
-		<properties>
-			<property name="alwaysUsedPropertiesAnnotations" type="array" value="@Column"/>
-		</properties>
-	</rule>
-    <rule ref="SlevomatCodingStandard.Classes.SuperfluousInterfaceNaming"/>
-    <rule ref="SlevomatCodingStandard.Classes.SuperfluousExceptionNaming"/>
     <rule ref="SlevomatCodingStandard.Classes.ModernClassNameReference"/>
-    <rule ref="SlevomatCodingStandard.Classes.SuperfluousAbstractClassNaming"/>
-    <rule ref="SlevomatCodingStandard.Classes.ClassConstantVisibility"/>
     <rule ref="SlevomatCodingStandard.Classes.UselessLateStaticBinding"/>
     <rule ref="SlevomatCodingStandard.Classes.TraitUseSpacing">
         <properties>
@@ -36,48 +23,24 @@
     <rule ref="SlevomatCodingStandard.Commenting.InlineDocCommentDeclaration"/>
     <rule ref="SlevomatCodingStandard.Commenting.UselessInheritDocComment"/>
 
-    <rule ref="SlevomatCodingStandard.ControlStructures.AssignmentInCondition"/>
-    <rule ref="SlevomatCodingStandard.ControlStructures.DisallowEqualOperators"/>
     <rule ref="SlevomatCodingStandard.ControlStructures.DisallowYodaComparison"/>
     <rule ref="SlevomatCodingStandard.ControlStructures.RequireNullCoalesceOperator"/>
     <rule ref="SlevomatCodingStandard.ControlStructures.LanguageConstructWithParentheses"/>
     <rule ref="SlevomatCodingStandard.ControlStructures.UselessConditionWithReturn"/>
-    <rule ref="SlevomatCodingStandard.ControlStructures.RequireTernaryOperator"/>
-    <rule ref="SlevomatCodingStandard.ControlStructures.ControlStructureSpacing"/>
     <rule ref="SlevomatCodingStandard.ControlStructures.RequireMultiLineTernaryOperator">
         <properties>
             <property name="lineLengthLimit" value="120"/>
         </properties>
     </rule>
-    <rule ref="SlevomatCodingStandard.ControlStructures.EarlyExit">
-        <type>warning</type>
-        <properties>
-            <property name="ignoreStandaloneIfInScope" value="true"/>
-        </properties>
-    </rule>
 
-    <rule ref="SlevomatCodingStandard.Exceptions.DeadCatch"/>
     <rule ref="SlevomatCodingStandard.Exceptions.ReferenceThrowableOnly"/>
 
-    <rule ref="SlevomatCodingStandard.Variables.DuplicateAssignmentToVariable"/>
-    <rule ref="SlevomatCodingStandard.Variables.UselessVariable"/>
-    <rule ref="SlevomatCodingStandard.Variables.UnusedVariable">
-        <properties>
-            <property name="ignoreUnusedValuesWhenOnlyKeysAreUsedInForeach" value="true"/>
-        </properties>
-    </rule>
-
-    <rule ref="SlevomatCodingStandard.Functions.UnusedParameter"/>
     <rule ref="SlevomatCodingStandard.Functions.UnusedInheritedVariablePassedToClosure"/>
     <rule ref="SlevomatCodingStandard.Functions.StaticClosure"/>
-    <rule ref="SlevomatCodingStandard.Functions.UselessParameterDefaultValue"/>
 
     <rule ref="SlevomatCodingStandard.Namespaces.UselessAlias"/>
-    <rule ref="SlevomatCodingStandard.Namespaces.DisallowGroupUse"/>
-    <rule ref="SlevomatCodingStandard.Namespaces.MultipleUsesPerLine"/>
     <rule ref="SlevomatCodingStandard.Namespaces.NamespaceDeclaration"/>
     <rule ref="SlevomatCodingStandard.Namespaces.UseFromSameNamespace"/>
-    <rule ref="SlevomatCodingStandard.Namespaces.FullyQualifiedClassNameAfterKeyword"/>
     <rule ref="SlevomatCodingStandard.Namespaces.UseSpacing">
         <properties>
             <property name="linesCountBeforeFirstUse" value="1"/>
@@ -110,12 +73,10 @@
         </properties>
     </rule>
 
-    <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes"/>
     <rule ref="SlevomatCodingStandard.TypeHints.LongTypeHints"/>
     <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHintSpacing"/>
     <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHintSpacing"/>
     <rule ref="SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue"/>
-    <rule ref="SlevomatCodingStandard.TypeHints.NullTypeHintOnLastPosition"/>
     <rule ref="SlevomatCodingStandard.TypeHints.UselessConstantTypeHint"/>
     <rule ref="SlevomatCodingStandard.TypeHints.TypeHintDeclaration">
         <properties>
@@ -175,6 +136,5 @@
 		</properties>
 	</rule>
 
-    <rule ref="SlevomatCodingStandard.Operators.RequireOnlyStandaloneIncrementAndDecrementOperators"/>
     <rule ref="SlevomatCodingStandard.Operators.RequireCombinedAssignmentOperator"/>
 </ruleset>
