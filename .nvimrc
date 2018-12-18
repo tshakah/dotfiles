@@ -220,6 +220,7 @@ nnoremap <leader>nf :Neoformat<cr>
 Plug 'floobits/floobits-neovim', { 'do': ':UpdateRemotePlugins' }
 Plug 'tpope/vim-fugitive'
 Plug 'ludovicchabant/vim-lawrencium'
+Plug 'whiteinge/diffconflicts'
 Plug 'sjl/splice.vim'
 let g:splice_prefix = "`"
 let g:splice_initial_layout_grid = 1
