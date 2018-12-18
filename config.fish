@@ -20,8 +20,6 @@ bind -M insert \e\[1\;5D backward-word
 bind -M visual \e\[1\;5C forward-word
 bind -M visual \e\[1\;5D backward-word
 
-eval (direnv hook fish)
-
 alias rg "rg -S -M 200 --glob '!vendor' --glob '!data'"
 alias vi "nvim"
 alias vpn='z vpn; and sudo openvpn capvpn.ovpn'
