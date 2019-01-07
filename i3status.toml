@@ -2,6 +2,10 @@
 name = "gruvbox-dark"
 
 [[block]]
+block = "focused_window"
+max_width = 120
+
+[[block]]
 block = "disk_space"
 path = "/"
 alias = "/"
