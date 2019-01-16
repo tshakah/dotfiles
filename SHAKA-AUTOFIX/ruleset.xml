@@ -78,20 +78,6 @@
     <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHintSpacing"/>
     <rule ref="SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue"/>
     <rule ref="SlevomatCodingStandard.TypeHints.UselessConstantTypeHint"/>
-    <rule ref="SlevomatCodingStandard.TypeHints.TypeHintDeclaration">
-        <properties>
-            <property name="usefulAnnotations" type="array" value="
-                @Given,
-                @When,
-                @And,
-                @Then,
-                @group,
-                @env
-            "/>
-            <property name="enableVoidTypeHint" value="false"/>
-            <property name="enableEachParameterAndReturnInspection" value="true"/>
-        </properties>
-    </rule>
 
     <rule ref="SlevomatCodingStandard.PHP.TypeCast"/>
     <rule ref="SlevomatCodingStandard.PHP.ShortList"/>
