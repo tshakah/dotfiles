@@ -124,8 +124,8 @@
                 @When,
                 @And,
                 @Then,
-                @group,
-                @env
+                @env,
+                @group
             "/>
             <property name="enableVoidTypeHint" value="false"/>
             <property name="enableEachParameterAndReturnInspection" value="true"/>
