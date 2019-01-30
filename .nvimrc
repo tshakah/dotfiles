@@ -95,6 +95,7 @@ Plug 'mhinz/vim-signify'
 
 
 " Search and navigation
+Plug 'machakann/vim-highlightedyank'
 Plug 'easymotion/vim-easymotion'
 Plug 'simeji/winresizer'
 
