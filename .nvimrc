@@ -28,10 +28,16 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
     \ 'do': 'bash install.sh',
     \ }
+"let g:LanguageClient_serverCommands = {
+"    \ 'elixir': ['/home/elishahastings/source/tools/elixir-ls/lsp/language_server.sh'],
+"    \ }
 Plug 'roxma/LanguageServer-php-neovim',  {'do': 'composer install && composer run-script parse-stubs'}
 nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 nnoremap <F7> :call LanguageClient_contextMenu()<CR>
+autocmd * nnoremap <buffer>
+  \ <leader>gf :call LanguageClient_textDocument_documentSymbol()<cr>
+
 
 Plug 'Shougo/echodoc.vim'
 Plug 'Shougo/neosnippet.vim'
@@ -42,11 +48,12 @@ let g:echodoc#type = "virtual"
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_smart_case = 1
 let g:deoplete#auto_complete_start_length = 1
-let g:deoplete#sources#padawan#add_parentheses = 0
 let g:deoplete#sources = {}
-let g:deoplete#sources.php = ['padawan', 'neosnippet', 'tags', 'buffer']
-let g:AutoPairsMapCR=0
+let g:deoplete#sources.php = ['LanguageClient', 'neosnippet']
 let g:neosnippet#enable_completed_snippet = 1
+imap <expr><TAB> pumvisible() ? "\<C-n>" : (neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>")
+imap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
+imap <expr><CR> pumvisible() ? deoplete#mappings#close_popup() : "\<CR>\"
 set completeopt-=preview
 imap <expr><TAB> pumvisible() ? "\<C-n>" : (neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>")
 imap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
@@ -251,18 +258,9 @@ highlight DbgBreakptSign ctermbg=none ctermfg=green
 highlight DbgCurrentLine ctermbg=none ctermfg=none
 highlight DbgCurrentSign ctermbg=none ctermfg=red
 
-Plug 'padawan-php/deoplete-padawan', { 'do': 'composer install' }
-command! PadawanStart call deoplete#sources#padawan#StartServer()
-command! PadawanStop call deoplete#sources#padawan#StopServer()
-command! PadawanRestart call deoplete#sources#padawan#RestartServer()
-command! PadawanInstall call deoplete#sources#padawan#InstallServer()
-command! PadawanUpdate call deoplete#sources#padawan#UpdatePadawan()
-command! -bang PadawanGenerate call deoplete#sources#padawan#Generate(<bang>0)
-
 
 " Elixir
 Plug 'slashmili/alchemist.vim'
-
 
 " CSV
 Plug 'chrisbra/csv.vim'
@@ -404,12 +402,6 @@ let g:lightline = {
 
     "" Unimpaired vim!
     "Plug 'tpope/vim-unimpaired'
-
-    "" Elixir
-    "Plug 'elixir-lang/vim-elixir'
-    "Plug 'thinca/vim-ref'
-    "Plug 'awetzel/elixir.nvim', { 'do': 'yes \| ./install.sh' }
-
 
     "Plug 'gregsexton/MatchTag'
     "Plug 'qpkorr/vim-bufkill'
