@@ -54,6 +54,7 @@ let g:neosnippet#enable_completed_snippet = 1
 imap <expr><TAB> pumvisible() ? "\<C-n>" : (neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>")
 imap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
 imap <expr><CR> pumvisible() ? deoplete#mappings#close_popup() : "\<CR>\"
+
 set completeopt-=preview
 imap <expr><TAB> pumvisible() ? "\<C-n>" : (neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>")
 imap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
@@ -95,6 +96,7 @@ Plug 'mhinz/vim-signify'
 
 " Search and navigation
 Plug 'easymotion/vim-easymotion'
+Plug 'simeji/winresizer'
 
 " <Leader>f{char} to move to {char}
 map  <Leader>f <Plug>(easymotion-bd-f)
@@ -300,6 +302,11 @@ set noshowmode
 set shortmess+=c
 set listchars=tab:>\
 set backspace=indent,eol,start " smart backspace
+set inccommand=nosplit
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
 
 " Whitespace
 set autoindent " preserve indentation
