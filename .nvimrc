@@ -96,58 +96,18 @@ Plug 'mhinz/vim-signify'
 
 " Search and navigation
 Plug 'machakann/vim-highlightedyank'
-Plug 'easymotion/vim-easymotion'
 Plug 'simeji/winresizer'
-
-let g:EasyMotion_smartcase = 1
-let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
-let g:EasyMotion_do_mapping = 0 " Disable default mappings
-
-" Jump to anywhere you want with minimal keystrokes, with just one key binding.
-nmap s <Plug>(easymotion-overwin-f2)
-
-" JK motions: Line motions
-map <Leader>j <Plug>(easymotion-j)
-map <Leader>k <Plug>(easymotion-k)
-
-Plug 'haya14busa/incsearch.vim'
-Plug 'haya14busa/incsearch-fuzzy.vim'
-Plug 'haya14busa/incsearch-easymotion.vim'
-
-" You can use other keymappings like <C-l> instead of <CR> if you want to
-" use these mappings as default search and somtimes want to move cursor with
-" EasyMotion.
-function! s:incsearch_config(...) abort
-  return incsearch#util#deepextend(deepcopy({
-  \   'modules': [incsearch#config#easymotion#module({'overwin': 1})],
-  \   'keymap': {
-  \     "\<CR>": '<Over>(easymotion)'
-  \   },
-  \   'is_expr': 0
-  \ }), get(a:, 1, {}))
-endfunction
-
-function! s:config_easyfuzzymotion(...) abort
-  return extend(copy({
-  \   'converters': [incsearch#config#fuzzyword#converter()],
-  \   'modules': [incsearch#config#easymotion#module({'overwin': 1})],
-  \   'keymap': {"\<CR>": '<Over>(easymotion)'},
-  \   'is_expr': 0,
-  \   'is_stay': 1
-  \ }), get(a:, 1, {}))
-endfunction
-
-
-noremap <silent><expr> /  incsearch#go(<SID>incsearch_config())
-noremap <silent><expr> ?  incsearch#go(<SID>incsearch_config({'command': '?'}))
-noremap <silent><expr> g/ incsearch#go(<SID>incsearch_config({'is_stay': 1}))
-noremap <silent><expr> / incsearch#go(<SID>config_easyfuzzymotion())
-
 Plug 'wellle/targets.vim'
 Plug 'tpope/vim-repeat'
 Plug 'dyng/ctrlsf.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'IngoHeimbach/fzf.vim'
+Plug 'justinmk/vim-sneak'
+let g:sneak#label = 1
+map f <Plug>Sneak_f
+map F <Plug>Sneak_F
+map t <Plug>Sneak_t
+map T <Plug>Sneak_T
 
 set smartcase
 set incsearch
