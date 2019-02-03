@@ -100,6 +100,8 @@
 			<property name="annotationsGroups" type="array">
 				<element value="
 					@Column,
+                    @GeneratedValue,
+                    @Id,
 					@Embedded,
 					@ManyToMany,
 					@OneToMany,
@@ -111,8 +113,8 @@
 					@return,
 				"/>
 				<element value="
-					@env,
 					@group,
+					@env,
 				"/>
 				<element value="
 					@Entity,
