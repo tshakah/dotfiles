@@ -10,6 +10,7 @@ set -g theme_show_exit_status yes
 set -g theme_color_scheme gruvbox
 set --universal fish_user_paths $fish_user_paths ~/.npm/node_modules/bin/
 set -Ux BAT_THEME gruvbox
+set -Ux ERL_AFLAGS "-kernel shell_history enabled"
 set -gx EDITOR nvim
 
 fish_vi_key_bindings
