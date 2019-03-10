@@ -23,7 +23,6 @@ bind -M visual \e\[1\;5D backward-word
 
 alias nix-shell "nix-shell --run fish"
 alias rg "rg -S -M 200 --glob '!vendor' --glob '!data'"
-alias vpn 'z vpn; and sudo openvpn capvpn.ovpn'
 alias vi 'nvim'
 alias ls 'ls --color=tty'
 alias hope 'z hope; and nix-shell'
@@ -36,3 +35,15 @@ alias dot 'z dotfiles'
 alias scr 'z scripts'
 
 source ~/.config/fish/gnupg.fish
+
+function vpn
+    systemctl status openvpn-cap >/dev/null 2>&1
+
+    if test $status -eq 0
+        sudo systemctl stop openvpn-cap
+        systemctl status openvpn-cap
+    else
+        sudo systemctl start openvpn-cap
+        systemctl status openvpn-cap
+    end
+end
