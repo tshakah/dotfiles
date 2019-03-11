@@ -66,6 +66,7 @@ autocmd InsertLeave * if pumvisible() == 0 | pclose | endif
 Plug 'ntpeters/vim-better-whitespace'
 let g:better_whitespace_enabled=1
 let g:strip_whitespace_on_save=1
+let g:strip_whitespace_confirm=0
 
 Plug 'itchyny/lightline.vim' " Config below
 Plug 'mgee/lightline-bufferline'
