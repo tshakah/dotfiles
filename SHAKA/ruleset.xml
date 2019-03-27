@@ -1,12 +1,14 @@
 <?xml version="1.0"?>
 <ruleset name="SHAKA">
-    <file>/home/elishahastings/source/tools/slevomat-cs/SlevomatCodingStandard/ruleset.xml</file>
+    <file>/home/elishahastings/source/cap/hope/vendor/slevomat/coding-standard/SlevomatCodingStandard/ruleset.xml</file>
     <!-- Include PSR2 -->
     <rule ref="PSR2">
         <!-- Checked by SlevomatCodingStandard.Namespaces.UseSpacing -->
         <exclude name="PSR2.Namespaces.UseDeclaration.SpaceAfterLastUse"/>
         <!-- Checked by SlevomatCodingStandard.Namespaces.NamespaceSpacing -->
         <exclude name="PSR2.Namespaces.NamespaceDeclaration.BlankLineAfter"/>
+        <!-- Yeah, I'm not going to put underscores unless codeception forces me due to special methods -->
+        <exclude name="PSR2.Methods.MethodDeclaration.Underscore"/>
     </rule>
 
     <!-- Disallow else if in favor of elseif -->
