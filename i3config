@@ -171,19 +171,14 @@ bar {
   font pango:DejaVu Sans Mono for Powerline Bold
   status_command i3status-rs ~/.config/i3/status.toml
   colors {
-    set $background1 #282a2e
-    set $background2 #3c3836
-    set $color1 #db3f3f
-    set $color2 #a89984
+    background #282a2e
+    statusline #fbf1c7
+    separator  #db3f3f
 
-    background $background1
-    statusline $fbf1c7
-    separator  $color1
-
-    focused_workspace  $background1 $background2 $color1
-    active_workspace   $background1 $background1 $color2
-    inactive_workspace $background1 $background1 $color2
-    urgent_workspace   $background1 $background2 #db3f3f
+    focused_workspace  #282a2e #3c3836 #db3f3f
+    active_workspace   #282a2e #282a2e #a89984
+    inactive_workspace #282a2e #282a2e #a89984
+    urgent_workspace   #282a2e #3c3836 #db3f3f
   }
 }
 
