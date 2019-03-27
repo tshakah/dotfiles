@@ -4,16 +4,16 @@ if not functions -q fisher
     fish -c fisher
 end
 
-set -g theme_display_vi yes
 set -g theme_display_hg yes
 set -g theme_show_exit_status yes
 set -g theme_color_scheme gruvbox
-set --universal fish_user_paths $fish_user_paths ~/.npm/node_modules/bin/
 set -Ux BAT_THEME gruvbox
 set -Ux ERL_AFLAGS "-kernel shell_history enabled"
 set -gx EDITOR nvim
 
-fish_vi_key_bindings
+set --universal fish_user_paths $fish_user_paths ~/.npm/node_modules/bin/
+set --universal fish_user_paths $fish_user_paths ~/.cargo/bin/
+
 fish_default_key_bindings -M insert
 bind \e\[1\;5C forward-word
 bind \e\[1\;5D backward-word
