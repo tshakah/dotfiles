@@ -9,9 +9,6 @@ if &shell =~# 'fish$'
     set shell=zsh
 endif
 
-" vimconf is not vi-compatible
-set nocompatible
-
 let mapleader="\<SPACE>"
 
 " Automatically make needed files and folders on first run
@@ -24,21 +21,6 @@ call plug#begin("~/.config/nvim/plugged")
 
 
 " Autocompletion
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
-"let g:LanguageClient_serverCommands = {
-"    \ 'elixir': ['/home/elishahastings/source/tools/elixir-ls/lsp/language_server.sh'],
-"    \ }
-Plug 'roxma/LanguageServer-php-neovim',  {'do': 'composer install && composer run-script parse-stubs'}
-nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
-nnoremap <F7> :call LanguageClient_contextMenu()<CR>
-autocmd * nnoremap <buffer>
-  \ <leader>gf :call LanguageClient_textDocument_documentSymbol()<cr>
-
-
 Plug 'Shougo/echodoc.vim'
 Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
@@ -48,8 +30,6 @@ let g:echodoc#type = "virtual"
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_smart_case = 1
 let g:deoplete#auto_complete_start_length = 1
-let g:deoplete#sources = {}
-let g:deoplete#sources.php = ['LanguageClient', 'neosnippet']
 let g:neosnippet#enable_completed_snippet = 1
 imap <expr><TAB> pumvisible() ? "\<C-n>" : (neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>")
 imap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
@@ -63,6 +43,11 @@ autocmd InsertLeave * if pumvisible() == 0 | pclose | endif
 
 
 " UI
+" A fancy start screen
+Plug 'mhinz/vim-startify'
+let g:startify_change_to_vcs_root = 1
+let g:startify_fortune_use_unicode = 1
+
 Plug 'ntpeters/vim-better-whitespace'
 let g:better_whitespace_enabled=1
 let g:strip_whitespace_on_save=1
@@ -100,18 +85,25 @@ Plug 'machakann/vim-highlightedyank'
 Plug 'simeji/winresizer'
 Plug 'wellle/targets.vim'
 Plug 'tpope/vim-repeat'
-Plug 'dyng/ctrlsf.vim'
+
+Plug 'brooth/far.vim'
+let g:far#default_file_mask = '**/*.*'
+let g:far#source = 'rgnvim'
+nnoremap <buffer><silent> <C-J> :call g:far#scroll_preview_window(-g:far#preview_window_scroll_step)<cr>
+nnoremap <buffer><silent> <C-K> :call g:far#scroll_preview_window(g:far#preview_window_scroll_step)<cr>
+
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'IngoHeimbach/fzf.vim'
 Plug 'justinmk/vim-sneak'
 let g:sneak#label = 1
+let g:sneak#s_next = 1
+let g:sneak#use_ic_scs = 1
 map f <Plug>Sneak_f
 map F <Plug>Sneak_F
 map t <Plug>Sneak_t
 map T <Plug>Sneak_T
 
 set smartcase
-set incsearch
 set ignorecase " by default ignore case
 let g:fzf_files_options = '--color "border:#6699cc,info:#fabd2f"'
 let g:fzf_layout = { 'down': '~40%' }
@@ -175,7 +167,6 @@ let g:neoformat_enabled_php = ['phpcbf']
 nnoremap <leader>nf :Neoformat<cr>
 
 " VCS and remote stuff
-Plug 'floobits/floobits-neovim', { 'do': ':UpdateRemotePlugins' }
 Plug 'tpope/vim-fugitive'
 Plug 'ludovicchabant/vim-lawrencium'
 Plug 'whiteinge/diffconflicts'
@@ -191,7 +182,21 @@ let g:splice_initial_scrollbind_compare = 1
 Plug 'sheerun/vim-polyglot'
 
 
+" Elixir
+Plug 'slashmili/alchemist.vim'
+
+
+" CSV
+Plug 'chrisbra/csv.vim'
+
+
+" Elm
+Plug 'elmcast/elm-vim'
+
+
 " PHP
+Plug 'rayburgemeestre/phpfolding.vim'
+
 Plug 'vim-vdebug/vdebug'
 if !exists('g:vdebug_options')
     let g:vdebug_options = {
@@ -210,15 +215,12 @@ highlight DbgCurrentLine ctermbg=none ctermfg=none
 highlight DbgCurrentSign ctermbg=none ctermfg=red
 
 
-" Elixir
-Plug 'slashmili/alchemist.vim'
-
-" CSV
-Plug 'chrisbra/csv.vim'
-
-
-" Elm
-Plug 'elmcast/elm-vim'
+" REPL
+augroup replcmds
+  autocmd! replcmds
+  autocmd Filetype php nmap <buffer> <silent> <F5> <ESC>oeval(\Psy\sh());<ESC>:w<CR>
+  autocmd Filetype elixir nmap <buffer> <silent> <F5> <ESC>orequire IEx; IEx.pry<ESC> :w<CR>
+augroup end
 
 
 call plug#end()
@@ -245,25 +247,37 @@ command DeleteHiddenBuffers call DeleteHiddenBuffers()
 
 " General UI
 set title " Show buffer name in title
-set nowrap
+set sidescroll=5
+set listchars+=precedes:<,extends:>
 set cursorline
 set noshowmode
 set shortmess+=c
-set listchars=tab:>\
-set backspace=indent,eol,start " smart backspace
 set inccommand=nosplit
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
+nnoremap <C-j> <C-W><C-J>
+nnoremap <C-k> <C-W><C-K>
+nnoremap <C-l> <C-W><C-L>
+nnoremap <C-h> <C-W><C-H>
+set foldmethod=syntax
+
+set incsearch
+set nohlsearch
+cnoremap $t <CR>:t''<CR>
+cnoremap $T <CR>:T''<CR>
+cnoremap $m <CR>:m''<CR>
+cnoremap $M <CR>:M''<CR>
+cnoremap $d <CR>:d<CR>``
+
+" Handle surround chars like ''
+Plug 'tpope/vim-surround'
 
 " Whitespace
-set autoindent " preserve indentation
 set cinkeys-=0# " don't force # indentation
+set nowrap
 set expandtab " no real tabs
 set shiftround " be clever with tabs
+set showbreak=\ →\
+set breakindent
 set shiftwidth=4 " default 2
-set smarttab " tab to 0,4,8 etc.
 set softtabstop=4 " "tab" feels like <tab>
 set tabstop=4 " replace <TAB> w/2 spaces
 
@@ -272,9 +286,7 @@ execute "set colorcolumn=" . join(range(121,335), ',')
 highlight ColorColumn ctermbg=235
 
 " Syntax highlighting
-syntax on
 filetype plugin on
-filetype plugin indent on
 
 " Theme
 set background=dark
@@ -282,7 +294,6 @@ colorscheme gruvbox
 set termguicolors
 
 " IO
-set autoread " refresh if changed
 set confirm " confirm changed files
 set noautowrite " never autowrite
 set nobackup " disable backups
@@ -321,23 +332,11 @@ let g:lightline = {
   \   }
   \ }
 
-    """" Github repos, uncomment to disable a plugin
-    ""Plug 'Shougo/denite.nvim'
-
     "" <Tab> everything!
     "Plug 'ervandew/supertab'
 
-    "" Super easy commenting, toggle comments etc
-    "Plug 'scrooloose/nerdcommenter'
-
     "" Autoclose (, " etc
     "Plug 'Townk/vim-autoclose'
-
-    "" Handle surround chars like ''
-    "Plug 'tpope/vim-surround'
-
-    "" A fancy start screen, shows MRU etc.
-    "Plug 'mhinz/vim-startify'
 
     "" Vim signs (:h signs) for modified lines based off VCS (e.g. Git)
     ""Plug 'airblade/vim-gitgutter'
