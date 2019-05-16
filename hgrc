@@ -10,9 +10,12 @@ strip =
 shelve =
 rebase =
 
+[merge]
+preferancestor = *
+
 [merge-tools]
 splice.executable = nvim
-splice.args = -f $base $local $other $output -c 'SpliceInit'
+splice.args = -c "let g:DisableAutoPHPFolding = 1" -f $base $local $other $output -c 'SpliceInit'
 splice.premerge = keep
 splice.priority = 1
 
