@@ -281,6 +281,25 @@ set shiftwidth=4 " default 2
 set softtabstop=4 " "tab" feels like <tab>
 set tabstop=4 " replace <TAB> w/2 spaces
 
+" Maximise a split
+nnoremap <C-W><C-O> :call MaximizeToggle()<CR>
+
+function! MaximizeToggle()
+  if exists("s:maximize_session")
+    exec "source " . s:maximize_session
+    call delete(s:maximize_session)
+    unlet s:maximize_session
+    let &hidden=s:maximize_hidden_save
+    unlet s:maximize_hidden_save
+  else
+    let s:maximize_hidden_save = &hidden
+    let s:maximize_session = tempname()
+    set hidden
+    exec "mksession! " . s:maximize_session
+    only
+  endif
+endfunction
+
 " Change background at 120 characters
 execute "set colorcolumn=" . join(range(121,335), ',')
 highlight ColorColumn ctermbg=235
