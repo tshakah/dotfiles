@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <ruleset name="SHAKA">
-    <file>/home/elishahastings/source/cap/hope/vendor/slevomat/coding-standard/SlevomatCodingStandard/ruleset.xml</file>
+    <autoload>/home/elishahastings/.config/composer/vendor/autoload.php</autoload>
+    <arg name="colors"/>
+    <file>/home/elishahastings/.config/composer/vendor/slevomat/coding-standard/SlevomatCodingStandard/ruleset.xml</file>
     <!-- Include PSR2 -->
     <rule ref="PSR2">
         <!-- Checked by SlevomatCodingStandard.Namespaces.UseSpacing -->
@@ -250,6 +252,7 @@
 					@return,
 				"/>
 				<element value="
+					@dataProvider,
 					@group,
 					@env,
 				"/>
