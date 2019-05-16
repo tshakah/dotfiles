@@ -167,10 +167,11 @@ let g:neoformat_enabled_php = ['phpcbf']
 nnoremap <leader>nf :Neoformat<cr>
 
 " VCS and remote stuff
+Plug 'junkblocker/patchreview-vim'
 Plug 'tpope/vim-fugitive'
 Plug 'ludovicchabant/vim-lawrencium'
 Plug 'whiteinge/diffconflicts'
-Plug 'sjl/splice.vim'
+Plug 'albfan/splice.vim'
 let g:splice_prefix = "`"
 let g:splice_initial_layout_grid = 1
 let g:splice_initial_diff_grid = 1
@@ -180,14 +181,12 @@ let g:splice_initial_scrollbind_compare = 1
 
 " Language support
 Plug 'sheerun/vim-polyglot'
+let g:polyglot_disabled = ['csv']
 
 
 " Elixir
 Plug 'slashmili/alchemist.vim'
-
-
-" CSV
-Plug 'chrisbra/csv.vim'
+Plug 'elixir-editors/vim-elixir'
 
 
 " Elm
@@ -218,8 +217,8 @@ highlight DbgCurrentSign ctermbg=none ctermfg=red
 " REPL
 augroup replcmds
   autocmd! replcmds
-  autocmd Filetype php nmap <buffer> <silent> <F5> <ESC>oeval(\Psy\sh());<ESC>:w<CR>
-  autocmd Filetype elixir nmap <buffer> <silent> <F5> <ESC>orequire IEx; IEx.pry<ESC> :w<CR>
+  autocmd Filetype php nmap <buffer> <silent> <F7> <ESC>oeval(\Psy\sh());<ESC>:w<CR>
+  autocmd Filetype elixir nmap <buffer> <silent> <F7> <ESC>orequire IEx; IEx.pry<ESC> :w<CR>
 augroup end
 
 
@@ -247,7 +246,7 @@ command DeleteHiddenBuffers call DeleteHiddenBuffers()
 
 " General UI
 set title " Show buffer name in title
-set sidescroll=5
+set sidescroll=2
 set listchars+=precedes:<,extends:>
 set cursorline
 set noshowmode
@@ -258,6 +257,7 @@ nnoremap <C-k> <C-W><C-K>
 nnoremap <C-l> <C-W><C-L>
 nnoremap <C-h> <C-W><C-H>
 set foldmethod=syntax
+set foldlevel=1
 
 set incsearch
 set nohlsearch
@@ -338,17 +338,6 @@ let g:lightline = {
     "" Autoclose (, " etc
     "Plug 'Townk/vim-autoclose'
 
-    "" Vim signs (:h signs) for modified lines based off VCS (e.g. Git)
-    ""Plug 'airblade/vim-gitgutter'
-
-    "Plug 'NLKNguyen/vim-lisp-syntax'
-
-    "" Detect whitespace
-    "Plug 'ntpeters/vim-better-whitespace'
-
-    "" Code analysis
-    "Plug 'ngmy/vim-rubocop'
-
     "" End completion
     "Plug 'tpope/vim-endwise'
 
@@ -375,5 +364,3 @@ let g:lightline = {
     "Plug 'shmup/vim-sql-syntax'
 
     "Plug 'sunaku/vim-dasht'
-
-    "Plug 'mechatroner/rainbow_csv'
