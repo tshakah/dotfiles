@@ -32,8 +32,10 @@ alias aire 'z aire; and nix-shell'
 alias ddw 'z worker; and nix-shell'
 alias dash 'z dev_dashboard; and nix-shell'
 alias our 'z adventure; and nix-shell'
+alias ner 'z ner; and nix-shell'
 alias dot 'z dotfiles'
 alias scr 'z scripts'
+alias pi 'pijul'
 
 source ~/.config/fish/gnupg.fish
 
