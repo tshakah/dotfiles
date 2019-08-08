@@ -183,6 +183,15 @@ let g:splice_initial_scrollbind_compare = 1
 Plug 'sheerun/vim-polyglot'
 let g:polyglot_disabled = ['csv']
 
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
+
+nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+
 
 " Elixir
 Plug 'slashmili/alchemist.vim'
@@ -195,6 +204,7 @@ Plug 'elmcast/elm-vim'
 
 " PHP
 Plug 'rayburgemeestre/phpfolding.vim'
+Plug 'roxma/LanguageServer-php-neovim', {'do': 'composer install && composer run-script parse-stubs'}
 
 Plug 'vim-vdebug/vdebug'
 if !exists('g:vdebug_options')
