@@ -33,12 +33,12 @@ let g:deoplete#auto_complete_start_length = 1
 let g:neosnippet#enable_completed_snippet = 1
 imap <expr><TAB> pumvisible() ? "\<C-n>" : (neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>")
 imap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
-imap <expr><CR> pumvisible() ? deoplete#mappings#close_popup() : "\<CR>\"
+imap <expr><CR> pumvisible() ? deoplete#close_popup() : "\<CR>\"
 
 set completeopt-=preview
 imap <expr><TAB> pumvisible() ? "\<C-n>" : (neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>")
 imap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
-imap <expr><CR> pumvisible() ? deoplete#mappings#close_popup() : "\<CR>"
+imap <expr><CR> pumvisible() ? deoplete#close_popup() : "\<CR>"
 autocmd InsertLeave * if pumvisible() == 0 | pclose | endif
 
 
