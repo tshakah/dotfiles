@@ -189,22 +189,20 @@ set $inactive-text-color #a89884
 set $urgent-bg-color     #db3f3f
 
 # window colors
-#                       border              background         text                 indicator
-client.focused          $bg-color           $bg-color          $text-color          $bg-color
-client.unfocused        $inactive-bg-color  $inactive-bg-color $inactive-text-color $inactive-bg-color
-client.focused_inactive $inactive-bg-color  $inactive-bg-color $inactive-text-color $inactive-bg-color
-client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color          $urgent-bg-color
+#                       border              background         text                 indicator          child border
+client.focused          $bg-color           $bg-color          $text-color          $bg-color          $bg-color
+client.unfocused        $inactive-bg-color  $inactive-bg-color $inactive-text-color $inactive-bg-color $inactive-bg-color
+client.focused_inactive $inactive-bg-color  $inactive-bg-color $inactive-text-color $inactive-bg-color $inactive-bg-color
+client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color          $urgent-bg-color   $urgent-bg-color
 
 for_window [class="Nautilus" instance="file_progress"] floating enable
 for_window [class="Mate-system-monitor"] floating enable; resize shrink righ ppt
 for_window [window_role="pop-up"] floating enable
 for_window [window_role="task_dialog"] floating enable
 
-exec --no-startup-id numlockx on
 exec --no-startup-id syndaemon -i 0.5 -K -R -d
-exec gnome-keyring-daemon
 
-set $Locker i3lock-fancy -p -- scrot -z && sleep 1
+set $Locker ~/source/scripts/lock.sh && sleep 1
 
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
 mode "$mode_system" {
