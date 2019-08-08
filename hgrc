@@ -9,6 +9,10 @@ transplant =
 strip =
 shelve =
 rebase =
+share =
+histedit =
+hgext.bookmarks =
+hggit =
 
 [merge]
 preferancestor = *
