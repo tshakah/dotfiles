@@ -122,7 +122,7 @@ font:
   use_thin_strokes: true
 
 # Should display the render timer
-render_timer: false
+debug.render_timer: false
 
 # Base16 Gruvbox dark, medium 256 - alacritty color config
 # Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)
