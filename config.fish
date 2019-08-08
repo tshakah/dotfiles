@@ -11,6 +11,8 @@ set -Ux BAT_THEME gruvbox
 set -Ux ERL_AFLAGS "-kernel shell_history enabled"
 set -gx EDITOR nvim
 
+set -e fish_user_paths
+
 set --universal fish_user_paths $fish_user_paths ~/.npm/node_modules/bin/
 set --universal fish_user_paths $fish_user_paths ~/.cargo/bin/
 
