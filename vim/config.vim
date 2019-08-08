@@ -97,23 +97,25 @@ let g:far#source = 'rgnvim'
 nnoremap <buffer><silent> <C-J> :call g:far#scroll_preview_window(-g:far#preview_window_scroll_step)<cr>
 nnoremap <buffer><silent> <C-K> :call g:far#scroll_preview_window(g:far#preview_window_scroll_step)<cr>
 
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'IngoHeimbach/fzf.vim'
+Plug 'lotabout/skim.vim'
+set rtp+=~/.skim
+
 Plug 'justinmk/vim-sneak'
 let g:sneak#label = 1
-let g:sneak#s_next = 1
 let g:sneak#use_ic_scs = 1
-map f <Plug>Sneak_f
-map F <Plug>Sneak_F
-map t <Plug>Sneak_t
-map T <Plug>Sneak_T
+Plug 'unblevable/quick-scope'
+let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+" Move across wrapped lines like regular lines
+noremap 0 ^ " Go to the first non-blank character of a line
+noremap ^ 0 " Just in case you need to go to the very beginning of a line
 
 set smartcase
 set ignorecase " by default ignore case
 let g:fzf_files_options = '--color "border:#6699cc,info:#fabd2f"'
 let g:fzf_layout = { 'down': '~40%' }
 let g:fzf_history_dir = '~/.local/share/fzf-history'
-let $FZF_DEFAULT_COMMAND="rg -S --files --follow --hidden  --glob '!.hg' --glob '!.git' --glob '!vendor'"
+let $FZF_DEFAULT_COMMAND="rg -S --files --follow --hidden --glob '!.hg' --glob '!.git' --glob '!vendor'"
+let $SKIM_DEFAULT_COMMAND="rg -S --files --follow --hidden --glob '!.hg' --glob '!.git' --glob '!vendor'"
 let g:fzf_action = {
   \ 'ctrl-t': 'tab split',
   \ 'ctrl-x': 'split',
