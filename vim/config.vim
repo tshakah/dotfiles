@@ -89,6 +89,7 @@ Plug 'machakann/vim-highlightedyank'
 Plug 'simeji/winresizer'
 Plug 'wellle/targets.vim'
 Plug 'tpope/vim-repeat'
+Plug 'chrisbra/NrrwRgn'
 
 Plug 'brooth/far.vim'
 let g:far#default_file_mask = '**/*.*'
