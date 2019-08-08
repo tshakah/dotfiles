@@ -6,7 +6,7 @@
 
 " vim doesn't like fish :(
 if &shell =~# 'fish$'
-    set shell=zsh
+    set shell=/run/current-system/sw/bin/bash
 endif
 
 let mapleader="\<SPACE>"
