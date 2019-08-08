@@ -81,6 +81,10 @@ Plug 'mhinz/vim-signify'
 
 
 " Search and navigation
+Plug 'vim-ctrlspace/vim-ctrlspace'
+let g:CtrlSpaceDefaultMappingKey = "<C-space> "
+set showtabline=0
+
 Plug 'machakann/vim-highlightedyank'
 Plug 'simeji/winresizer'
 Plug 'wellle/targets.vim'
@@ -132,13 +136,6 @@ endfunction
 function! s:bufopen(e)
   execute 'buffer' matchstr(a:e, '^[ 0-9]*')
 endfunction
-
-nnoremap <silent> <Leader><Enter> :call fzf#run({
-\   'source':  reverse(<sid>buflist()),
-\   'sink':    function('<sid>bufopen'),
-\   'options': '+m',
-\   'down':    len(<sid>buflist()) + 2
-\ })<CR>
 
 
 " Syntax
