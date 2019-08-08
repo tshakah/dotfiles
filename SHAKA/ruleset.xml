@@ -22,7 +22,11 @@
     <rule ref="Squiz.Strings.DoubleQuoteUsage.NotRequired"/>
 
     <!-- Commented out code -->
-    <rule ref="Squiz.PHP.CommentedOutCode.Found"/>
+    <rule ref="Squiz.PHP.CommentedOutCode">
+		<properties>
+			<property name="maxPercentage" value="50"/>
+		</properties>
+	</rule>
 
     <!-- Force one space before and after assignment -->
     <rule ref="Squiz.WhiteSpace.OperatorSpacing">
@@ -138,7 +142,8 @@
     <rule ref="SlevomatCodingStandard.ControlStructures.RequireNullCoalesceOperator"/>
     <rule ref="SlevomatCodingStandard.ControlStructures.LanguageConstructWithParentheses"/>
     <rule ref="SlevomatCodingStandard.ControlStructures.RequireTernaryOperator"/>
-    <rule ref="SlevomatCodingStandard.ControlStructures.ControlStructureSpacing"/>
+    <rule ref="SlevomatCodingStandard.ControlStructures.BlockControlStructureSpacing"/>
+    <rule ref="SlevomatCodingStandard.ControlStructures.JumpStatementsSpacing"/>
     <rule ref="SlevomatCodingStandard.ControlStructures.RequireMultiLineTernaryOperator">
         <properties>
             <property name="lineLengthLimit" value="120"/>
@@ -218,8 +223,9 @@
         </properties>
     </rule>
 
-    <rule ref="SlevomatCodingStandard.PHP.TypeCast"/>
+    <rule ref="SlevomatCodingStandard.PHP.ReferenceSpacing"/>
     <rule ref="SlevomatCodingStandard.PHP.ShortList"/>
+    <rule ref="SlevomatCodingStandard.PHP.TypeCast"/>
     <rule ref="SlevomatCodingStandard.PHP.UselessSemicolon"/>
     <rule ref="SlevomatCodingStandard.PHP.UselessParentheses">
         <properties>
