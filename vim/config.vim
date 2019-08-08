@@ -26,7 +26,7 @@ Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'Shougo/deoplete.nvim'
 let g:echodoc#enable_at_startup = 1
-let g:echodoc#type = "virtual"
+let g:echodoc#type = "floating"
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_smart_case = 1
 let g:deoplete#auto_complete_start_length = 1
