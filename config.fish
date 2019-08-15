@@ -38,6 +38,7 @@ alias our 'z adventure; and nix-shell'
 alias ner 'z ner; and nix-shell'
 alias dot 'z dotfiles'
 alias scr 'z scripts'
+alias hgp 'hg push --new-branch'
 
 source ~/.config/fish/gnupg.fish
 
