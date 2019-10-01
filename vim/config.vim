@@ -76,13 +76,13 @@ let g:strip_whitespace_confirm=0
 
 Plug 'itchyny/lightline.vim' " Config below
 Plug 'mgee/lightline-bufferline'
-Plug 'shinchu/lightline-gruvbox.vim'
 Plug 'tpope/vim-eunuch'
 Plug 'haya14busa/vim-asterisk'
 Plug 'tpope/vim-sensible'
 Plug 'tommcdo/vim-exchange'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'morhetz/gruvbox'
+Plug 'shinchu/lightline-gruvbox.vim'
 
 Plug 'FooSoft/vim-argwrap'
 nnoremap <silent> <leader>a :ArgWrap<CR>
