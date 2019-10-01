@@ -11,6 +11,9 @@ set -Ux BAT_THEME gruvbox
 set -Ux ERL_AFLAGS "-kernel shell_history enabled"
 set -gx EDITOR nvim
 
+set -x FZF_DEFAULT_COMMAND "rg -S --files --follow --hidden --glob '!.hg' --glob '!.git' --glob '!vendor' --glob '!data'"
+set -x FZF_CTRL_T_OPTS "--height 100% --preview '(bat --style=numbers --color=always {} || cat {}) 2> /dev/null | head -500'"
+
 set -e fish_user_paths
 
 set --universal fish_user_paths $fish_user_paths ~/.npm/node_modules/bin/
