@@ -46,6 +46,29 @@ Plug 'mhinz/vim-startify'
 let g:startify_change_to_vcs_root = 1
 let g:startify_fortune_use_unicode = 1
 
+let g:ascii = [
+        \ '           A--A',
+        \ '       .-./   #\.-.',
+        \ '      ''--;d    b;--''',
+        \ '         \# \/  /',
+        \ '          \''--''/',
+        \ '           |==|',
+        \ '           | #|',
+        \ '           |# |',
+        \ '          /   #\',
+        \ '         ;   #  ;',
+        \ '         | #    |',
+        \ '        /|  ,, #|\',
+        \ '       /#|  ||  | \',
+        \ '   .-.''  |# ||  |# ''.-.',
+        \ '  (.=.),''|  ||# |'',(.=.)',
+        \ '   ''-''  /  #)(   \  ''-''',
+        \ '        `""`  `""`',
+        \]
+
+let g:startify_custom_header =
+        \ 'map(startify#fortune#boxed() + g:ascii, "\"   \".v:val")'
+
 Plug 'ntpeters/vim-better-whitespace'
 let g:better_whitespace_enabled=1
 let g:strip_whitespace_on_save=1
