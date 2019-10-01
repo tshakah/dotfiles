@@ -247,6 +247,7 @@ highlight DbgCurrentSign ctermbg=none ctermfg=red
 " REPL
 augroup replcmds
   autocmd! replcmds
+  autocmd Filetype rust nmap <buffer> <silent> <F7> <ESC>println!("{:?}",);<ESC>:w<CR>hh
   autocmd Filetype php nmap <buffer> <silent> <F7> <ESC>oeval(\Psy\sh());<ESC>:w<CR>
   autocmd Filetype elixir nmap <buffer> <silent> <F7> <ESC>orequire IEx; IEx.pry<ESC> :w<CR>
 augroup end
