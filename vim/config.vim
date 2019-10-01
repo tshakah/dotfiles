@@ -82,7 +82,6 @@ Plug 'haya14busa/vim-asterisk'
 Plug 'tpope/vim-sensible'
 Plug 'tommcdo/vim-exchange'
 Plug 'ConradIrwin/vim-bracketed-paste'
-Plug 'terryma/vim-multiple-cursors'
 Plug 'morhetz/gruvbox'
 
 Plug 'FooSoft/vim-argwrap'
