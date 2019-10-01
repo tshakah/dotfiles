@@ -5,9 +5,7 @@
 "--------------------------------------------------"
 
 " vim doesn't like fish :(
-if &shell =~# 'fish$'
-    set shell=/run/current-system/sw/bin/bash
-endif
+set shell=/bin/sh
 
 let mapleader="\<SPACE>"
 
