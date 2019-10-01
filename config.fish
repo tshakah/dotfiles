@@ -42,6 +42,7 @@ alias ner 'z ner; and nix-shell'
 alias dot 'z dotfiles'
 alias scr 'z scripts'
 alias hgp 'hg push --new-branch'
+alias hgb 'hg log --branch (hg branch) -G'
 
 source ~/.config/fish/gnupg.fish
 
