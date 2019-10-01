@@ -276,6 +276,7 @@ endfunction
 command DeleteHiddenBuffers call DeleteHiddenBuffers()
 
 " General UI
+set updatetime=750
 set title " Show buffer name in title
 set sidescroll=2
 set listchars+=precedes:<,extends:>
