@@ -132,4 +132,22 @@
 	</rule>
 
     <rule ref="SlevomatCodingStandard.Operators.RequireCombinedAssignmentOperator"/>
+
+    <!-- Force no whitespace after a type cast -->
+    <rule ref="Generic.Formatting.SpaceAfterCast">
+        <properties>
+            <property name="spacing" value="1"/>
+        </properties>
+    </rule>
+
+    <!-- Forbid whitespace after the not operator `!` -->
+    <rule ref="Generic.Formatting.SpaceAfterNot">
+        <properties>
+            <property name="spacing" value="0"/>
+        </properties>
+    </rule>
+
+    <!-- Ensure there are no spaces are splatting -->
+    <rule ref="Generic.WhiteSpace.SpreadOperatorSpacingAfter" />
+
 </ruleset>
