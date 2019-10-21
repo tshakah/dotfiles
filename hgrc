@@ -13,6 +13,7 @@ share =
 histedit =
 hgext.bookmarks =
 hggit =
+convert =
 
 [merge]
 preferancestor = *

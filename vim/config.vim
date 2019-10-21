@@ -116,13 +116,13 @@ let g:strip_whitespace_confirm=0
 
 Plug 'itchyny/lightline.vim' " Config below
 Plug 'mgee/lightline-bufferline'
-Plug 'shinchu/lightline-gruvbox.vim'
 Plug 'tpope/vim-eunuch'
 Plug 'haya14busa/vim-asterisk'
 Plug 'tpope/vim-sensible'
 Plug 'tommcdo/vim-exchange'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'morhetz/gruvbox'
+Plug 'shinchu/lightline-gruvbox.vim'
 
 Plug 'FooSoft/vim-argwrap'
 nnoremap <silent> <leader>a :ArgWrap<CR>
@@ -174,8 +174,8 @@ set ignorecase " by default ignore case
 let g:fzf_files_options = '--color "border:#6699cc,info:#fabd2f"'
 let g:fzf_layout = { 'down': '~40%' }
 let g:fzf_history_dir = '~/.local/share/fzf-history'
-let $FZF_DEFAULT_COMMAND="rg -S --files --follow --hidden --glob '!.hg' --glob '!.git' --glob '!vendor' --glob '!data'"
-let $SKIM_DEFAULT_COMMAND="rg -S --files --follow --hidden --glob '!.hg' --glob '!.git' --glob '!vendor' --glob '!data'"
+let $FZF_DEFAULT_COMMAND="rg -S --files --follow --hidden --glob '!.hg' --glob '!.git' --glob '!vendor' --glob '!data' --glob '!_build' --glob '!.elixir_ls'"
+let $SKIM_DEFAULT_COMMAND="rg -S --files --follow --hidden --glob '!.hg' --glob '!.git' --glob '!vendor' --glob '!data' --glob '!_build' --glob '!.elixir_ls'"
 let g:fzf_action = {
   \ 'ctrl-t': 'tab split',
   \ 'ctrl-x': 'split',
@@ -306,6 +306,7 @@ endfunction
 command DeleteHiddenBuffers call DeleteHiddenBuffers()
 
 " General UI
+set updatetime=750
 set title " Show buffer name in title
 set sidescroll=2
 set listchars+=precedes:<,extends:>
