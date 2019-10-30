@@ -5,7 +5,7 @@
 "--------------------------------------------------"
 
 " vim doesn't like fish :(
-set shell=/bin/sh
+set shell=/run/current-system/sw/bin/bash
 
 let mapleader="\<SPACE>"
 
@@ -81,8 +81,7 @@ Plug 'haya14busa/vim-asterisk'
 Plug 'tpope/vim-sensible'
 Plug 'tommcdo/vim-exchange'
 Plug 'ConradIrwin/vim-bracketed-paste'
-Plug 'morhetz/gruvbox'
-Plug 'shinchu/lightline-gruvbox.vim'
+Plug 'icymind/NeoSolarized'
 
 Plug 'FooSoft/vim-argwrap'
 nnoremap <silent> <leader>a :ArgWrap<CR>
@@ -340,8 +339,8 @@ highlight ColorColumn ctermbg=235
 filetype plugin on
 
 " Theme
-set background=dark
-colorscheme gruvbox
+set background=light
+colorscheme NeoSolarized
 set termguicolors
 
 " IO
@@ -363,7 +362,7 @@ noremap <leader>y "+y
 
 " Lightline
 let g:lightline = {
-  \   'colorscheme': 'gruvbox',
+  \   'colorscheme': 'solarized',
   \   'active': {
   \     'left':[ [ 'mode', 'paste' ],
   \              [ 'gitbranch', 'readonly', 'modified', 'buffers' ]
