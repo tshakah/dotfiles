@@ -20,15 +20,15 @@ convert =
 preferancestor = *
 
 [merge-tools]
-diffconflicts.executable=nvim
-diffconflicts.args=-c 'let g:diffconflicts_vcs="hg"' -c DiffConflicts "$output" $base $local $other
-diffconflicts.premerge=keep
-diffconflicts.check=conflicts
-diffconflicts.priority=99
-//splice.executable = nvim
-//splice.args = -c "let g:DisableAutoPHPFolding = 1" -f $base $local $other $output -c 'SpliceInit'
-//splice.premerge = keep
-//splice.priority = 1
+diffconflicts.executable = nvim
+diffconflicts.args = -c 'let g:diffconflicts_vcs="hg"' -c DiffConflicts "$output" $base $local $other
+diffconflicts.premerge = keep
+diffconflicts.check = conflicts
+diffconflicts.priority = 1
+splice.executable = nvim
+splice.args = -c "let g:DisableAutoPHPFolding = 1" -f $base $local $other $output -c 'SpliceInit'
+splice.premerge = keep
+splice.priority = 99
 
 [hooks]
 pre-branch = ~/source/scripts/pre_hg_branch.sh
