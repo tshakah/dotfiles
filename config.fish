@@ -6,10 +6,11 @@ end
 
 set -g theme_display_hg yes
 set -g theme_show_exit_status yes
-set -g theme_color_scheme gruvbox
+set -g theme_color_scheme solarized-light
 set -Ux BAT_THEME gruvbox
 set -Ux ERL_AFLAGS "-kernel shell_history enabled"
 set -gx EDITOR nvim
+set -g fish_term24bit 1
 
 set -x FZF_DEFAULT_COMMAND "rg -S --files --follow --hidden --glob '!.hg' --glob '!.git' --glob '!vendor' --glob '!data'"
 set -x FZF_CTRL_T_OPTS "--height 100% --preview '(bat --style=numbers --color=always {} || cat {}) 2> /dev/null | head -500'"
