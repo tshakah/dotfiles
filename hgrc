@@ -1,4 +1,5 @@
 [ui]
+editor = ~/source/scripts/hg_verbose_commit.sh
 interface = curses
 
 [extensions]
@@ -33,9 +34,6 @@ diffconflicts.priority=99
 pre-branch = ~/source/scripts/pre_hg_branch.sh
 pre-push = ~/source/scripts/pre_push_phpcbf.sh
 pre-push = ~/source/scripts/pre_push_phpcs.sh
-
-[ui]
-editor = ~/source/scripts/hg_verbose_commit.sh
 
 [color]
 mode=terminfo
