@@ -156,8 +156,8 @@ let g:far#source = 'rgnvim'
 nnoremap <buffer><silent> <C-J> :call g:far#scroll_preview_window(-g:far#preview_window_scroll_step)<cr>
 nnoremap <buffer><silent> <C-K> :call g:far#scroll_preview_window(g:far#preview_window_scroll_step)<cr>
 
-Plug 'lotabout/skim.vim'
-set rtp+=~/.skim
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
 Plug 'justinmk/vim-sneak'
 let g:sneak#label = 1
@@ -174,7 +174,6 @@ let g:fzf_files_options = '--color "border:#6699cc,info:#fabd2f"'
 let g:fzf_layout = { 'down': '~40%' }
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 let $FZF_DEFAULT_COMMAND="rg -S --files --follow --hidden --glob '!.hg' --glob '!.git' --glob '!vendor' --glob '!data' --glob '!_build' --glob '!.elixir_ls'"
-let $SKIM_DEFAULT_COMMAND="rg -S --files --follow --hidden --glob '!.hg' --glob '!.git' --glob '!vendor' --glob '!data' --glob '!_build' --glob '!.elixir_ls'"
 let g:fzf_action = {
   \ 'ctrl-t': 'tab split',
   \ 'ctrl-x': 'split',
