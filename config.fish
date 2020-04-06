@@ -6,8 +6,8 @@ end
 
 set -g theme_display_hg yes
 set -g theme_show_exit_status yes
-set -g theme_color_scheme solarized-light
-set -Ux BAT_THEME gruvbox
+set -g theme_color_scheme gruvbox
+set -Ux BAT_THEME base16
 set -Ux ERL_AFLAGS "-kernel shell_history enabled"
 set -gx EDITOR nvim
 set -g fish_term24bit 1

@@ -121,7 +121,7 @@ Plug 'haya14busa/vim-asterisk'
 Plug 'tpope/vim-sensible'
 Plug 'tommcdo/vim-exchange'
 Plug 'ConradIrwin/vim-bracketed-paste'
-Plug 'icymind/NeoSolarized'
+Plug 'morhetz/gruvbox'
 
 Plug 'FooSoft/vim-argwrap'
 nnoremap <silent> <leader>a :ArgWrap<CR>
@@ -369,9 +369,10 @@ highlight ColorColumn ctermbg=235
 filetype plugin on
 
 " Theme
-set background=light
-colorscheme NeoSolarized
+set background=dark
+let g:gruvbox_italic=1
 set termguicolors
+colorscheme gruvbox
 
 " IO
 set confirm " confirm changed files
@@ -392,7 +393,7 @@ noremap <leader>y "+y
 
 " Lightline
 let g:lightline = {
-  \   'colorscheme': 'solarized',
+  \   'colorscheme': 'gruvbox',
   \   'active': {
   \     'left':[ [ 'mode', 'paste' ],
   \              [ 'gitbranch', 'readonly', 'modified', 'buffers' ]
