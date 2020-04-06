@@ -432,9 +432,6 @@ let g:lightline = {
     "" End completion
     "Plug 'tpope/vim-endwise'
 
-    "" RACER!
-    "Plug 'phildawes/racer'
-
     "" Unimpaired vim!
     "Plug 'tpope/vim-unimpaired'
 
@@ -444,9 +441,6 @@ let g:lightline = {
     "Plug 'junegunn/goyo.vim'
     "Plug 'junegunn/limelight.vim'
     "Plug 'phux/vim-hardtime'
-
-    "Plug 'OmniSharp/omnisharp-vim'
-    "Plug 'OrangeT/vim-csharp'
 
     "Plug 'pangloss/vim-javascript'
     "Plug 'ternjs/tern_for_vim'
