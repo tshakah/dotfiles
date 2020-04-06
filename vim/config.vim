@@ -252,6 +252,17 @@ Plug 'elmcast/elm-vim'
 
 
 " PHP
+Plug 'StanAngeloff/php.vim'
+function! PhpSyntaxOverride()
+  hi phpUseNamespaceSeparator guifg=#808080 guibg=NONE gui=NONE
+  hi phpClassNamespaceSeparator guifg=#808080 guibg=NONE gui=NONE
+endfunction
+
+augroup phpSyntaxOverride
+  autocmd!
+  autocmd FileType php call PhpSyntaxOverride()
+augroup END
+
 Plug 'rayburgemeestre/phpfolding.vim'
 
 Plug 'vim-vdebug/vdebug'
