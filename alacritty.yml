@@ -36,13 +36,6 @@ scrolling:
   # scrollback is enabled (history > 0).
   multiplier: 3
 
-  # Automatically scroll to the bottom when new text is written
-  # to the terminal.
-  auto_scroll: false
-
-# Display tabs using this many cells (changes require restart)
-tabspaces: 4
-
 # Font configuration (changes require restart)
 #
 # Important font attributes like antialiasing, subpixel aa, and hinting can be
