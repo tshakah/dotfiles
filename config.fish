@@ -41,6 +41,8 @@ alias our 'z adventure; and nix-shell'
 alias ner 'z ner; and nix-shell'
 alias dot 'z dotfiles'
 alias scr 'z scripts'
+alias ls '~/source/scripts/lc.sh'
+alias cat '~/source/scripts/lc.sh'
 
 source ~/.config/fish/gnupg.fish
 
@@ -54,4 +56,9 @@ function vpn
         sudo systemctl start openvpn-cap
         systemctl status openvpn-cap
     end
+end
+
+function ensure
+    mkdir -p (dirname $argv)
+    touch $argv
 end
