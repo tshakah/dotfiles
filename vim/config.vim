@@ -203,14 +203,6 @@ endfunction
 
 
 " Syntax
-Plug 'neomake/neomake'
-autocmd! BufWritePost * Neomake
-autocmd! BufReadPost * Neomake
-let g:neomake_elixir_enabled_makers = ['mix', 'credo']
-let g:neomake_php_phpcs_args_standard = "SHAKA"
-let g:neomake_phpstan_level = 7
-let g:neomake_php_phpmd_args = ['%:p', 'text', '/home/elishahastings/source/dotfiles/phpmd-ruleset.xml']
-
 Plug 'sbdchd/neoformat'
 let g:neoformat_php_phpcbf = {
       \ 'exe': 'phpcbf',
@@ -403,9 +395,6 @@ set undodir=$HOME/.config/nvim/undo/ " where to store undofiles
 set undofile " enable undofile
 set undolevels=500 " max undos stored
 set undoreload=10000 " buffer stored undos
-
-" Commands
-call neomake#configure#automake('nrwi', 500)
 
 " Yank(copy) to system clipboard
 noremap <leader>y "+y

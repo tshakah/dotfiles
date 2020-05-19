@@ -1,15 +1,56 @@
 {
-  "codeLens.enable": true,
-  "languageserver": {
-     "elixirLS": {
-      "command": "~/source/tools/elixir-ls/release/language_server.sh",
-      "filetypes": ["elixir", "eelixir"]
-     },
-     "purescript": {
-       "command": "~/.npm/lib/node_modules/purescript-language-server/cli.js",
-       "args": ["--stdio"],
-       "filetypes": ["purescript"],
-       "rootPatterns": ["packages.dhall", "spago.dhall"]
-     }
-  }
+    "codeLens.enable": true,
+    "intelephense.files.exclude": [
+        "**/.git/**"
+    ],
+    "intelephense.diagnostics": {
+        "unusedSymbols": false
+    },
+    "languageserver": {
+        "elixirLS": {
+            "command": "~/source/tools/elixir-ls/release/language_server.sh",
+            "filetypes": ["elixir", "eelixir"]
+        },
+        "purescript": {
+            "command": "~/.npm/lib/node_modules/purescript-language-server/cli.js",
+            "args": ["--stdio"],
+            "filetypes": ["purescript"],
+            "rootPatterns": ["packages.dhall", "spago.dhall"]
+        },
+        "dls": {
+            "command": "diagnostic-languageserver",
+            "args": [ "--stdio" ],
+            "filetypes": [ "php" ],
+            "initializationOptions": {
+                "linters": {
+                    "phpcs": {
+                        "command": "phpcs",
+                        "debounce": 100,
+                        "rootPatterns": [ "composer.json", "composer.lock", "vendor", ".git" ],
+                        "args": [ "--standard=SHAKA", "--report=emacs", "-s", "-" ],
+                        "offsetLine": 0,
+                        "offsetColumn": 0,
+                        "sourceName": "phpcs",
+                        "formatLines": 1,
+                        "formatPattern": [
+                            "^.*:(\\d+):(\\d+):\\s+(.*)\\s+-\\s+(.*)$",
+                            {
+                                "line": 1,
+                                "column": 2,
+                                "message": 4,
+                                "security": 3
+                            }
+                        ],
+                        "securities": {
+                            "error": "error",
+                            "warning": "warning"
+                        }
+                    }
+                },
+                "filetypes": {
+                    "php": ["phpcs", "phpstan", "psalm"]
+                }
+            }
+        }
+    }
 }
