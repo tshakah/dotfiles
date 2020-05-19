@@ -285,7 +285,7 @@ highlight DbgCurrentLine ctermbg=none ctermfg=none
 highlight DbgCurrentSign ctermbg=none ctermfg=red
 
 
-" REPL
+" REPL(ish)
 augroup replcmds
   autocmd! replcmds
   autocmd Filetype rust nmap <buffer> <silent> <F7> <ESC>println!("{:?}",);<ESC>:w<CR>hh
