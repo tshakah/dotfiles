@@ -376,14 +376,16 @@ endfunction
 execute "set colorcolumn=" . join(range(121,335), ',')
 highlight ColorColumn ctermbg=235
 
-" Syntax highlighting
-filetype plugin on
-
 " Theme
 set background=dark
 let g:gruvbox_italic=1
 set termguicolors
 colorscheme gruvbox
+
+" Syntax highlighting
+syntax on
+filetype on
+filetype plugin indent on
 
 " IO
 set confirm " confirm changed files
