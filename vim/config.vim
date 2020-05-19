@@ -227,7 +227,6 @@ let g:neoformat_enabled_php = ['phpcbf']
 nnoremap <leader>nf :Neoformat<cr>
 
 " VCS and remote stuff
-Plug 'junkblocker/patchreview-vim'
 Plug 'tpope/vim-fugitive'
 Plug 'ludovicchabant/vim-lawrencium'
 Plug 'whiteinge/diffconflicts'
