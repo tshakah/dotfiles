@@ -403,11 +403,15 @@ call neomake#configure#automake('nrwi', 500)
 noremap <leader>y "+y
 
 " Lightline
+function! CocCurrentFunction()
+    return get(b:, 'coc_current_function', '')
+endfunction
+
 let g:lightline = {
   \   'colorscheme': 'gruvbox',
   \   'active': {
   \     'left':[ [ 'mode', 'paste' ],
-  \              [ 'gitbranch', 'readonly', 'modified', 'buffers' ]
+  \              [ 'cocstatus', 'gitbranch', 'readonly', 'modified', 'buffers' ]
   \     ]
   \   },
   \   'component': {
@@ -421,6 +425,8 @@ let g:lightline = {
   \   },
   \   'component_function': {
   \     'gitbranch': 'fugitive#head',
+  \     'cocstatus': 'coc#status',
+  \     'currentfunction': 'CocCurrentFunction'
   \   }
   \ }
 
