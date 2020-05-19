@@ -250,6 +250,7 @@ Plug 'elixir-editors/vim-elixir'
 
 " Elm
 Plug 'elmcast/elm-vim'
+let g:elm_format_autosave = 1
 
 
 " PHP
