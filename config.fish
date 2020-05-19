@@ -7,6 +7,7 @@ end
 set -g theme_show_exit_status yes
 set -g theme_color_scheme gruvbox
 set -Ux BAT_THEME base16
+set -Ux NODE_PATH "~/.npm"
 set -Ux ERL_AFLAGS "-kernel shell_history enabled"
 set -gx EDITOR nvim
 set -g fish_term24bit 1
