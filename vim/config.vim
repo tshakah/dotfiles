@@ -140,6 +140,8 @@ Plug 'mhinz/vim-signify'
 
 
 " Search and navigation
+Plug 'pechorin/any-jump.vim'
+
 Plug 'vim-ctrlspace/vim-ctrlspace'
 let g:CtrlSpaceDefaultMappingKey = "<C-space> "
 set showtabline=0
