@@ -17,7 +17,7 @@ set -x FZF_CTRL_T_OPTS "--height 100% --preview '(bat --style=numbers --color=al
 
 set -e fish_user_paths
 
-set --universal fish_user_paths $fish_user_paths ~/.npm/node_modules/bin/
+set --universal fish_user_paths $fish_user_paths ~/.npm/bin/
 set --universal fish_user_paths $fish_user_paths ~/.cargo/bin/
 
 fish_default_key_bindings -M insert
