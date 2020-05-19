@@ -1,0 +1,15 @@
+{
+  "codeLens.enable": true,
+  "languageserver": {
+     "elixirLS": {
+      "command": "~/source/tools/elixir-ls/release/language_server.sh",
+      "filetypes": ["elixir", "eelixir"]
+     },
+     "purescript": {
+       "command": "~/.npm/lib/node_modules/purescript-language-server/cli.js",
+       "args": ["--stdio"],
+       "filetypes": ["purescript"],
+       "rootPatterns": ["packages.dhall", "spago.dhall"]
+     }
+  }
+}
