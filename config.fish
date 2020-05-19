@@ -4,7 +4,6 @@ if not functions -q fisher
     fish -c fisher
 end
 
-set -g theme_display_hg yes
 set -g theme_show_exit_status yes
 set -g theme_color_scheme gruvbox
 set -Ux BAT_THEME base16
@@ -12,7 +11,7 @@ set -Ux ERL_AFLAGS "-kernel shell_history enabled"
 set -gx EDITOR nvim
 set -g fish_term24bit 1
 
-set -x FZF_DEFAULT_COMMAND "rg -S --files --follow --hidden --glob '!.hg' --glob '!.git' --glob '!vendor' --glob '!data'"
+set -x FZF_DEFAULT_COMMAND "rg -S --files --follow --hidden --glob '!.git' --glob '!vendor' --glob '!data'"
 set -x FZF_CTRL_T_OPTS "--height 100% --preview '(bat --style=numbers --color=always {} || cat {}) 2> /dev/null | head -500'"
 
 set -e fish_user_paths
@@ -42,8 +41,6 @@ alias our 'z adventure; and nix-shell'
 alias ner 'z ner; and nix-shell'
 alias dot 'z dotfiles'
 alias scr 'z scripts'
-alias hgp 'hg push --new-branch'
-alias hgb 'hg log --branch (hg branch) -G'
 
 source ~/.config/fish/gnupg.fish
 
