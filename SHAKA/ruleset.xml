@@ -13,6 +13,47 @@
         <exclude name="PSR2.Methods.MethodDeclaration.Underscore"/>
     </rule>
 
+    <rule ref="PSR12">
+        <exclude name="PSR12.Files.FileHeader"/>
+        <exclude name="PSR12.Files.OpenTag"/>
+        <exclude name="PSR12.Files.DeclareStatement.SpaceFoundAfterDirective"/>
+        <exclude name="PSR12.Files.DeclareStatement.SpaceFoundBeforeDirectiveValue"/>
+        <exclude name="PSR12.Operators.OperatorSpacing.NoSpaceBefore"/>
+        <exclude name="PSR12.Operators.OperatorSpacing.NoSpaceAfter"/>
+        <exclude name="Generic.Formatting.SpaceAfterCast.NoSpace"/>
+        <exclude name="PSR12.Classes.ClassInstantiation.MissingParentheses"/>
+    </rule>
+
+    <!-- Disabled until we upgrade to >= PHP 7.4
+    <rule ref="SlevomatCodingStandard.Numbers.RequireNumericLiteralSeparator"/>
+    <rule ref="SlevomatCodingStandard.Functions.RequireArrowFunction"/>
+    <rule ref="SlevomatCodingStandard.Functions.ArrowFunctionDeclaration"/>
+    <rule ref="SlevomatCodingStandard.ControlStructures.RequireNullCoalesceEqualOperator"/>
+
+    OR until we have discussed.
+    NOTE: Comments in this section will need to be fixed when it is uncommented.
+    <rule ref="SlevomatCodingStandard.Classes.ClassStructure">
+        <properties>
+            <property name="groups" type="array">
+                <element value="uses"/>
+
+                <!- Public constants are first but you don't care about the order of protected or private constants ->
+                <element value="public constants"/>
+                <element value="constants"/>
+
+                <!- You don't care about the order among the properties. The same can be done with "properties" shortcut ->
+                <element value="public properties, protected properties, private properties"/>
+
+                <!- Constructor is first, then all public methods, then protected/private methods and magic methods are last ->
+                <element value="constructor"/>
+                <element value="all public methods"/>
+                <element value="methods"/>
+                <element value="magic methods"/>
+            </property>
+        </properties>
+    </rule>
+    -->
+
     <!-- Disallow else if in favor of elseif -->
     <rule ref="PSR2.ControlStructures.ElseIfDeclaration.NotAllowed">
         <type>error</type>
@@ -112,13 +153,44 @@
     <!-- Include a selection of the Slevomat standard -->
     <rule ref="SlevomatCodingStandard.Arrays.TrailingArrayComma"/>
     <rule ref="SlevomatCodingStandard.Arrays.DisallowImplicitArrayCreation"/>
+    <rule ref="SlevomatCodingStandard.Arrays.MultiLineArrayEndBracketPlacement"/>
+    <rule ref="SlevomatCodingStandard.Arrays.SingleLineArrayWhitespace"/>
 
+    <rule ref="SlevomatCodingStandard.Classes.ClassMemberSpacing"/>
+    <rule ref="SlevomatCodingStandard.Classes.MethodSpacing"/>
+    <rule ref="SlevomatCodingStandard.Classes.DisallowMultiConstantDefinition"/>
+    <rule ref="SlevomatCodingStandard.Classes.ConstantSpacing"/>
+    <rule ref="SlevomatCodingStandard.Classes.PropertySpacing"/>
     <rule ref="SlevomatCodingStandard.Classes.TraitUseDeclaration"/>
+    <rule ref="SlevomatCodingStandard.Classes.ParentCallSpacing">
+		<properties>
+			<property name="linesCountBeforeParentCall" value="0"/>
+			<property name="linesCountBeforeFirstParentCall" value="0"/>
+			<property name="linesCountAfterParentCall" value="0"/>
+			<property name="linesCountAfterLastParentCall" value="0"/>
+		</properties>
+    </rule>
     <rule ref="SlevomatCodingStandard.Classes.UnusedPrivateElements">
 		<properties>
-			<property name="alwaysUsedPropertiesAnnotations" type="array" value="@Column"/>
+			<property name="alwaysUsedPropertiesAnnotations" type="array">
+                <element value="@Column"/>
+                <element value="@OneToOne"/>
+                <element value="@OneToMany"/>
+                <element value="@ManyToOne"/>
+                <element value="@ManyToMany"/>
+            </property>
 		</properties>
 	</rule>
+    <rule ref="SlevomatCodingStandard.Classes.RequireSingleLineMethodSignature">
+		<properties>
+			<property name="maxLineLength" value="120"/>
+        </properties>
+    </rule>
+    <rule ref="SlevomatCodingStandard.Classes.RequireMultiLineMethodSignature">
+		<properties>
+			<property name="maxLineLength" value="121"/>
+        </properties>
+    </rule>
     <rule ref="SlevomatCodingStandard.Classes.SuperfluousInterfaceNaming"/>
     <rule ref="SlevomatCodingStandard.Classes.SuperfluousExceptionNaming"/>
     <rule ref="SlevomatCodingStandard.Classes.SuperfluousAbstractClassNaming"/>
@@ -136,6 +208,11 @@
     <rule ref="SlevomatCodingStandard.Commenting.InlineDocCommentDeclaration"/>
     <rule ref="SlevomatCodingStandard.Commenting.UselessInheritDocComment"/>
 
+    <rule ref="SlevomatCodingStandard.ControlStructures.RequireSingleLineCondition">
+        <properties>
+            <property name="maxLineLength" value="120"/>
+        </properties>
+    </rule>
     <rule ref="SlevomatCodingStandard.ControlStructures.AssignmentInCondition"/>
     <rule ref="SlevomatCodingStandard.ControlStructures.DisallowYodaComparison"/>
     <rule ref="SlevomatCodingStandard.ControlStructures.RequireNullCoalesceOperator"/>
@@ -152,12 +229,20 @@
         <type>warning</type>
         <properties>
             <property name="ignoreStandaloneIfInScope" value="true"/>
+            <property name="ignoreOneLineTrailingIf" value="true"/>
         </properties>
     </rule>
 
     <rule ref="SlevomatCodingStandard.Exceptions.DeadCatch"/>
     <rule ref="SlevomatCodingStandard.Exceptions.ReferenceThrowableOnly"/>
 
+    <rule ref="SlevomatCodingStandard.Files.LineLength">
+        <properties>
+            <property name="lineLengthLimit" value="120"/>
+        </properties>
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.Variables.DisallowSuperGlobalVariable"/>
     <rule ref="SlevomatCodingStandard.Variables.DuplicateAssignmentToVariable"/>
     <rule ref="SlevomatCodingStandard.Variables.UselessVariable"/>
     <rule ref="SlevomatCodingStandard.Variables.UnusedVariable">
@@ -166,11 +251,13 @@
         </properties>
     </rule>
 
+    <rule ref="SlevomatCodingStandard.Functions.StrictCall"/>
     <rule ref="SlevomatCodingStandard.Functions.UselessParameterDefaultValue"/>
     <rule ref="SlevomatCodingStandard.Functions.UnusedParameter"/>
     <rule ref="SlevomatCodingStandard.Functions.UnusedInheritedVariablePassedToClosure"/>
     <rule ref="SlevomatCodingStandard.Functions.StaticClosure"/>
     <rule ref="SlevomatCodingStandard.Functions.UselessParameterDefaultValue"/>
+    <rule ref="SlevomatCodingStandard.Functions.DisallowEmptyFunction"/>
 
     <rule ref="SlevomatCodingStandard.Namespaces.UselessAlias"/>
     <rule ref="SlevomatCodingStandard.Namespaces.DisallowGroupUse"/>
@@ -210,18 +297,17 @@
 
     <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes"/>
     <rule ref="SlevomatCodingStandard.TypeHints.LongTypeHints"/>
-    <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHintSpacing"/>
-    <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHintSpacing"/>
     <rule ref="SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue"/>
     <rule ref="SlevomatCodingStandard.TypeHints.NullTypeHintOnLastPosition"/>
     <rule ref="SlevomatCodingStandard.TypeHints.UselessConstantTypeHint"/>
-    <rule ref="SlevomatCodingStandard.TypeHints.TypeHintDeclaration">
-        <properties>
-            <property name="allAnnotationsAreUseful" value="true"/>
-            <property name="enableEachParameterAndReturnInspection" value="true"/>
-        </properties>
-    </rule>
+    <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHintSpacing"/>
+    <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint"/>
+    <rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHintSpacing"/>
+    <rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint"/>
+    <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHintSpacing"/>
+    <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint"/>
 
+    <rule ref="SlevomatCodingStandard.PHP.DisallowDirectMagicInvokeCall"/>
     <rule ref="SlevomatCodingStandard.PHP.ReferenceSpacing"/>
     <rule ref="SlevomatCodingStandard.PHP.ShortList"/>
     <rule ref="SlevomatCodingStandard.PHP.TypeCast"/>
@@ -235,6 +321,8 @@
     <rule ref="SlevomatCodingStandard.Commenting.EmptyComment"/>
     <rule ref="SlevomatCodingStandard.Commenting.InlineDocCommentDeclaration"/>
     <rule ref="SlevomatCodingStandard.Commenting.RequireOneLinePropertyDocComment"/>
+    <rule ref="SlevomatCodingStandard.Commenting.RequireOneLineDocComment"/>
+    <rule ref="SlevomatCodingStandard.Commenting.UselessFunctionDocComment"/>
     <rule ref="SlevomatCodingStandard.Commenting.DocCommentSpacing">
 		<properties>
             <property name="linesCountBeforeFirstContent" value="0"/>
@@ -269,6 +357,9 @@
 		</properties>
 	</rule>
 
+    <rule ref="SlevomatCodingStandard.Operators.NegationOperatorSpacing"/>
     <rule ref="SlevomatCodingStandard.Operators.RequireOnlyStandaloneIncrementAndDecrementOperators"/>
     <rule ref="SlevomatCodingStandard.Operators.RequireCombinedAssignmentOperator"/>
+
+    <rule ref="SlevomatCodingStandard.Whitespaces.DuplicateSpaces"/>
 </ruleset>
