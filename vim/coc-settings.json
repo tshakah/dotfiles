@@ -7,6 +7,11 @@
         "unusedSymbols": false
     },
     "languageserver": {
+        "elmLS": {
+            "command": "elm-language-server",
+            "filetypes": ["elm"],
+            "rootPatterns": ["elm.json"]
+        },
         "elixirLS": {
             "command": "~/source/tools/elixir-ls/release/language_server.sh",
             "filetypes": ["elixir", "eelixir"]
