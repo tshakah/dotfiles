@@ -287,10 +287,6 @@ augroup replcmds
 augroup end
 
 
-" Organisation
-Plug 'jceb/vim-orgmode'
-
-
 call plug#end()
 
 """"""""""""
