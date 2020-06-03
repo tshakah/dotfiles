@@ -44,6 +44,7 @@ alias dot 'z dotfiles'
 alias scr 'z scripts'
 alias ls '~/source/scripts/lc.sh'
 alias cat '~/source/scripts/lc.sh'
+alias git '~/source/scripts/git.sh'
 
 source ~/.config/fish/gnupg.fish
 
