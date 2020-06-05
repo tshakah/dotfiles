@@ -18,6 +18,9 @@ call system("mkdir -p $HOME/.config/nvim/{swap,undo}")
 call plug#begin("~/.config/nvim/plugged")
 
 
+" Environment
+Plug 'tpope/vim-dotenv'
+
 " Autocompletion
 Plug 'Shougo/echodoc.vim'
 let g:echodoc#enable_at_startup = 1
@@ -285,6 +288,11 @@ augroup replcmds
   autocmd Filetype php nmap <buffer> <silent> <F7> <ESC>oeval(\Psy\sh());<ESC>:w<CR>
   autocmd Filetype elixir nmap <buffer> <silent> <F7> <ESC>orequire IEx; IEx.pry<ESC> :w<CR>
 augroup end
+
+
+" Databases
+Plug 'tpope/vim-dadbod'
+Plug 'kristijanhusak/vim-dadbod-ui'
 
 
 call plug#end()
