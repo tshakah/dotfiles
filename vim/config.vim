@@ -289,6 +289,7 @@ augroup end
 " Databases
 Plug 'tpope/vim-dadbod'
 Plug 'kristijanhusak/vim-dadbod-ui'
+nmap <C-]> :DBUI<CR>
 
 
 call plug#end()
