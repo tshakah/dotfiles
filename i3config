@@ -211,3 +211,12 @@ mode "$mode_system" {
 }
 
 bindsym $mod+Control+l mode "$mode_system"
+
+#input type:keyboard {
+#    xkb_layout gb
+#    xkb_options caps:escape
+#}
+#
+#input type:touchpad {
+#    natural_scroll enabled
+#}
