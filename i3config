@@ -161,7 +161,7 @@ bar {
   mode hide
   modifier Mod1
   font pango:DejaVu Sans Mono for Powerline Bold
-  status_command i3status-rs ~/.config/i3/status.toml
+  status_command i3status-rs
   colors {
     background #282a2e
     statusline #fbf1c7
