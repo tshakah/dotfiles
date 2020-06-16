@@ -145,11 +145,6 @@ Plug 'mhinz/vim-signify'
 
 " Search and navigation
 Plug 'pechorin/any-jump.vim'
-
-Plug 'vim-ctrlspace/vim-ctrlspace'
-let g:CtrlSpaceDefaultMappingKey = "<C-space> "
-set showtabline=0
-
 Plug 'machakann/vim-highlightedyank'
 Plug 'simeji/winresizer'
 Plug 'wellle/targets.vim'
@@ -192,6 +187,7 @@ command! -bang -nargs=? -complete=dir Files
   \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 
 nmap <C-p> :Files<CR>
+nmap <C-space> :Buffers<CR>
 
 function! s:buflist()
   redir => ls
