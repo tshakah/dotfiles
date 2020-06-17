@@ -45,6 +45,7 @@ alias scr 'z scripts'
 alias ls '~/source/scripts/lc.sh'
 alias cat '~/source/scripts/lc.sh'
 alias git '~/source/scripts/git.sh'
+alias ssh 'env TERM=xterm-256color ssh'
 
 source ~/.config/fish/gnupg.fish
 
