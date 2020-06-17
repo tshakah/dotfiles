@@ -12,10 +12,16 @@ set -Ux ERL_AFLAGS "-kernel shell_history enabled"
 set -gx EDITOR nvim
 set -g fish_term24bit 1
 
-set -x FZF_DEFAULT_COMMAND "rg -S --files --follow --hidden --glob '!.git' --glob '!vendor' --glob '!data'"
+set -x FZF_DEFAULT_COMMAND "rg -S --files --follow --hidden --glob '!.git' --glob '!vendor' --glob '!data' --color=always"
+set -x FZF_DEFAULT_OPTS "
+  --color fg:#ebdbb2,bg:#282828,hl:#fabd2f,fg+:#ebdbb2,bg+:#3c3836,hl+:#fabd2f
+  --color info:#83a598,prompt:#bdae93,spinner:#fabd2f,pointer:#83a598,marker:#fe8019,header:#665c54
+"
 set -x FZF_CTRL_T_OPTS "--height 100% --preview '(bat --style=numbers --color=always {} || cat {}) 2> /dev/null | head -500'"
 
 set -e fish_user_paths
+
+bash "$HOME/.config/nvim/plugged/gruvbox/gruvbox_256palette.sh"
 
 set --universal fish_user_paths $fish_user_paths ~/.npm/bin/
 set --universal fish_user_paths $fish_user_paths ~/.cargo/bin/
