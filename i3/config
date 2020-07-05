@@ -15,6 +15,7 @@ exec --no-startup-id greenclip daemon
 bindsym $mod+c exec --no-startup-id rofi -modi "clipboard:greenclip print" -show clipboard -theme "~/.config/rofi/config.rasi"
 
 exec --no-startup-id nm-applet
+exec --no-startup-id redshift -m wayland
 
 # Auto change display conf
 exec --no-startup-id srandrd autorandr -c
@@ -42,8 +43,8 @@ bindsym $mod+Shift+q kill
 bindsym $mod+d exec rofi -show combi -terminal ghostty -theme "~/.config/rofi/config.rasi"
 
 # screenshots
-bindsym --release $mod+Shift+s exec "maim -s -D -b 3 ~/$(date +%Y-%m-%d::%T).png"
-bindsym --release Print exec "maim ~/$(date +%Y-%m-%d::%T).png"
+bindsym --release $mod+Shift+s exec grim -g "$(slurp)"
+bindsym --release Print exec grim
 
 # Task manager
 bindsym --release $mod+Control+Delete exec mate-system-monitor
@@ -146,11 +147,7 @@ workspace $ws4 output DisplayPort-0 eDP1 eDP
 workspace $ws5 output DisplayPort-0 eDP1 eDP
 
 # reload the configuration file
-#bindsym $mod+Shift+c reload
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r restart
-# exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Shift+r exec "swaymsg reload"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -268,5 +265,15 @@ bindsym XF86AudioMute exec --no-startup-id "amixer -D pipewire sset Master toggl
 bindsym XF86AudioMicMute exec --no-startup-id "amixer -D pipewire sset Capture toggle"
 
 # Toggle mousepad
-set $mouse ELAN1201:00 04F3:3098 Touchpad
-bindsym XF86TouchpadToggle exec --no-startup-id "xinput list '$mouse' | grep disabled && xinput enable '$mouse' && notify-send -t 1000 'Mouse enabled' || $(xinput disable '$mouse' && notify-send -t 1000 'Mouse disabled')"
+#set $mouse ELAN1201:00 04F3:3098 Touchpad
+#bindsym XF86TouchpadToggle exec --no-startup-id "xinput list '$mouse' | grep disabled && xinput enable '$mouse' && notify-send -t 1000 'Mouse enabled' || $(xinput disable '$mouse' && notify-send -t 1000 'Mouse disabled')"
+
+input type:keyboard {
+    xkb_layout gb
+    xkb_options caps:escape
+}
+
+input type:touchpad {
+    natural_scroll enabled
+    tap enabled
+}
