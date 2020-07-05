@@ -6,10 +6,12 @@ end
 
 set -g theme_show_exit_status yes
 set -g theme_color_scheme gruvbox
-set -Ux BAT_THEME base16
-set -Ux NODE_PATH "~/.npm"
-set -Ux ERL_AFLAGS "-kernel shell_history enabled"
+set -g theme_display_nix yes
+set -gx BAT_THEME gruvbox
+set -gx NODE_PATH "~/.npm"
+set -gx ERL_AFLAGS "-kernel shell_history enabled"
 set -gx EDITOR nvim
+set -gx NIX_SHELL_PROMPT $SHLVL
 set -g fish_term24bit 1
 
 set -x FZF_DEFAULT_COMMAND "rg -S --files --follow --hidden --glob '!.git' --glob '!vendor' --glob '!data' --color=always"
@@ -23,8 +25,9 @@ set -e fish_user_paths
 
 bash "$HOME/.config/nvim/plugged/gruvbox/gruvbox_256palette.sh"
 
-set --universal fish_user_paths $fish_user_paths ~/.npm/bin/
-set --universal fish_user_paths $fish_user_paths ~/.cargo/bin/
+contains $fish_user_paths ~/.npm/bin; or set -Ua fish_user_paths ~/.npm/bin
+contains $fish_user_paths ~/.cargo/bin; or set -Ua fish_user_paths ~/.cargo/bin
+contains $fish_user_paths ~/.local/bin; or set -Ua fish_user_paths ~/.local/bin
 
 fish_default_key_bindings -M insert
 bind \e\[1\;5C forward-word
