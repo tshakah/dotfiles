@@ -1,5 +1,8 @@
-[theme]
-name = "gruvbox-dark"
+theme = "gruvbox-dark"
+scrolling = "reverse"
+
+[icons]
+name = "awesome5"
 
 [[block]]
 block = "focused_window"
