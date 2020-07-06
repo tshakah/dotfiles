@@ -1,6 +1,6 @@
 {
     global = {
-        font = "Roboto Mono For Powerline Regular 10";
+        font = "Inconsolata Regular 10";
         markup = "full";
         format = "<b>%s</b>\\n%b";
         sort = "yes";
