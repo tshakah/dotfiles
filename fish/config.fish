@@ -40,7 +40,7 @@ bind -M visual \e\[1\;5D backward-word
 alias nix-shell "nix-shell --run fish"
 alias rg "rg -S -M 200 --glob '!vendor' --glob '!data'"
 alias vi 'nvim'
-alias ls 'ls --color=tty'
+alias ls 'lsd'
 alias hope 'z hope; and nix-shell'
 alias imbr 'z imbr; and nix-shell'
 alias aire 'z aire; and nix-shell'
