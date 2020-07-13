@@ -40,7 +40,6 @@ bind -M visual \e\[1\;5D backward-word
 alias nix-shell "nix-shell --run fish"
 alias rg "rg -S -M 200 --glob '!vendor' --glob '!data'"
 alias vi 'nvim'
-alias ls 'lsd'
 alias dot 'z dotfiles'
 alias scr 'z scripts'
 alias ls '~/source/scripts/lc.sh'
