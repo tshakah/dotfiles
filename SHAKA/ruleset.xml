@@ -206,7 +206,6 @@
         </properties>
     </rule>
     <!-- Forbid single-line method definitions that are too long -->
-    </rule>
     <rule ref="SlevomatCodingStandard.Classes.RequireMultiLineMethodSignature">
 		<properties>
 			<property name="maxLineLength" value="121"/>
