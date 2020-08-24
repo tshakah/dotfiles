@@ -20,7 +20,7 @@ focus_follows_mouse no
 
 # Hide borders
 hide_edge_borders smart
-default_border pixel
+default_border pixel 3
 
 # start a terminal
 bindsym $mod+Return exec alacritty
@@ -179,10 +179,11 @@ set $inactive-bg-color   #454849
 set $text-color          #fbf1c7
 set $inactive-text-color #a89884
 set $urgent-bg-color     #db3f3f
+set $active-bg-color     #98971a
 
 # window colors
 #                       border              background         text                 indicator          child border
-client.focused          $bg-color           $bg-color          $text-color          $bg-color          $bg-color
+client.focused          $active-bg-color    $active-bg-color   $text-color          $bg-color          $active-bg-color
 client.unfocused        $inactive-bg-color  $inactive-bg-color $inactive-text-color $inactive-bg-color $inactive-bg-color
 client.focused_inactive $inactive-bg-color  $inactive-bg-color $inactive-text-color $inactive-bg-color $inactive-bg-color
 client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color          $urgent-bg-color   $urgent-bg-color
