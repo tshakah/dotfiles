@@ -126,6 +126,24 @@ workspace "4: comms" output eDP1
 # reload the configuration file
 bindsym $mod+Shift+c exec "swaymsg reload"
 
+# Workspace groups
+set $exec_i3_groups exec --no-startup-id i3-workspace-groups
+
+# Switch active workspace group
+bindsym $mod+g exec --no-startup-id i3-switch-active-workspace-group
+
+# Assign workspace to a group
+bindsym $mod+Shift+g exec --no-startup-id i3-assign-workspace-to-group
+
+# Select workspace to focus on
+bindsym $mod+Ctrl+w exec --no-startup-id i3-focus-on-workspace
+
+# Move the focused container to another workspace
+bindsym $mod+Shift+w exec --no-startup-id i3-move-to-workspace
+
+# Rename/renumber workspace. Uses Super+Alt+n
+bindsym Mod1+Mod4+n exec --no-startup-id i3-rename-workspace
+
 # resize window (you can also use the mouse for that)
 mode "resize" {
   # These bindings trigger as soon as you enter the resize mode

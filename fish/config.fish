@@ -21,6 +21,8 @@ set -x FZF_DEFAULT_OPTS "
 "
 set -x FZF_CTRL_T_OPTS "--height 100% --preview '(bat --style=numbers --color=always {} || cat {}) 2> /dev/null | head -500'"
 
+set -x PYTHONPATH "$HOME/.local/lib/python3.8/site-packages:$PYTHONPATH"
+
 set -e fish_user_paths
 
 bash "$HOME/.config/nvim/plugged/gruvbox/gruvbox_256palette.sh"
