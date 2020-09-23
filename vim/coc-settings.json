@@ -1,4 +1,11 @@
 {
+    "diagnostic.checkCurrentLine": true,
+    "diagnostic.maxWindowHeight": 1,
+    "suggest.echodocSupport": true,
+    "suggest.maxCompleteItemCount": 20,
+    "suggest.floatEnable": true,
+    "suggest.enablePreview": true,
+    "coc.preferences.hoverTarget": "float",
     "codeLens.enable": true,
     "css.validate": false,
     "less.validate": false,
