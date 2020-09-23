@@ -41,14 +41,6 @@ alias nix-shell "nix-shell --run fish"
 alias rg "rg -S -M 200 --glob '!vendor' --glob '!data'"
 alias vi 'nvim'
 alias ls 'lsd'
-alias hope 'z hope; and nix-shell'
-alias imbr 'z imbr; and nix-shell'
-alias aire 'z aire; and nix-shell'
-alias ddw 'z worker; and nix-shell'
-alias pba 'z pba; and nix-shell'
-alias dash 'z dev_dashboard; and nix-shell'
-alias our 'z adventure; and nix-shell'
-alias ner 'z ner; and nix-shell'
 alias dot 'z dotfiles'
 alias scr 'z scripts'
 alias ls '~/source/scripts/lc.sh'
@@ -59,6 +51,10 @@ alias ssh 'env TERM=xterm-256color ssh'
 alias rm 'rm -I'
 
 source ~/.config/fish/gnupg.fish
+
+function ns
+  z $argv; and nix-shell
+end
 
 function vpn
     systemctl status openvpn-cap >/dev/null 2>&1
