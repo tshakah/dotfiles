@@ -121,8 +121,6 @@ workspace "2: terminal" output eDP1
 workspace "3: browser" output eDP1
 workspace "4: comms" output eDP1
 
-workspace "1: code"
-
 # reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
