@@ -1,5 +1,11 @@
 {
     "codeLens.enable": true,
+    "css.validate": false,
+    "less.validate": false,
+    "scss.validate": false,
+    "wxss.validate": false,
+    "stylelintplus.autoFixOnSave": true,
+    "stylelintplus.configFile": "./.stylelintrc",
     "intelephense.files.exclude": [
         "**/.git/**"
     ],
@@ -24,15 +30,15 @@
         },
         "dls": {
             "command": "diagnostic-languageserver",
-            "args": [ "--stdio" ],
-            "filetypes": [ "php" ],
+            "args": ["--stdio"],
+            "filetypes": ["php", "elixir", "eelixir"],
             "initializationOptions": {
                 "linters": {
                     "phpcs": {
                         "command": "phpcs",
                         "debounce": 100,
                         "rootPatterns": [ "composer.json", "composer.lock", "vendor", ".git" ],
-                        "args": [ "--standard=SHAKA", "--report=emacs", "-s", "-" ],
+                        "args": [ "--standard=CAPCS", "--report=emacs", "-s", "-" ],
                         "offsetLine": 0,
                         "offsetColumn": 0,
                         "sourceName": "phpcs",
@@ -50,10 +56,47 @@
                             "error": "error",
                             "warning": "warning"
                         }
+                    },
+                    "mix_credo": {
+                        "command": "mix",
+                        "debounce": 100,
+                        "rootPatterns": ["mix.exs"],
+                        "args": ["credo", "suggest", "--format", "flycheck", "--read-from-stdin"],
+                        "offsetLine": 0,
+                        "offsetColumn": 0,
+                        "sourceName": "mix_credo",
+                        "formatLines": 1,
+                        "formatPattern": [
+                            "^[^ ]+?:([0-9]+)(:([0-9]+))?:\\s+([^ ]+):\\s+(.*)$",
+                        {
+                            "line": 1,
+                            "column": 3,
+                            "message": 5,
+                            "security": 4
+                        }
+                        ],
+                        "securities": {
+                            "F": "warning",
+                            "C": "warning",
+                            "D": "info",
+                            "R": "info"
+                        }
                     }
                 },
+                "formatters": {
+                    "mix_format": {
+                        "command": "mix",
+                        "args": ["format", "-"]
+                    }
+                },
+                "formatFiletypes": {
+                    "elixir": "mix_format",
+                    "eelixir": "mix_format"
+                },
                 "filetypes": {
-                    "php": ["phpcs", "phpstan", "psalm"]
+                    "php": ["phpcs", "phpstan", "psalm"],
+                    "elixir": "mix_credo",
+                    "eelixir": "mix_credo"
                 }
             }
         }
