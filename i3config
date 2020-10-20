@@ -6,7 +6,7 @@ exec setxkbmap -layout gb
 exec xrdb -load ~/.Xresources
 exec --no-startup-id xsetroot -solid "#252525"
 exec --no-startup-id ~/source/scripts/distract.sh
-exec --no-startup-id redshift -m wayland
+exec --no-startup-id gammastep
 
 # Auto change display conf
 exec --no-startup-id srandrd autorandr -c
