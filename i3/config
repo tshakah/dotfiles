@@ -15,7 +15,7 @@ exec --no-startup-id greenclip daemon
 bindsym $mod+c exec --no-startup-id rofi -modi "clipboard:greenclip print" -show clipboard -theme "~/.config/rofi/config.rasi"
 
 exec --no-startup-id nm-applet
-exec --no-startup-id redshift -m wayland
+exec --no-startup-id gammastep
 
 # Auto change display conf
 exec --no-startup-id srandrd autorandr -c
