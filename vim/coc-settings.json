@@ -20,6 +20,12 @@
         "unusedSymbols": false
     },
     "languageserver": {
+        "psalmls": {
+            "command": "~/.config/composer/vendor/bin/psalm-language-server",
+            "filetypes": ["php"],
+            "rootPatterns": ["psalm.xml", "psalm.xml.dist"],
+            "requireRootPattern": true
+        },
         "elmLS": {
             "command": "elm-language-server",
             "filetypes": ["elm"],
@@ -41,11 +47,52 @@
             "filetypes": ["php", "elixir", "eelixir"],
             "initializationOptions": {
                 "linters": {
-                    "phpcs": {
-                        "command": "phpcs",
+                    "psalm": {
+                        "command": "~/.config/composer/vendor/bin/psalm",
+                        "debounce": 100,
+                        "rootPatterns": ["composer.json", "composer.lock", "vendor", ".git"],
+                        "args": ["--output-format=emacs", "--no-progress"],
+                        "offsetLine": 0,
+                        "offsetColumn": 0,
+                        "sourceName": "psalm",
+                        "formatLines": 1,
+                        "formatPattern": [
+                            "^[^:]+:(\\d):(\\d):(.*)\\s-\\s(.*)(\\r|\\n)*$",
+                            {
+                            "line": 1,
+                            "column": 2,
+                            "message": 4,
+                            "security": 3
+                            }
+                        ],
+                        "securities": {
+                            "error": "error",
+                            "warning": "warning"
+                        },
+                        "requiredFiles": ["psalm.xml"]
+                    },
+                    "phpstan": {
+                        "command": "phpstan",
                         "debounce": 100,
                         "rootPatterns": [ "composer.json", "composer.lock", "vendor", ".git" ],
-                        "args": [ "--standard=CAPCS", "--report=emacs", "-s", "-" ],
+                        "args": [ "analyze", "--error-format", "raw", "--no-progress", "%file" ],
+                        "offsetLine": 0,
+                        "offsetColumn": 0,
+                        "sourceName": "phpstan",
+                        "formatLines": 1,
+                        "formatPattern": [
+                            "^[^:]+:(\\d+):(.*)(\\r|\\n)*$",
+                            {
+                            "line": 1,
+                            "message": 2
+                            }
+                        ]
+                    },
+                    "phpcs": {
+                        "command": "./bin/phpcs",
+                        "debounce": 100,
+                        "rootPatterns": [ "composer.json", "composer.lock", "vendor", ".git" ],
+                        "args": [ "--standard=phpcs.xml", "--report=emacs", "-s", "-" ],
                         "offsetLine": 0,
                         "offsetColumn": 0,
                         "sourceName": "phpcs",
