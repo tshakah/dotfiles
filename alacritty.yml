@@ -34,7 +34,7 @@ scrolling:
 
   # Number of lines the viewport will move for every line scrolled when
   # scrollback is enabled (history > 0).
-  multiplier: 30
+  multiplier: 15
 
 # Font configuration (changes require restart)
 #
