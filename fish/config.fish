@@ -52,7 +52,11 @@ alias rm 'rm -I'
 source ~/.config/fish/gnupg.fish
 
 function ns
-  z $argv; and nix-shell
+  if count $argv > /dev/null
+    z $argv
+  end
+
+  nix-shell
 end
 
 function vpn
