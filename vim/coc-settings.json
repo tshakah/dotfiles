@@ -89,10 +89,10 @@
                         ]
                     },
                     "phpcs": {
-                        "command": "./bin/phpcs",
+                        "command": "phpcs",
                         "debounce": 100,
-                        "rootPatterns": [ "composer.json", "composer.lock", "vendor", ".git" ],
-                        "args": [ "--standard=phpcs.xml", "--report=emacs", "-s", "-" ],
+                        "rootPatterns": [ "phpcs.xml", "composer.json", "composer.lock", "vendor", ".git" ],
+                        "args": [ "--report=emacs", "-s", "-" ],
                         "offsetLine": 0,
                         "offsetColumn": 0,
                         "sourceName": "phpcs",
