@@ -187,6 +187,9 @@ Plug 'wellle/targets.vim'
 Plug 'tpope/vim-repeat'
 Plug 'chrisbra/NrrwRgn'
 
+" Handle surround chars like ''
+Plug 'tpope/vim-surround'
+
 Plug 'brooth/far.vim'
 let g:far#default_file_mask = '**/*.*'
 let g:far#source = 'rgnvim'
@@ -384,9 +387,6 @@ cnoremap $T <CR>:T''<CR>
 cnoremap $m <CR>:m''<CR>
 cnoremap $M <CR>:M''<CR>
 cnoremap $d <CR>:d<CR>``
-
-" Handle surround chars like ''
-Plug 'tpope/vim-surround'
 
 " Whitespace
 set cinkeys-=0# " don't force # indentation
