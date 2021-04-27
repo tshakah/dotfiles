@@ -237,7 +237,7 @@ Plug 'sbdchd/neoformat'
 let g:neoformat_php_phpcbf = {
       \ 'exe': 'phpcbf',
       \ 'args': [
-      \ '--standard=SHAKA-AUTOFIX',
+      \ '--standard=CAPCS',
       \ '--extensions=php',
       \ '%',
       \ '||',
