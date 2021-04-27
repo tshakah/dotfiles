@@ -26,85 +26,28 @@ Plug 'Shougo/echodoc.vim'
 let g:echodoc#enable_at_startup = 1
 let g:echodoc#type = "floating"
 
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-lua/completion-nvim'
+Plug 'nvim-lua/lsp-status.nvim'
+Plug 'nvim-lua/diagnostic-nvim'
+
+" Use <Tab> and <S-Tab> to navigate through popup menu
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
+" Status line
+set statusline=%<%f\ %h%m%r
+set statusline+=%=%-10.60{LspStatus()}\ %-.(%l,%c%V%)\ %P
 
-" Add `:OR` command for organize imports of the current buffer.
-command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
-
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
-" position. Coc only does snippet and additional edit on confirm.
-" <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
-if exists('*complete_info')
-  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-else
-  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-endif
-nmap <leader>d zz<C-w>wz15<CR>
-
-" Use K to show documentation in preview window.
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocActionAsync('doHover', 'preferShowAbove')
+function! LspStatus() abort
+  if luaeval('#vim.lsp.buf_get_clients() > 0')
+    return luaeval("require('lsp-status').status()")
   endif
+
+  return ''
 endfunction
-
-nmap <silent> <C-n> <Plug>(coc-cursors-word)*
-xmap <silent> <C-n> y/\V<C-r>=escape(@",'/\')<CR><CR>gN<Plug>(coc-cursors-range)gk
-
-" Remap keys for gotos
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
-" Use `[g` and `]g` to navigate diagnostics
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
-
-" Highlight symbol under cursor on CursorHold
-autocmd CursorHold * silent call CocActionAsync('highlight')
-
-" Remap for rename current word
-nmap <leader>rn <Plug>(coc-rename)
-
-" Remap for format selected region
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
-
 
 Plug 'honza/vim-snippets'
-
-" Use <C-l> for trigger snippet expand.
-imap <C-l> <Plug>(coc-snippets-expand)
-
-" Use <C-j> for select text for visual placeholder of snippet.
-vmap <C-j> <Plug>(coc-snippets-select)
-
-" Use <C-j> for jump to next placeholder, it's default of coc.nvim
-let g:coc_snippet_next = '<c-j>'
-
-" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
-let g:coc_snippet_prev = '<c-k>'
-
-" Use <C-j> for both expand and jump (make expand higher priority.)
-imap <C-j> <Plug>(coc-snippets-expand-jump)
 
 " UI
 " A fancy start screen
@@ -233,21 +176,21 @@ endfunction
 
 
 " Syntax
-Plug 'sbdchd/neoformat'
-let g:neoformat_php_phpcbf = {
-      \ 'exe': 'phpcbf',
-      \ 'args': [
-      \ '--standard=SHAKA-AUTOFIX',
-      \ '--extensions=php',
-      \ '%',
-      \ '||',
-      \ 'true'
-      \ ],
-      \ 'stdin': 1,
-      \ 'no_append': 1
-      \ }
-let g:neoformat_enabled_php = ['phpcbf']
-nnoremap <leader>nf :Neoformat<cr>
+"Plug 'sbdchd/neoformat'
+"let g:neoformat_php_phpcbf = {
+"      \ 'exe': 'phpcbf',
+"      \ 'args': [
+"      \ '--standard=CAPCS',
+"      \ '--extensions=php',
+"      \ '%',
+"      \ '||',
+"      \ 'true'
+"      \ ],
+"      \ 'stdin': 1,
+"      \ 'no_append': 1
+"      \ }
+"let g:neoformat_enabled_php = ['phpcbf']
+"nnoremap <leader>nf :Neoformat<cr>
 
 " VCS and remote stuff
 Plug 'tpope/vim-fugitive'
@@ -271,7 +214,10 @@ let g:gitgutter_override_sign_column_highlight = 1
 
 " Language support
 Plug 'sheerun/vim-polyglot'
-let g:polyglot_disabled = ['csv']
+let g:polyglot_disabled = ["autoindent", "sensible", "csv"]
+
+" We recommend updating the parsers on update
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 
 " Elixir
@@ -356,7 +302,10 @@ endfunction
 command DeleteHiddenBuffers call DeleteHiddenBuffers()
 
 " General UI
-set updatetime=750
+set updatetime=300
+set completeopt=menuone
+set completeopt+=noinsert
+set completeopt-=preview
 set title " Show buffer name in title
 set sidescroll=2
 set listchars+=precedes:<,extends:>
@@ -440,15 +389,11 @@ set undoreload=10000 " buffer stored undos
 noremap <leader>y "+y
 
 " Lightline
-function! CocCurrentFunction()
-    return get(b:, 'coc_current_function', '')
-endfunction
-
 let g:lightline = {
   \   'colorscheme': 'gruvbox',
   \   'active': {
   \     'left':[ [ 'mode', 'paste' ],
-  \              [ 'cocstatus', 'gitbranch', 'readonly', 'modified', 'buffers' ]
+  \              [ 'gitbranch', 'readonly', 'modified', 'buffers' ]
   \     ]
   \   },
   \   'component': {
@@ -461,11 +406,12 @@ let g:lightline = {
   \     'buffers': 'tabsel'
   \   },
   \   'component_function': {
-  \     'gitbranch': 'fugitive#head',
-  \     'cocstatus': 'coc#status',
-  \     'currentfunction': 'CocCurrentFunction'
+  \     'gitbranch': 'fugitive#head'
   \   }
   \ }
+
+" Loads lua config
+lua require('init')
 
     "" <Tab> everything!
     "Plug 'ervandew/supertab'
