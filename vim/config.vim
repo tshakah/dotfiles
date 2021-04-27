@@ -177,6 +177,9 @@ Plug 'mhinz/vim-signify'
 
 
 " Search and navigation
+Plug 'Yilin-Yang/vim-markbar'
+nmap <Leader>m <Plug>ToggleMarkbar
+
 Plug 'pechorin/any-jump.vim'
 Plug 'machakann/vim-highlightedyank'
 Plug 'simeji/winresizer'
