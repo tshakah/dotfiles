@@ -196,6 +196,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'justinmk/vim-sneak'
 let g:sneak#label = 1
 let g:sneak#use_ic_scs = 1
+let g:sneak#s_next = 1
 map f <Plug>Sneak_f
 map F <Plug>Sneak_F
 map t <Plug>Sneak_t
@@ -374,6 +375,7 @@ set foldlevel=1
 
 set incsearch
 set nohlsearch
+" allows incsearch highlighting for range commands
 cnoremap $t <CR>:t''<CR>
 cnoremap $T <CR>:T''<CR>
 cnoremap $m <CR>:m''<CR>
