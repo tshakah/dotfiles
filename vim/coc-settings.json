@@ -12,6 +12,7 @@
     "scss.validate": false,
     "wxss.validate": false,
     "stylelintplus.autoFixOnSave": true,
+    "sh.enable": true,
     "stylelintplus.configFile": "./.stylelintrc",
     "intelephense.files.exclude": [
         "**/.git/**"
