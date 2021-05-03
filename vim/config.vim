@@ -239,6 +239,8 @@ function! PhpSyntaxOverride()
   hi phpClassNamespaceSeparator guifg=#808080 guibg=NONE gui=NONE
 endfunction
 
+Plug 'phpactor/phpactor', {'for': 'php', 'tag': '*', 'do': 'composer install --no-dev -o'}
+
 augroup phpSyntaxOverride
   autocmd!
   autocmd FileType php call PhpSyntaxOverride()
