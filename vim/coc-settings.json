@@ -49,7 +49,7 @@
             "initializationOptions": {
                 "linters": {
                     "psalm": {
-                        "command": "~/.config/composer/vendor/bin/psalm",
+                        "command": "php -d memory_limit=2G ~/.config/composer/vendor/bin/psalm",
                         "debounce": 100,
                         "rootPatterns": ["composer.json", "composer.lock", "vendor", ".git"],
                         "args": ["--output-format=emacs", "--no-progress"],

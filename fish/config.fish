@@ -28,6 +28,7 @@ bash "$HOME/.config/nvim/plugged/gruvbox/gruvbox_256palette.sh"
 contains $fish_user_paths ~/.npm/bin; or set -Ua fish_user_paths ~/.npm/bin
 contains $fish_user_paths ~/.cargo/bin; or set -Ua fish_user_paths ~/.cargo/bin
 contains $fish_user_paths ~/.local/bin; or set -Ua fish_user_paths ~/.local/bin
+contains $fish_user_paths ~/.mix/escripts; or set -Ua fish_user_paths ~/.mix/escripts
 
 fish_default_key_bindings -M insert
 bind \e\[1\;5C forward-word
