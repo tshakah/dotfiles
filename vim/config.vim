@@ -91,7 +91,7 @@ Plug 'haya14busa/vim-asterisk'
 Plug 'tpope/vim-sensible'
 Plug 'tommcdo/vim-exchange'
 Plug 'ConradIrwin/vim-bracketed-paste'
-Plug 'gruvbox-community/gruvbox'
+Plug 'sainnhe/everforest'
 
 Plug 'FooSoft/vim-argwrap'
 nnoremap <silent> <leader>a :ArgWrap<CR>
@@ -367,9 +367,12 @@ highlight ColorColumn ctermbg=235
 
 " Theme
 set background=dark
-let g:gruvbox_italic=1
+let g:everforest_background = 'hard'
+let g:everforest_diagnostic_text_highlight = 1
+let g:everforest_diagnostic_line_highlight = 1
+let g:everforest_enable_italic = 1
 set termguicolors
-colorscheme gruvbox
+colorscheme everforest
 
 " Syntax highlighting
 syntax on
@@ -392,7 +395,7 @@ noremap <leader>y "+y
 
 " Lightline
 let g:lightline = {
-  \   'colorscheme': 'gruvbox',
+  \   'colorscheme': 'everforest',
   \   'active': {
   \     'left':[ [ 'mode', 'paste' ],
   \              [ 'gitbranch', 'readonly', 'modified', 'buffers' ]

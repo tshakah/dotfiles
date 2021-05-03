@@ -5,7 +5,7 @@ if not functions -q fisher
 end
 
 set -g theme_show_exit_status yes
-set -g theme_color_scheme gruvbox
+set -g theme_color_scheme base16-dark
 set -g theme_display_nix yes
 set -gx BAT_THEME gruvbox
 set -gx NODE_PATH "~/.npm"
@@ -16,14 +16,12 @@ set -g fish_term24bit 1
 
 set -x FZF_DEFAULT_COMMAND "rg -S --files --follow --hidden --glob '!.git' --glob '!vendor' --glob '!data' --color=always"
 set -x FZF_DEFAULT_OPTS "
-  --color fg:#ebdbb2,bg:#282828,hl:#fabd2f,fg+:#ebdbb2,bg+:#3c3836,hl+:#fabd2f
+  --color fg:#ebdbb2,bg:#2b3339,hl:#fabd2f,fg+:#ebdbb2,bg+:#3c3836,hl+:#fabd2f
   --color info:#83a598,prompt:#bdae93,spinner:#fabd2f,pointer:#83a598,marker:#fe8019,header:#665c54
 "
 set -x FZF_CTRL_T_OPTS "--height 100% --preview '(bat --style=numbers --color=always {} || cat {}) 2> /dev/null | head -500'"
 
 set -e fish_user_paths
-
-bash "$HOME/.config/nvim/plugged/gruvbox/gruvbox_256palette.sh"
 
 contains $fish_user_paths ~/.npm/bin; or set -Ua fish_user_paths ~/.npm/bin
 contains $fish_user_paths ~/.cargo/bin; or set -Ua fish_user_paths ~/.cargo/bin

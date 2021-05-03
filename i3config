@@ -164,14 +164,14 @@ bar {
   font pango:Inconsolata Bold
   status_command i3status-rs
   colors {
-    background #282a2e
+    background #212529
     statusline #fbf1c7
     separator  #db3f3f
 
-    focused_workspace  #282a2e #3c3836 #db3f3f
-    active_workspace   #282a2e #282a2e #a89984
-    inactive_workspace #282a2e #282a2e #a89984
-    urgent_workspace   #282a2e #3c3836 #db3f3f
+    focused_workspace  #212529 #3c3836 #db3f3f
+    active_workspace   #212529 #212529 #a89984
+    inactive_workspace #212529 #212529 #a89984
+    urgent_workspace   #212529 #3c3836 #db3f3f
   }
 }
 
@@ -180,7 +180,7 @@ set $inactive-bg-color   #454849
 set $text-color          #fbf1c7
 set $inactive-text-color #a89884
 set $urgent-bg-color     #db3f3f
-set $active-bg-color     #98971a
+set $active-bg-color     #a7c080
 
 # window colors
 #                       border              background         text                 indicator          child border
