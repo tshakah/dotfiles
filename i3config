@@ -57,6 +57,15 @@ bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+Shift+a focus parent
+
+# focus the child container
+bindsym $mod+c focus child
+
 # move focused window
 bindsym $mod+Shift+h move left
 bindsym $mod+Shift+j move down
@@ -85,12 +94,6 @@ bindsym $mod+e layout toggle split
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
-
-# change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
-
-# focus the parent container
-bindsym $mod+Shift+a focus parent
 
 # switch to workspace
 bindsym $mod+1 workspace number 1: code
@@ -182,6 +185,20 @@ set $inactive-text-color #a7c080
 set $urgent-bg-color     #e67e80
 set $active-bg-color     #a7c080
 
+# workspace switching
+bindsym $mod+Tab workspace back_and_forth
+
+bindsym $mod+n [title="NVIM"] focus
+
+# Make the currently focused window a scratchpad
+bindsym $mod+Shift+minus move scratchpad
+
+# Show the first scratchpad window
+bindsym $mod+minus scratchpad show
+
+# don't steal focus
+focus_on_window_activation smart
+
 # window colors
 #                       border              background         text                 indicator          child border
 client.focused          $active-bg-color    $active-bg-color   $text-color          $bg-color          $active-bg-color
@@ -195,6 +212,7 @@ for_window [window_role="pop-up"] floating enable
 for_window [window_role="task_dialog"] floating enable
 for_window [title="galculator"] floating enable
 for_window [title="Volume Control"] floating enable
+for_window [class="Slack" title="mini panel"] floating disable
 
 exec --no-startup-id syndaemon -i 0.5 -K -R -d
 
