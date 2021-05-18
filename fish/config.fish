@@ -49,7 +49,7 @@ alias cat '~/source/scripts/lc.sh'
 alias git '~/source/scripts/git.sh'
 alias rgr '~/source/scripts/rgr.sh'
 alias ssh 'env TERM=xterm-256color ssh'
-alias rm 'rm -I'
+alias rm 'rm -I --preserve-root'
 alias gti git
 alias google-chrome google-chrome-stable
 
