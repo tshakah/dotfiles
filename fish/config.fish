@@ -7,7 +7,7 @@ end
 set -g theme_show_exit_status yes
 set -g theme_color_scheme base16-dark
 set -g theme_display_nix yes
-set -gx BAT_THEME gruvbox
+set -gx BAT_THEME ansi-dark
 set -gx NODE_PATH "~/.npm"
 set -gx ERL_AFLAGS "-kernel shell_history enabled"
 set -gx EDITOR nvim

@@ -4,7 +4,7 @@ set $mod Mod1
 
 exec setxkbmap -layout gb
 exec xrdb -load ~/.Xresources
-exec --no-startup-id hsetroot -solid "#282828"
+exec --no-startup-id hsetroot -solid "#212529"
 exec --no-startup-id ~/source/scripts/distract.sh
 
 # Auto change display conf
@@ -21,7 +21,7 @@ focus_follows_mouse no
 
 # Hide borders
 hide_edge_borders smart
-default_border pixel 3
+default_border pixel 4
 
 # start a terminal
 bindsym $mod+Return exec alacritty
@@ -166,26 +166,26 @@ bar {
   colors {
     background #212529
     statusline #fbf1c7
-    separator  #db3f3f
+    separator  #a7c080
 
-    focused_workspace  #212529 #3c3836 #db3f3f
-    active_workspace   #212529 #212529 #a89984
-    inactive_workspace #212529 #212529 #a89984
-    urgent_workspace   #212529 #3c3836 #db3f3f
+    focused_workspace  #323d43 #323d43 #d3c6aa
+    active_workspace   #323d43 #323d43 #a7c080
+    inactive_workspace #212529 #212529 #6a836f
+    urgent_workspace   #212529 #212529 #f85552
   }
 }
 
-set $bg-color            #458588
-set $inactive-bg-color   #454849
-set $text-color          #fbf1c7
-set $inactive-text-color #a89884
-set $urgent-bg-color     #db3f3f
+set $bg-color            #d3c6aa
+set $inactive-bg-color   #323d43
+set $text-color          #2b3339
+set $inactive-text-color #a7c080
+set $urgent-bg-color     #e67e80
 set $active-bg-color     #a7c080
 
 # window colors
 #                       border              background         text                 indicator          child border
 client.focused          $active-bg-color    $active-bg-color   $text-color          $bg-color          $active-bg-color
-client.unfocused        $inactive-bg-color  $inactive-bg-color $inactive-text-color $inactive-bg-color $inactive-bg-color
+client.unfocused        $text-color         $inactive-bg-color $inactive-text-color $inactive-bg-color $inactive-bg-color
 client.focused_inactive $inactive-bg-color  $inactive-bg-color $inactive-text-color $inactive-bg-color $inactive-bg-color
 client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color          $urgent-bg-color   $urgent-bg-color
 
