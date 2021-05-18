@@ -27,9 +27,15 @@ let g:echodoc#enable_at_startup = 1
 let g:echodoc#type = "floating"
 
 Plug 'neovim/nvim-lspconfig'
-Plug 'nvim-lua/completion-nvim'
 Plug 'nvim-lua/lsp-status.nvim'
 Plug 'nvim-lua/diagnostic-nvim'
+Plug 'hrsh7th/nvim-compe'
+
+inoremap <silent><expr> <C-Space> compe#complete()
+inoremap <silent><expr> <CR>      compe#confirm('<CR>')
+inoremap <silent><expr> <C-e>     compe#close('<C-e>')
+inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
+inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
 
 " Use <Tab> and <S-Tab> to navigate through popup menu
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
@@ -305,9 +311,7 @@ command DeleteHiddenBuffers call DeleteHiddenBuffers()
 
 " General UI
 set updatetime=300
-set completeopt=menuone
-set completeopt+=noinsert
-set completeopt-=preview
+set completeopt=menuone,noselect
 set title " Show buffer name in title
 set sidescroll=2
 set listchars+=precedes:<,extends:>

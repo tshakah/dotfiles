@@ -3,6 +3,31 @@ local lsp_status = require("lsp-status")
 local configs = require'lspconfig/configs'
 
 -- function to attach completion when setting up lsp
+require'compe'.setup {
+  enabled = true;
+  autocomplete = true;
+  debug = false;
+  min_length = 1;
+  preselect = 'enable';
+  throttle_time = 80;
+  source_timeout = 200;
+  incomplete_delay = 400;
+  max_abbr_width = 100;
+  max_kind_width = 100;
+  max_menu_width = 100;
+  documentation = true;
+
+  source = {
+    path = true;
+    buffer = true;
+    calc = true;
+    nvim_lsp = true;
+    nvim_lua = true;
+    vsnip = true;
+    ultisnips = true;
+  };
+}
+
 local on_attach = function(client)
     lsp_status.register_progress()
     lsp_status.config(
@@ -16,7 +41,6 @@ local on_attach = function(client)
         }
     )
 
-    require "completion".on_attach(client)
     local function buf_set_keymap(...)
         vim.api.nvim_buf_set_keymap(bufnr, ...)
     end
@@ -92,7 +116,8 @@ end
 local servers = {
     "bashls",
     "rust_analyzer",
-    "phpactor"
+    "phpactor",
+    "elixirls"
 }
 for _, lsp in ipairs(servers) do
     lspconfig[lsp].setup {
@@ -114,6 +139,10 @@ end
 --  }
 --end
 
+lspconfig.elixirls.setup {
+    cmd = {'/home/elishahastings/source/tools/elixir-ls/release/language_server.sh'}
+}
+
 --lspconfig.psalmls.setup {}
 lspconfig.phpactor.setup {
     cmd = {'/home/elishahastings/.config/composer/vendor/bin/phpactor', 'language-server'}
@@ -131,7 +160,9 @@ lspconfig.diagnosticls.setup {
         "json",
         "yaml",
         "toml",
-        "php"
+        "php",
+        "elixir",
+        "eelixir"
     },
     init_options = {
         linters = {
@@ -196,6 +227,31 @@ lspconfig.diagnosticls.setup {
                     style = "hint"
                 }
             },
+            mix_credo = {
+                command = "mix",
+                debounce = 100,
+                rootPatterns = {"mix.exs"},
+                args = {"credo", "suggest", "--format", "flycheck", "--read-from-stdin"},
+                offsetLine = 0,
+                offsetColumn = 0,
+                sourceName = "mix_credo",
+                formatLines = 1,
+                formatPattern = {
+                    "^[^ ]+?:([0-9]+)(:([0-9]+))?:\\s+([^ ]+):\\s+(.*)$",
+                    {
+                        line = 1,
+                        column = 3,
+                        message = 5,
+                        security = 4
+                    }
+                },
+                securities = {
+                    F = "warning",
+                    C = "warning",
+                    D = "info",
+                    R = "info"
+                }
+            },
             markdownlint = {
                 command = "markdownlint",
                 isStderr = true,
@@ -218,7 +274,9 @@ lspconfig.diagnosticls.setup {
         filetypes = {
             php = {"phpstan", "psalm"},
             sh = "shellcheck",
-            markdown = "markdownlint"
+            markdown = "markdownlint",
+            elixir = "mix_credo",
+            eelixir = "mix_credo"
         },
         formatters = {
             shfmt = {
@@ -228,6 +286,10 @@ lspconfig.diagnosticls.setup {
             prettier = {
                 command = "prettier",
                 args = {"--stdin-filepath", "%filepath"},
+            },
+            mix_format = {
+                command = "mix",
+                args = {"format"}
             }
         },
         formatFiletypes = {
@@ -237,6 +299,8 @@ lspconfig.diagnosticls.setup {
             toml = "prettier",
             markdown = "prettier",
             lua = "prettier"
+            -- elixir = "mix_format",
+            -- eelixir = "mix_format"
         }
     }
 }
