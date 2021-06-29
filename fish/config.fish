@@ -4,6 +4,8 @@ if not functions -q fisher
     fish -c fisher
 end
 
+zoxide init fish | source
+
 set -g theme_show_exit_status yes
 set -g theme_color_scheme base16-dark
 set -g theme_display_nix yes
