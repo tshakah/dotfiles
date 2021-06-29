@@ -140,7 +140,7 @@ end
 --end
 
 lspconfig.elixirls.setup {
-    cmd = {'/home/elishahastings/source/tools/elixir-ls/release/language_server.sh'}
+    cmd = {'elixir-ls'}
 }
 
 --lspconfig.psalmls.setup {}
@@ -298,9 +298,9 @@ lspconfig.diagnosticls.setup {
             yaml = "prettier",
             toml = "prettier",
             markdown = "prettier",
-            lua = "prettier"
-            -- elixir = "mix_format",
-            -- eelixir = "mix_format"
+            lua = "prettier",
+            elixir = "mix_format",
+            eelixir = "mix_format"
         }
     }
 }
