@@ -233,21 +233,8 @@ endfunction
 
 
 " Syntax
-Plug 'sbdchd/neoformat'
-let g:neoformat_php_phpcbf = {
-      \ 'exe': 'phpcbf',
-      \ 'args': [
-      \ '--standard=CAPCS',
-      \ '--extensions=php',
-      \ '%',
-      \ '||',
-      \ 'true'
-      \ ],
-      \ 'stdin': 1,
-      \ 'no_append': 1
-      \ }
-let g:neoformat_enabled_php = ['phpcbf']
-nnoremap <leader>nf :Neoformat<cr>
+"Plug 'sbdchd/neoformat'
+"nnoremap <leader>nf :Neoformat<cr>
 
 " VCS and remote stuff
 Plug 'tpope/vim-fugitive'
@@ -286,43 +273,10 @@ Plug 'elmcast/elm-vim'
 let g:elm_format_autosave = 1
 
 
-" PHP
-Plug 'StanAngeloff/php.vim'
-function! PhpSyntaxOverride()
-  hi phpUseNamespaceSeparator guifg=#808080 guibg=NONE gui=NONE
-  hi phpClassNamespaceSeparator guifg=#808080 guibg=NONE gui=NONE
-endfunction
-
-augroup phpSyntaxOverride
-  autocmd!
-  autocmd FileType php call PhpSyntaxOverride()
-augroup END
-
-Plug 'rayburgemeestre/phpfolding.vim'
-
-Plug 'vim-vdebug/vdebug'
-if !exists('g:vdebug_options')
-    let g:vdebug_options = {
-      \   'window_commands': {
-      \     'DebuggerWatch': 'vertical belowright new +res',
-      \     'DebuggerStack': 'belowright new +res0',
-      \     'DebuggerStatus': 'belowright new +res0'
-      \   },
-      \ }
-endif
-let g:vdebug_options.watch_window_style = 'compact'
-let g:vdebug_options.break_on_open = 0
-highlight DbgBreakptLine ctermbg=none ctermfg=none
-highlight DbgBreakptSign ctermbg=none ctermfg=green
-highlight DbgCurrentLine ctermbg=none ctermfg=none
-highlight DbgCurrentSign ctermbg=none ctermfg=red
-
-
 " REPL(ish)
 augroup replcmds
   autocmd! replcmds
   autocmd Filetype rust nmap <buffer> <silent> <F7> <ESC>println!("{:?}",);<ESC>:w<CR>hh
-  autocmd Filetype php nmap <buffer> <silent> <F7> <ESC>oeval(\Psy\sh());<ESC>:w<CR>
   autocmd Filetype elixir nmap <buffer> <silent> <F7> <ESC>orequire IEx; IEx.pry<ESC> :w<CR>
 augroup end
 
