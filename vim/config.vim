@@ -146,8 +146,9 @@ let g:far#source = 'rgnvim'
 nnoremap <buffer><silent> <C-J> :call g:far#scroll_preview_window(-g:far#preview_window_scroll_step)<cr>
 nnoremap <buffer><silent> <C-K> :call g:far#scroll_preview_window(g:far#preview_window_scroll_step)<cr>
 
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
 
 Plug 'justinmk/vim-sneak'
 let g:sneak#label = 1
@@ -162,34 +163,14 @@ noremap ^ 0 " Just in case you need to go to the very beginning of a line
 
 set smartcase
 set ignorecase " by default ignore case
-let g:fzf_files_options = '--color "border:#6699cc,info:#fabd2f"'
-let g:fzf_layout = { 'down': '~40%' }
-let g:fzf_history_dir = '~/.local/share/fzf-history'
-let $FZF_DEFAULT_COMMAND="rg -S --files --follow --hidden --glob '!.hg' --glob '!.git' --glob '!vendor' --glob '!data' --glob '!_build' --glob '!.elixir_ls'"
-let g:fzf_action = {
-  \ 'ctrl-t': 'tab split',
-  \ 'ctrl-x': 'split',
-  \ 'ctrl-v': 'vsplit' }
 set splitbelow
 set splitright
 
-" Files command with preview window
-command! -bang -nargs=? -complete=dir Files
-  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+nnoremap <C-p> <cmd>Telescope find_files<CR>
+nnoremap <C-space> <cmd>Telescope buffers<CR>
+nnoremap <C-f> <cmd>Telescope live_grep<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
-nmap <C-p> :Files<CR>
-nmap <C-space> :Buffers<CR>
-
-function! s:buflist()
-  redir => ls
-  silent ls
-  redir END
-  return split(ls, '\n')
-endfunction
-
-function! s:bufopen(e)
-  execute 'buffer' matchstr(a:e, '^[ 0-9]*')
-endfunction
 
 
 " Syntax
@@ -256,19 +237,6 @@ call plug#end()
 
 " Buffers
 set hidden " let modified buffers be hidden
-function! DeleteHiddenBuffers()
-  let tpbl=[]
-  let closed = 0
-  call map(range(1, tabpagenr('$')), 'extend(tpbl, tabpagebuflist(v:val))')
-  for buf in filter(range(1, bufnr('$')), 'bufexists(v:val) && index(tpbl, v:val)==-1')
-    if getbufvar(buf, '&mod') == 0
-      silent execute 'bwipeout' buf
-      let closed += 1
-    endif
-  endfor
-  echo "Closed ".closed." hidden buffers"
-endfunction
-command DeleteHiddenBuffers call DeleteHiddenBuffers()
 
 " General UI
 set updatetime=300
