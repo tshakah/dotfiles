@@ -120,10 +120,11 @@ bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 
 # attaching workspaces to outputs
-workspace "1: code" output DP1 DP3 eDP1
-workspace "2: terminal" output eDP1
-workspace "3: browser" output eDP1
+workspace "1: code" output DP1 DP2 DP3 eDP1
+workspace "2: terminal" output DP1 DP2 DP3 eDP1
+workspace "3: browser" output DP1 DP2 DP3 eDP1
 workspace "4: comms" output eDP1
+workspace "5: tasks" output eDP1
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
