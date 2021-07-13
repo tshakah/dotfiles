@@ -79,3 +79,5 @@ function ensure
     mkdir -p (dirname $argv)
     touch $argv
 end
+
+starship init fish | source
