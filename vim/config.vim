@@ -327,12 +327,10 @@ noremap <leader>y "+y
 let g:lightline = {
   \   'colorscheme': 'everforest',
   \   'active': {
-  \     'left':[ [ 'mode', 'paste' ],
-  \              [ 'gitbranch', 'readonly', 'modified', 'buffers' ]
-  \     ]
+  \     'left':[ [ 'mode', 'paste' ], [ 'readonly', 'modified', 'buffers' ] ]
   \   },
   \   'component': {
-  \     'lineinfo': ' %3l:%-2v',
+  \     'lineinfo': '%3l:%-2v',
   \   },
   \   'component_expand': {
   \     'buffers': 'lightline#bufferline#buffers'
