@@ -2,6 +2,10 @@ local lspconfig = require "lspconfig"
 local lsp_status = require("lsp-status")
 local configs = require'lspconfig/configs'
 
+require'snippets'.use_suggested_mappings()
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true;
+
 -- function to attach completion when setting up lsp
 require'compe'.setup {
   enabled = true;
@@ -25,6 +29,9 @@ require'compe'.setup {
     nvim_lua = true;
     vsnip = true;
     ultisnips = true;
+    spell = true,
+    tags = true,
+    treesitter = true
   };
 }
 
@@ -68,27 +75,6 @@ local on_attach = function(client)
     elseif client.resolved_capabilities.document_range_formatting then
         buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
     end
-
-    -- Set autocommands conditional on server_capabilities
-    if client.resolved_capabilities.document_highlight then
-        vim.api.nvim_exec([[
-            augroup lsp_document_highlight
-            autocmd! * <buffer>
-            autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-            autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-            " autocmd CursorHold *.* :lua vim.lsp.diagnostic.show_line_diagnostics()
-            autocmd BufWritePre * lua vim.lsp.buf.formatting_sync(nil, 300)
-           augroup END
-        ]],
-            false
-        )
-    else
-        -- autocmd BufWritePre * Neoformat
-        vim.api.nvim_exec([[
-            autocmd!
-            augroup END
-        ]], false)
-    end
 end
 
 vim.lsp.handlers['textDocument/hover'] = function(_, method, result)
@@ -116,193 +102,24 @@ end
 local servers = {
     "bashls",
     "rust_analyzer",
-    "phpactor",
-    "elixirls"
 }
+
 for _, lsp in ipairs(servers) do
     lspconfig[lsp].setup {
         on_attach = on_attach,
-        capabilities = lsp_status.capabilities
+        capabilities = capabilities
     }
 end
 
---if not lspconfig.psalmls then
---  configs.psalmls = {
---    default_config = {
---      cmd = {"php", "-d memory_limit=2G", "/home/elishahastings/.config/composer/vendor/bin/psalm-language-server"};
---      filetypes = {'php'};
---      root_dir = function(fname)
---        return lspconfig.util.find_git_ancestor(fname) or lspconfig.util.root_pattern("psalm.xml")
---      end;
---      settings = {};
---    };
---  }
---end
-
 lspconfig.elixirls.setup {
-    cmd = {'elixir-ls'}
-}
-
---lspconfig.psalmls.setup {}
-lspconfig.phpactor.setup {
-    cmd = {'/home/elishahastings/.config/composer/vendor/bin/phpactor', 'language-server'}
-}
-
--- Setup diagnostics formaters and linters for non LSP provided files
-lspconfig.diagnosticls.setup {
     on_attach = on_attach,
-    capabilities = lsp_status.capabilities,
-    cmd = {"diagnostic-languageserver", "--stdio"},
-    filetypes = {
-        "lua",
-        "sh",
-        "markdown",
-        "json",
-        "yaml",
-        "toml",
-        "php",
-        "elixir",
-        "eelixir"
-    },
-    init_options = {
-        linters = {
-            psalm = {
-                command = "~/.config/composer/vendor/bin/psalm",
-                debounce = 100,
-                rootPatterns = {"composer.json", "composer.lock", "vendor", ".git"},
-                args = {"--output-format=emacs", "--no-progress"},
-                offsetLine = 0,
-                offsetColumn = 0,
-                sourceName = "psalm",
-                formatLines = 1,
-                formatPattern = {
-                    "^[^:]+:(\\d):(\\d):(.*)\\s-\\s(.*)(\\r|\\n)*$",
-                    {
-                        line = 1,
-                        column = 2,
-                        message = 4,
-                        security = 3
-                    }
-                },
-                securities = {
-                    error = "error",
-                    warning = "warning"
-                },
-                requiredFiles = {"psalm.xml"}
-            },
-            phpstan = {
-                command = "phpstan",
-                debounce = 100,
-                rootPatterns = {"composer.json", "composer.lock", "vendor", ".git"},
-                args = {"analyze", "--error-format", "raw", "--no-progress", "%file"},
-                offsetLine = 0,
-                offsetColumn = 0,
-                sourceName = "phpstan",
-                formatLines = 1,
-                formatPattern = {
-                    "^[^:]+:(\\d+):(.*)(\\r|\\n)*$",
-                    {
-                        line = 1,
-                        message = 2
-                    }
-                }
-            },
-            shellcheck = {
-                command = "shellcheck",
-                debounce = 100,
-                args = {"--format", "json", "-"},
-                sourceName = "shellcheck",
-                parseJson = {
-                    line = "line",
-                    column = "column",
-                    endLine = "endLine",
-                    endColumn = "endColumn",
-                    message = "${message} [${code}]",
-                    security = "level"
-                },
-                securities = {
-                    error = "error",
-                    warning = "warning",
-                    info = "info",
-                    style = "hint"
-                }
-            },
-            mix_credo = {
-                command = "mix",
-                debounce = 100,
-                rootPatterns = {"mix.exs"},
-                args = {"credo", "suggest", "--format", "flycheck", "--read-from-stdin"},
-                offsetLine = 0,
-                offsetColumn = 0,
-                sourceName = "mix_credo",
-                formatLines = 1,
-                formatPattern = {
-                    "^[^ ]+?:([0-9]+)(:([0-9]+))?:\\s+([^ ]+):\\s+(.*)$",
-                    {
-                        line = 1,
-                        column = 3,
-                        message = 5,
-                        security = 4
-                    }
-                },
-                securities = {
-                    F = "warning",
-                    C = "warning",
-                    D = "info",
-                    R = "info"
-                }
-            },
-            markdownlint = {
-                command = "markdownlint",
-                isStderr = true,
-                debounce = 100,
-                args = {"--stdin"},
-                offsetLine = 0,
-                offsetColumn = 0,
-                sourceName = "markdownlint",
-                formatLines = 1,
-                formatPattern = {
-                    "^.*?:\\s?(\\d+)(:(\\d+)?)?\\s(MD\\d{3}\\/[A-Za-z0-9-/]+)\\s(.*)$",
-                    {
-                        line = 1,
-                        column = 3,
-                        message = {4}
-                    }
-                }
-            }
-        },
-        filetypes = {
-            php = {"phpstan", "psalm"},
-            sh = "shellcheck",
-            markdown = "markdownlint",
-            elixir = "mix_credo",
-            eelixir = "mix_credo"
-        },
-        formatters = {
-            shfmt = {
-                command = "shfmt",
-                args = {"-i", "2", "-bn", "-ci", "-sr"}
-            },
-            prettier = {
-                command = "prettier",
-                args = {"--stdin-filepath", "%filepath"},
-            },
-            mix_format = {
-                command = "mix",
-                args = {"format"}
-            }
-        },
-        formatFiletypes = {
-            sh = "shfmt",
-            json = "prettier",
-            yaml = "prettier",
-            toml = "prettier",
-            markdown = "prettier",
-            lua = "prettier",
-            elixir = "mix_format",
-            eelixir = "mix_format"
+    capabilities = capabilities,
+    settings = {
+       elixirLS = {
+            fetchDeps = false
         }
-    }
+    },
+    cmd = {'elixir-ls'}
 }
 
 -- Enable diagnostics
