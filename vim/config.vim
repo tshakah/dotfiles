@@ -172,11 +172,6 @@ nnoremap <C-f> <cmd>Telescope live_grep<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
 
-
-" Syntax
-"Plug 'sbdchd/neoformat'
-"nnoremap <leader>nf :Neoformat<cr>
-
 " VCS and remote stuff
 Plug 'tpope/vim-fugitive'
 Plug 'ludovicchabant/vim-lawrencium'
