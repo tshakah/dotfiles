@@ -109,6 +109,7 @@ Plug 'tpope/vim-eunuch'
 Plug 'haya14busa/vim-asterisk'
 Plug 'tpope/vim-sensible'
 Plug 'tommcdo/vim-exchange'
+Plug 'gregsexton/MatchTag'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'sainnhe/everforest'
 
@@ -138,6 +139,7 @@ Plug 'simeji/winresizer'
 Plug 'wellle/targets.vim'
 Plug 'tpope/vim-repeat'
 Plug 'chrisbra/NrrwRgn'
+Plug 'tpope/tpope-vim-abolish'
 
 " Handle surround chars like ''
 Plug 'tpope/vim-surround'
@@ -345,30 +347,3 @@ let g:lightline = {
 
 " Loads lua config
 lua require('init')
-
-    "" <Tab> everything!
-    "Plug 'ervandew/supertab'
-
-    "" Autoclose (, " etc
-    "Plug 'Townk/vim-autoclose'
-
-    "" End completion
-    "Plug 'tpope/vim-endwise'
-
-    "" Unimpaired vim!
-    "Plug 'tpope/vim-unimpaired'
-
-    "Plug 'gregsexton/MatchTag'
-    "Plug 'qpkorr/vim-bufkill'
-    "Plug 'tpope/tpope-vim-abolish'
-    "Plug 'junegunn/goyo.vim'
-    "Plug 'junegunn/limelight.vim'
-    "Plug 'phux/vim-hardtime'
-
-    "Plug 'pangloss/vim-javascript'
-    "Plug 'ternjs/tern_for_vim'
-
-    "Plug 'vim-scripts/dbext.vim'
-    "Plug 'shmup/vim-sql-syntax'
-
-    "Plug 'sunaku/vim-dasht'
