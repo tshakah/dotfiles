@@ -63,6 +63,10 @@ inoremap <c-j> <cmd>lua return require'snippets'.advance_snippet(-1)<CR>
 
 
 " UI
+" Code reviews
+Plug 'pwntester/octo.nvim'
+Plug 'kyazdani42/nvim-web-devicons'
+
 " A fancy start screen
 Plug 'mhinz/vim-startify'
 let g:startify_change_to_vcs_root = 1
