@@ -102,7 +102,7 @@ let g:strip_whitespace_on_save=1
 let g:strip_whitespace_confirm=0
 
 Plug 'itchyny/lightline.vim' " Config below
-Plug 'mgee/lightline-bufferline'
+Plug 'mengelbrecht/lightline-bufferline'
 Plug 'tpope/vim-eunuch'
 Plug 'haya14busa/vim-asterisk'
 Plug 'tpope/vim-sensible'
