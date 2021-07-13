@@ -103,6 +103,8 @@ let g:strip_whitespace_confirm=0
 
 Plug 'itchyny/lightline.vim' " Config below
 Plug 'mengelbrecht/lightline-bufferline'
+autocmd BufWritePost,TextChanged,TextChangedI * call lightline#update()
+
 Plug 'tpope/vim-eunuch'
 Plug 'haya14busa/vim-asterisk'
 Plug 'tpope/vim-sensible'
