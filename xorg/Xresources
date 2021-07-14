@@ -3,6 +3,8 @@ Xft.hinting: true
 Xft.rgba: rgb
 Xft.hintstyle: hintfull
 Xft.dpi: 120
+Xcursor.theme: Numix-Cursor
+Xcursor.size: 20
 
 ! special
 *.foreground:   #d8caac

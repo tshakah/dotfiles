@@ -5,6 +5,18 @@ local configs = require'lspconfig/configs'
 require'snippets'.use_suggested_mappings()
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true;
+local telescope_actions = require('telescope.actions')
+
+require("telescope").setup {
+  defaults = {
+    mappings = {
+      i = {
+        ["<C-j>"] = telescope_actions.move_selection_next,
+        ["<C-k>"] = telescope_actions.move_selection_previous,
+      }
+    }
+  }
+}
 
 -- function to attach completion when setting up lsp
 require'compe'.setup {
