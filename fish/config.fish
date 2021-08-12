@@ -1,9 +1,3 @@
-if not functions -q fisher
-    set -q XDG_CONFIG_HOME; or set XDG_CONFIG_HOME ~/.config
-    curl https://git.io/fisher --create-dirs -sLo $XDG_CONFIG_HOME/fish/functions/fisher.fish
-    fish -c fisher
-end
-
 zoxide init fish | source
 
 set -g theme_show_exit_status yes
@@ -81,3 +75,5 @@ function ensure
 end
 
 starship init fish | source
+function fish_greeting
+end
