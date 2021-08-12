@@ -46,6 +46,7 @@ alias ssh 'env TERM=xterm-256color ssh'
 alias rm 'rm -I --preserve-root'
 alias gti git
 alias google-chrome google-chrome-stable
+alias dco 'docker-compose'
 
 source ~/.config/fish/gnupg.fish
 
