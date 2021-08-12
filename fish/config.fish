@@ -1,4 +1,6 @@
 zoxide init fish | source
+direnv hook fish | source
+starship init fish | source
 
 set -g theme_show_exit_status yes
 set -g theme_color_scheme base16-dark
@@ -75,6 +77,5 @@ function ensure
     touch $argv
 end
 
-starship init fish | source
 function fish_greeting
 end
