@@ -298,6 +298,7 @@ colorscheme everforest
 syntax on
 filetype on
 filetype plugin indent on
+au BufRead,BufNewFile *.nix set filetype=nix
 
 " IO
 set confirm " confirm changed files
