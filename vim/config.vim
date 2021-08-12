@@ -258,9 +258,9 @@ set expandtab " no real tabs
 set shiftround " be clever with tabs
 set showbreak=\ →\
 set breakindent
-set shiftwidth=4 " default 2
-set softtabstop=4 " "tab" feels like <tab>
-set tabstop=4 " replace <TAB> w/2 spaces
+set shiftwidth=2 " default 2
+set softtabstop=2 " "tab" feels like <tab>
+set tabstop=2 " replace <TAB> w/2 spaces
 
 " Maximise a split
 nnoremap <C-W><C-O> :call MaximizeToggle()<CR>
