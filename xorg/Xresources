@@ -3,8 +3,8 @@ Xft.hinting: true
 Xft.rgba: rgb
 Xft.hintstyle: hintfull
 Xft.dpi: 120
-Xcursor.theme: Future-cursors
-Xcursor.size: 32
+Xcursor.theme: Bibata-Original-Ice
+Xcursor.size: 36
 
 ! special
 *.foreground:   #d8caac

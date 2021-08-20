@@ -12,5 +12,5 @@ gtk-xft-antialias=1
 gtk-xft-hinting=1
 gtk-xft-hintstyle=hintfull
 gtk-xft-rgba=rgb
-gtk-cursor-theme-name=Future-cursors
-gtk-cursor-theme-size=32
+gtk-cursor-theme-name=Bibata-Original-Ice
+gtk-cursor-theme-size=36
