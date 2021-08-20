@@ -57,7 +57,7 @@ function ns
     z $argv
   end
 
-  nix-shell
+  lorri shell
 end
 
 function vpn
