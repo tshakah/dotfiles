@@ -6,7 +6,7 @@ exec setxkbmap -layout gb
 exec xrdb -load ~/.Xresources
 exec --no-startup-id hsetroot -solid "#212529"
 exec --no-startup-id ~/source/scripts/distract.sh
-exec --no-startup-id ~/source/scripts/i3-battery-popup.sh -n -L 15 -H 85
+exec --no-startup-id ~/source/scripts/i3-battery-popup -n -L 15 -H 85
 
 exec --no-startup-id nm-applet
 
