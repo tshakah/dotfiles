@@ -7,6 +7,7 @@ exec xrdb -load ~/.Xresources
 exec --no-startup-id hsetroot -solid "#212529"
 exec --no-startup-id ~/source/scripts/distract.sh
 exec --no-startup-id ~/source/scripts/i3-battery-popup -n -L 15 -H 85
+exec_always --no-startup-id light-locker
 
 exec --no-startup-id nm-applet
 
@@ -220,7 +221,7 @@ for_window [class="Slack" title="mini panel"] floating disable
 
 exec --no-startup-id syndaemon -i 0.5 -K -R -d
 
-set $Locker ~/source/scripts/lock.sh && sleep 1
+set $Locker light-locker-command --lock
 
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
 mode "$mode_system" {
