@@ -36,9 +36,9 @@ bindsym $mod+Shift+q kill
 # start dmenu (a program launcher)
 bindsym $mod+d exec rofi -show combi -terminal alacritty
 
-# SCROT!
-bindsym --release $mod+Shift+s exec "scrot -s '%Y-%m-%d::%T.png' -e 'mv $f ~/'"
-bindsym --release Print exec "scrot -u '%Y-%m-%d::%T.png' -e 'mv $f ~/'"
+# screenshots
+bindsym --release $mod+Shift+s exec "maim -s -D -l -c 255,255,255,0.05 ~/(date +%Y-%m-%d::%T).png"
+bindsym --release Print exec "maim ~/(date +%Y-%m-%d::%T).png"
 
 # Volume control
 bindsym --release $mod+v exec mate-volume-control
