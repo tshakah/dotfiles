@@ -12,6 +12,9 @@ let mapleader="\<SPACE>"
 " Automatically make needed files and folders on first run
 call system("mkdir -p $HOME/.config/nvim/{swap,undo}")
 
+" Update plug and plugins
+nnoremap <leader>pu <cmd>PlugUpgrade<CR><cmd>PlugUpdate<CR>
+
 "---------"
 " Plugins "
 "---------"
