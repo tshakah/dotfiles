@@ -142,14 +142,7 @@ Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 
-Plug 'justinmk/vim-sneak'
-let g:sneak#label = 1
-let g:sneak#use_ic_scs = 1
-let g:sneak#s_next = 1
-map f <Plug>Sneak_f
-map F <Plug>Sneak_F
-map t <Plug>Sneak_t
-map T <Plug>Sneak_T
+Plug 'ggandor/lightspeed.nvim'
 noremap 0 ^ " Go to the first non-blank character of a line
 noremap ^ 0 " Just in case you need to go to the very beginning of a line
 
