@@ -40,9 +40,6 @@ bindsym $mod+d exec rofi -show combi -terminal alacritty
 bindsym --release $mod+Shift+s exec "maim -s -D -l -c 255,255,255,0.05 ~/(date +%Y-%m-%d::%T).png"
 bindsym --release Print exec "maim ~/(date +%Y-%m-%d::%T).png"
 
-# Volume control
-bindsym --release $mod+v exec mate-volume-control
-
 # Task manager
 bindsym --release $mod+Control+Delete exec mate-system-monitor
 
@@ -238,3 +235,13 @@ mode "$mode_system" {
 }
 
 bindsym $mod+Control+l mode "$mode_system"
+
+# Keyboard backlight control
+bindsym XF86KbdBrightnessUp exec --no-startup-id light -A 40 -s "sysfs/leds/asus::kbd_backlight"
+bindsym XF86KbdBrightnessDown exec --no-startup-id light -U 40 -s "sysfs/leds/asus::kbd_backlight"
+
+# Volume control
+bindsym XF86AudioRaiseVolume exec --no-startup-id "amixer -D pipewire sset Master 5%+"
+bindsym XF86AudioLowerVolume exec --no-startup-id "amixer -D pipewire sset Master 5%-"
+bindsym XF86AudioMute exec --no-startup-id "amixer -D pipewire sset Master toggle"
+bindsym XF86AudioMicMute exec --no-startup-id "amixer -D pipewire sset Capture toggle"
