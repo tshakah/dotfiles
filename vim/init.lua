@@ -2,6 +2,8 @@ local lspconfig = require "lspconfig"
 local lsp_status = require("lsp-status")
 local configs = require'lspconfig/configs'
 
+require'range-highlight'.setup{}
+require('whichkey_setup').config{}
 require'snippets'.use_suggested_mappings()
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true;
@@ -17,6 +19,8 @@ require("telescope").setup {
     }
   }
 }
+
+require('neoclip').setup()
 
 -- function to attach completion when setting up lsp
 require'compe'.setup {

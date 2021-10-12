@@ -66,6 +66,11 @@ inoremap <c-j> <cmd>lua return require'snippets'.advance_snippet(-1)<CR>
 
 
 " UI
+Plug 'liuchengxu/vim-which-key'
+Plug 'AckslD/nvim-whichkey-setup.lua'
+nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
+nnoremap <silent> <localleader> :<c-u>WhichKey  ','<CR>
+
 " Code reviews
 Plug 'pwntester/octo.nvim'
 Plug 'kyazdani42/nvim-web-devicons'
@@ -95,6 +100,8 @@ let g:strip_whitespace_confirm=0
 Plug 'itchyny/lightline.vim' " Config below
 Plug 'mengelbrecht/lightline-bufferline'
 autocmd BufWritePost,TextChanged,TextChangedI * call lightline#update()
+
+Plug 'norcalli/nvim-colorizer.lua'
 
 Plug 'tpope/vim-eunuch'
 Plug 'haya14busa/vim-asterisk'
@@ -132,6 +139,9 @@ Plug 'tpope/vim-repeat'
 Plug 'chrisbra/NrrwRgn'
 Plug 'tpope/tpope-vim-abolish'
 
+Plug 'winston0410/cmd-parser.nvim' " Required for range-highlight
+Plug 'winston0410/range-highlight.nvim'
+
 " Handle surround chars like ''
 Plug 'tpope/vim-surround'
 
@@ -144,6 +154,7 @@ nnoremap <buffer><silent> <C-K> :call g:far#scroll_preview_window(g:far#preview_
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
+Plug 'AckslD/nvim-neoclip.lua'
 
 Plug 'ggandor/lightspeed.nvim'
 noremap 0 ^ " Go to the first non-blank character of a line
@@ -158,6 +169,7 @@ nnoremap <C-p> <cmd>Telescope find_files<CR>
 nnoremap <C-space> <cmd>Telescope buffers<CR>
 nnoremap <C-f> <cmd>Telescope live_grep<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+nnoremap <leader>pp <cmd>Telescope neoclip<cr>
 
 
 " VCS and remote stuff
@@ -187,10 +199,11 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 
 " Elixir
-Plug 'slashmili/alchemist.vim'
+" Plug 'slashmili/alchemist.vim'
 Plug 'elixir-editors/vim-elixir'
-Plug 'mhinz/vim-mix-format'
-let g:mix_format_on_save = 1
+" Plug 'mhinz/vim-mix-format'
+" let g:mix_format_on_save = 1
+" let g:mix_format_silent_errors = 1
 
 
 " Elm
