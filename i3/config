@@ -249,4 +249,4 @@ bindsym XF86AudioMicMute exec --no-startup-id "amixer -D pipewire sset Capture t
 
 # Toggle mousepad
 set $mouse ELAN1201:00 04F3:3098 Touchpad
-bindsym XF86TouchpadToggle exec --no-startup-id "xinput list '$mouse' | grep disabled && xinput enable '$mouse' || xinput disable '$mouse'"
+bindsym XF86TouchpadToggle exec --no-startup-id "xinput list '$mouse' | grep disabled && xinput enable '$mouse' && notify-send -t 1000 'Mouse enabled' || $(xinput disable '$mouse' && notify-send -t 1000 'Mouse disabled')"
