@@ -245,3 +245,7 @@ bindsym XF86AudioRaiseVolume exec --no-startup-id "amixer -D pipewire sset Maste
 bindsym XF86AudioLowerVolume exec --no-startup-id "amixer -D pipewire sset Master 5%-"
 bindsym XF86AudioMute exec --no-startup-id "amixer -D pipewire sset Master toggle"
 bindsym XF86AudioMicMute exec --no-startup-id "amixer -D pipewire sset Capture toggle"
+
+# Toggle mousepad
+set $mouse ELAN1201:00 04F3:3098 Touchpad
+bindsym XF86TouchpadToggle exec --no-startup-id "xinput list '$mouse' | grep disabled && xinput enable '$mouse' || xinput disable '$mouse'"
