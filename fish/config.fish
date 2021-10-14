@@ -39,12 +39,10 @@ alias nix-shell "nix-shell --run fish"
 alias rg "rg -S -M 200 --glob '!vendor' --glob '!data'"
 alias vi 'nvim'
 alias du 'dust'
-alias dot 'z dotfiles'
-alias scr 'z scripts'
-alias ls '~/source/scripts/lc.sh'
-alias cat '~/source/scripts/lc.sh'
-alias git '~/source/scripts/git.sh'
-alias rgr '~/source/scripts/rgr.sh'
+alias ls '~/source/dotfiles/scripts/lc.sh'
+alias cat '~/source/dotfiles/scripts/lc.sh'
+alias git '~/source/dotfiles/scripts/git.sh'
+alias rgr '~/source/dotfiles/scripts/rgr.sh'
 alias ssh 'env TERM=xterm-256color ssh'
 alias rm 'rm -I --preserve-root'
 alias gti git
@@ -58,7 +56,7 @@ function ns
     z $argv
   end
 
-  lorri shell
+  nix-shell
 end
 
 function vpn
