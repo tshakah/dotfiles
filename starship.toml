@@ -1,0 +1,29 @@
+#format = """
+#[┌───────────────────>](bold green)
+#[│](bold green)$env_var $directory$rust$package
+#[└─>](bold green) """
+
+[env_var]
+variable = "SHLVL"
+format = "[$env_value](bold yellow)"
+
+[nix_shell]
+disabled = true
+
+[elixir]
+disabled = true
+
+[python]
+disabled = true
+
+[package]
+disabled = true
+
+[directory]
+truncate_to_repo = false
+
+[gcloud]
+disabled = true
+
+[vagrant]
+disabled = true
