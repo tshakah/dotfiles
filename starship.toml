@@ -19,6 +19,12 @@ disabled = true
 [package]
 disabled = true
 
+[rust]
+disabled = true
+
+[nodejs]
+disabled = true
+
 [directory]
 truncate_to_repo = false
 
