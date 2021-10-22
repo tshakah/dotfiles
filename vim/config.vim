@@ -31,12 +31,9 @@ let g:echodoc#type = "floating"
 
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/lsp-status.nvim'
-Plug 'hrsh7th/nvim-compe'
-
-inoremap <silent><expr> <CR>      compe#confirm('<CR>')
-inoremap <silent><expr> <C-e>     compe#close('<C-e>')
-inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
-inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/nvim-cmp'
 
 " Use <Tab> and <S-Tab> to navigate through popup menu
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
@@ -56,16 +53,23 @@ endfunction
 
 
 " Snippets
-Plug 'norcalli/snippets.nvim'
-" <c-k> will either expand the current snippet at the word or try to jump to
-" the next position for the snippet.
-inoremap <c-k> <cmd>lua return require'snippets'.expand_or_advance(1)<CR>
-" <c-j> will jump backwards to the previous field.
-" If you jump before the first field, it will cancel the snippet.
-inoremap <c-j> <cmd>lua return require'snippets'.advance_snippet(-1)<CR>
+Plug 'L3MON4D3/LuaSnip'
+Plug 'rafamadriz/friendly-snippets'
 
 
 " UI
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'folke/lsp-colors.nvim'
+Plug 'luukvbaal/stabilize.nvim'
+
+Plug 'folke/trouble.nvim'
+nnoremap <leader>xx <cmd>TroubleToggle<cr>
+nnoremap <leader>xw <cmd>TroubleToggle lsp_workspace_diagnostics<cr>
+nnoremap <leader>xd <cmd>TroubleToggle lsp_document_diagnostics<cr>
+nnoremap <leader>xq <cmd>TroubleToggle quickfix<cr>
+nnoremap <leader>xl <cmd>TroubleToggle loclist<cr>
+nnoremap gR <cmd>TroubleToggle lsp_references<cr>
+
 Plug 'liuchengxu/vim-which-key'
 Plug 'AckslD/nvim-whichkey-setup.lua'
 nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
@@ -73,7 +77,6 @@ nnoremap <silent> <localleader> :<c-u>WhichKey  ','<CR>
 
 " Code reviews
 Plug 'pwntester/octo.nvim'
-Plug 'kyazdani42/nvim-web-devicons'
 
 " A fancy start screen
 Plug 'mhinz/vim-startify'
@@ -199,16 +202,16 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 
 " Elixir
-" Plug 'slashmili/alchemist.vim'
 Plug 'elixir-editors/vim-elixir'
-" Plug 'mhinz/vim-mix-format'
-" let g:mix_format_on_save = 1
-" let g:mix_format_silent_errors = 1
 
 
 " Elm
 Plug 'elmcast/elm-vim'
 let g:elm_format_autosave = 1
+
+
+" Rust
+Plug 'simrat39/rust-tools.nvim'
 
 
 " REPL(ish)
