@@ -247,6 +247,8 @@ key_bindings:
   - { key: C,        mods: Control|Shift,    action: Copy                }
   - { key: Paste,                   action: Paste                        }
   - { key: Copy,                    action: Copy                         }
+  - { key: L,        mods: Control, action: ClearHistory                 }
+  - { key: L,        mods: Control, chars: "\x0c"                        }
   - { key: Q,        mods: Command, action: Quit                         }
   - { key: W,        mods: Command, action: Quit                         }
   - { key: Insert,   mods: Shift,   action: PasteSelection               }
