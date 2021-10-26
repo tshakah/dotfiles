@@ -5,8 +5,7 @@
 # these commands.
 
 # Check parent branch is used when creating a branch, to remind the user that other branches might be more appropriate.
-# This tries to prevent us creating branches with the wrong parent, e.g. off HOPE 9.2 when we could actually do the work
-# off HOPE 7.2, and so help intl as well as the UK.
+# This tries to prevent branch creation with the wrong parent, e.g. off a feature branch.
 function check_parent_branch {
     # If the requested branch exists, just check it out
     git show-ref --verify --quiet refs/heads/"$1"
