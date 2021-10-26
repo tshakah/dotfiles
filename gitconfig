@@ -5,3 +5,5 @@
 	verbose = true
 [push]
 	default = current
+[init]
+	defaultBranch = main
