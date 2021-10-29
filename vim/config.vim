@@ -34,6 +34,7 @@ Plug 'nvim-lua/lsp-status.nvim'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/nvim-cmp'
+autocmd BufWritePre * lua vim.lsp.buf.formatting_sync(nil, 1000)
 
 " Use <Tab> and <S-Tab> to navigate through popup menu
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
