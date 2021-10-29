@@ -36,7 +36,7 @@ bind -M visual \e\[1\;5C forward-word
 bind -M visual \e\[1\;5D backward-word
 
 alias nix-shell "nix-shell --run fish"
-alias rg "rg -S -M 200 --glob '!vendor' --glob '!data'"
+alias rg "rg -S -M 200 --hidden --glob '!vendor' --glob '!data' --glob '!.git'"
 alias vi 'nvim'
 alias du 'dust'
 alias ls '~/source/dotfiles/scripts/lc.sh'
