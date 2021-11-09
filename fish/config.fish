@@ -12,7 +12,7 @@ set -gx EDITOR nvim
 set -gx NIX_SHELL_PROMPT $SHLVL
 set -g fish_term24bit 1
 
-set -x FZF_DEFAULT_COMMAND "rg -S --files --follow --hidden --glob '!.git' --glob '!vendor' --glob '!data' --color=always"
+set -x FZF_DEFAULT_COMMAND "rg -S --ignore-vcs --files --follow --hidden --glob '!.git' --glob '!vendor' --glob '!data' --color=always"
 set -x FZF_DEFAULT_OPTS "
   --color fg:#ebdbb2,bg:#2b3339,hl:#fabd2f,fg+:#ebdbb2,bg+:#3c3836,hl+:#fabd2f
   --color info:#83a598,prompt:#bdae93,spinner:#fabd2f,pointer:#83a598,marker:#fe8019,header:#665c54
