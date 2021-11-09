@@ -179,7 +179,6 @@ nnoremap <leader>pp <cmd>Telescope neoclip<cr>
 
 " VCS and remote stuff
 Plug 'tpope/vim-fugitive'
-Plug 'ludovicchabant/vim-lawrencium'
 Plug 'whiteinge/diffconflicts'
 Plug 'albfan/splice.vim'
 let g:splice_prefix = "`"
