@@ -2,6 +2,7 @@ zoxide init fish | source
 direnv hook fish | source
 starship init fish | source
 
+set -U fish_color_command blue
 set -g theme_show_exit_status yes
 set -g theme_color_scheme base16-dark
 set -g theme_display_nix yes
