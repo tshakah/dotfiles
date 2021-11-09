@@ -7,9 +7,11 @@ local lspconfig = require "lspconfig"
 local lsp_status = require("lsp-status")
 local configs = require'lspconfig/configs'
 
-require("trouble").setup()
-require("stabilize").setup()
-require'range-highlight'.setup{}
+require('colorizer').setup()
+require('gitsigns').setup()
+require('trouble').setup()
+require('stabilize').setup()
+require('range-highlight').setup{}
 require('whichkey_setup').config{}
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 local telescope_actions = require('telescope.actions')
@@ -102,7 +104,8 @@ local on_attach = function(client)
   buf_set_keymap("n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
   buf_set_keymap("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
   buf_set_keymap("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-  buf_set_keymap("n", "K", "<Cmd>lua vim.lsp.buf.hover()<CR>", opts)
+  buf_set_keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
+  buf_set_keymap("n", "<space>k", "<cmd>CodeActionMenu<CR>", opts)
   buf_set_keymap("n", "<space>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
   buf_set_keymap("n", "<space>e", "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>", opts)
   buf_set_keymap("n", "[d", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", opts)
@@ -158,7 +161,18 @@ require'nvim-treesitter.configs'.setup {
   ensure_installed = "all", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
   ignore_install = { }, -- List of parsers to ignore installing
   highlight = {
-    enable = true,              -- false will disable the whole extension
-    disable = { },  -- list of language that will be disabled
+    enable = true, -- false will disable the whole extension
+    disable = { }, -- list of language that will be disabled
+  },
+  rainbow = {
+    enable = true,
+    extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
+    max_file_lines = nil, -- Do not enable for files with more than n lines, int
+    -- colors = {}, -- table of hex strings
+    -- termcolors = {} -- table of colour name strings
+  },
+  matchup = {
+    enable = true, -- mandatory, false will disable the whole extension
+    disable = { }, -- optional, list of language that will be disabled
   },
 }

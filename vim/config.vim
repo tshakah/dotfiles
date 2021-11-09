@@ -34,7 +34,12 @@ Plug 'nvim-lua/lsp-status.nvim'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/nvim-cmp'
+Plug 'weilbith/nvim-code-action-menu'
 autocmd BufWritePre * lua vim.lsp.buf.formatting_sync(nil, 1000)
+
+Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+let g:prettier#autoformat = 1
+let g:prettier#autoformat_require_pragma = 0
 
 " Use <Tab> and <S-Tab> to navigate through popup menu
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
@@ -136,6 +141,9 @@ Plug 'mhinz/vim-signify'
 Plug 'Yilin-Yang/vim-markbar'
 nmap <Leader>m <Plug>ToggleMarkbar
 
+Plug 'windwp/nvim-spectre'
+nnoremap <leader>S :lua require('spectre').open()<CR>
+
 Plug 'pechorin/any-jump.vim'
 Plug 'machakann/vim-highlightedyank'
 Plug 'simeji/winresizer'
@@ -143,6 +151,7 @@ Plug 'wellle/targets.vim'
 Plug 'tpope/vim-repeat'
 Plug 'chrisbra/NrrwRgn'
 Plug 'tpope/tpope-vim-abolish'
+Plug 'tpope/vim-commentary'
 
 Plug 'winston0410/cmd-parser.nvim' " Required for range-highlight
 Plug 'winston0410/range-highlight.nvim'
@@ -178,6 +187,7 @@ nnoremap <leader>pp <cmd>Telescope neoclip<cr>
 
 
 " VCS and remote stuff
+Plug 'rhysd/committia.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'whiteinge/diffconflicts'
 Plug 'albfan/splice.vim'
@@ -193,6 +203,8 @@ Plug 'lewis6991/gitsigns.nvim'
 
 " We recommend updating the parsers on update
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'p00f/nvim-ts-rainbow'
+Plug 'andymass/vim-matchup'
 
 
 " Elixir

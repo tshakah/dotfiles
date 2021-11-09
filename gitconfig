@@ -1,8 +1,6 @@
 [pull]
 	rebase = true
 	default = current
-[commit]
-	verbose = true
 [push]
 	default = current
 	followTags = true
