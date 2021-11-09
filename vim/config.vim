@@ -187,14 +187,7 @@ let g:splice_initial_diff_grid = 1
 let g:splice_initial_scrollbind_grid = 1
 let g:splice_initial_scrollbind_compare = 1
 
-Plug 'airblade/vim-gitgutter'
-let g:gitgutter_sign_added = '+'
-let g:gitgutter_sign_modified = '>'
-let g:gitgutter_sign_removed = '-'
-let g:gitgutter_sign_removed_first_line = '^'
-let g:gitgutter_sign_modified_removed = '<'
-let g:gitgutter_override_sign_column_highlight = 1
-
+Plug 'lewis6991/gitsigns.nvim'
 
 " Language support
 
