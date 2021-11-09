@@ -118,9 +118,10 @@ Plug 'sainnhe/everforest'
 Plug 'FooSoft/vim-argwrap'
 nnoremap <silent> <leader>a :ArgWrap<CR>
 
-Plug 'myusuf3/numbers.vim'
+Plug 'jeffkreeftmeijer/vim-numbertoggle'
 " Fix for C-c not resetting the numbers
 inoremap <C-c> <Esc>
+set number
 
 Plug 'simnalamburt/vim-mundo'
 nnoremap <F1> :MundoToggle<CR>
