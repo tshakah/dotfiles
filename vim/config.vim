@@ -87,7 +87,6 @@ Plug 'pwntester/octo.nvim'
 " A fancy start screen
 Plug 'mhinz/vim-startify'
 let g:startify_change_to_vcs_root = 1
-let g:startify_enable_special = 0
 
 let g:ascii = [
 \' ██████╗██╗  ██╗ █████╗ ██╗     ██╗      ██╗       ██╗███████╗   ██████╗ ██╗      █████╗ ██╗   ██╗    █████╗     ██████╗  █████╗ ███╗   ███╗███████╗ █████╗',
@@ -100,6 +99,12 @@ let g:ascii = [
 
 let g:startify_custom_header =
         \ 'map(g:ascii, "\"  \".v:val")'
+
+let g:startify_lists = [
+        \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
+        \ { 'type': 'files',     'header': ['   MRU']            },
+        \ { 'type': 'commands',  'header': ['   Commands']       },
+        \ ]
 
 Plug 'ntpeters/vim-better-whitespace'
 let g:better_whitespace_enabled=1
