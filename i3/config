@@ -59,6 +59,12 @@ bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
+# Dunst shortcuts. Since a recent update these weren't working with dunst directly
+bindsym Control+space --release exec dunstctl close
+bindsym Control+Shift+space --release exec dunstctl close-all
+bindsym Control+grave --release exec dunstctl history-pop
+bindsym Control+shift+period --release exec dunstctl context
+
 # change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
 
