@@ -6,3 +6,6 @@
 	followTags = true
 [init]
 	defaultBranch = main
+[user]
+	email = tshakah@gmail.com
+	name = Elisha Hastings
