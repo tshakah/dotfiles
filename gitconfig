@@ -11,3 +11,5 @@
 [user]
 	email = tshakah@gmail.com
 	name = Elisha Hastings
+[core]
+  excludesfile = ~/.gitignore_global
