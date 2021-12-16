@@ -10,7 +10,6 @@ local configs = require'lspconfig/configs'
 require('colorizer').setup()
 require('gitsigns').setup()
 require('trouble').setup()
-require('stabilize').setup()
 require('range-highlight').setup{}
 require('whichkey_setup').config{}
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())

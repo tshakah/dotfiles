@@ -66,7 +66,6 @@ Plug 'rafamadriz/friendly-snippets'
 " UI
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'folke/lsp-colors.nvim'
-Plug 'luukvbaal/stabilize.nvim'
 
 Plug 'folke/trouble.nvim'
 nnoremap <leader>xx <cmd>TroubleToggle<cr>
