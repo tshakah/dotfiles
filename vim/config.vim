@@ -184,7 +184,7 @@ set splitbelow
 set splitright
 
 nnoremap <C-p> <cmd>Telescope find_files<CR>
-nnoremap <C-[> <cmd>Telescope buffers<cr>
+nnoremap <C-b> <cmd>Telescope buffers<cr>
 nnoremap <C-f> <cmd>Telescope live_grep<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 nnoremap <leader>pp <cmd>Telescope neoclip<cr>
