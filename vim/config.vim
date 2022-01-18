@@ -209,6 +209,10 @@ Plug 'lewis6991/gitsigns.nvim'
 
 " We recommend updating the parsers on update
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
+set foldlevel=1
+
 Plug 'p00f/nvim-ts-rainbow'
 Plug 'andymass/vim-matchup'
 
@@ -263,8 +267,6 @@ nnoremap <C-j> <C-W><C-J>
 nnoremap <C-k> <C-W><C-K>
 nnoremap <C-l> <C-W><C-L>
 nnoremap <C-h> <C-W><C-H>
-set foldmethod=syntax
-set foldlevel=1
 
 set incsearch
 set nohlsearch
