@@ -7,6 +7,7 @@ local lspconfig = require "lspconfig"
 local lsp_status = require("lsp-status")
 local configs = require'lspconfig/configs'
 
+require('dirbuf').setup{}
 require('colorizer').setup()
 require('gitsigns').setup()
 require('trouble').setup()

@@ -160,6 +160,8 @@ Plug 'tpope/vim-commentary'
 Plug 'winston0410/cmd-parser.nvim' " Required for range-highlight
 Plug 'winston0410/range-highlight.nvim'
 
+Plug 'elihunter173/dirbuf.nvim'
+
 " Handle surround chars like ''
 Plug 'tpope/vim-surround'
 
