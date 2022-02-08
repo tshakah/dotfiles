@@ -360,5 +360,7 @@ let g:lightline = {
   \   }
   \ }
 
+highlight! link StartifyHeader Orange
+
 " Loads lua config
 lua require('init')
