@@ -38,7 +38,7 @@ bindsym $mod+Shift+q kill
 bindsym $mod+d exec rofi -show combi -terminal alacritty
 
 # screenshots
-bindsym --release $mod+Shift+s exec "maim -s -D -l -c '255,255,255,0.05' ~/$(date +%Y-%m-%d::%T).png"
+bindsym --release $mod+Shift+s exec "maim -s -D -b 3 ~/$(date +%Y-%m-%d::%T).png"
 bindsym --release Print exec "maim ~/$(date +%Y-%m-%d::%T).png"
 
 # Task manager
