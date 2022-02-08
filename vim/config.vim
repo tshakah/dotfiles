@@ -145,7 +145,7 @@ Plug 'mhinz/vim-signify'
 Plug 'Yilin-Yang/vim-markbar'
 nmap <Leader>m <Plug>ToggleMarkbar
 
-Plug 'windwp/nvim-spectre'
+Plug 'nvim-pack/nvim-spectre'
 nnoremap <leader>S :lua require('spectre').open()<CR>
 
 Plug 'pechorin/any-jump.vim'
