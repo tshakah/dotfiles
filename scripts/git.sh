@@ -87,11 +87,46 @@ Do you want to set up and track `echo -e '\e[33m'`$1`echo -e '\e[0m\e[1m'` on or
     done
 }
 
+# When force-pushing, a better default is to `--force-with-lease --force-if-includes`.
+# See https://stackoverflow.com/a/65839129/2564051 for a good explanation of the difference.
+function safer_force_push_prompt {
+    while read -p "`echo -e '\e[1m'`
+Do you want to use a safer force push, to prevent remote work being overwritten (y/n)?
+`echo -e '\e[0m'`" yn; do
+        case ${yn:0:1} in
+            Y|y )
+                echo -e ''
+                command git push --force-with-lease --force-if-includes;
+
+                if [ $? == 0 ]; then
+                    echo -e '\n\e[35m\e[1mDone ♥\e[0m';
+                    exit 0
+                else
+                    echo -e "\n\e[31m\e[1mI couldn't force push!\e[0m\e[1m\n"
+                    exit 1
+                fi
+            ;;
+            N|n )
+                echo -e '\n\e[34m\e[1mOkay! Doing what you originally asked for\e[0m\n';
+                command git "$@";
+
+                break
+            ;;
+            * )
+                echo -e '\n\e[33m\e[1mPlease answer y (yes) or n (no):\e[0m';
+                continue
+            ;;
+        esac
+    done
+}
+
 if [[ "$1" == "psuh" ]]; then
     # I frequently mistype `git push` as `git psuh`
     shift # remove the "psuh"
     # Call the correct command with the rest of the arguments
     command git push $@
+elif [[ $2 == "-f" || $2 == "--force" ]]; then
+    safer_force_push_prompt "$@"
 elif [[ $1 == "exdif" || $1 == "exdiff" ]]; then
     # Show the exclusive diff for a commit - i.e. only what that commit changed. Uses the supplied (or current) commit.
     commit="${2-$(git rev-parse HEAD)}"
