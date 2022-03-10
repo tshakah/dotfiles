@@ -248,8 +248,8 @@ bindsym XF86KbdBrightnessUp exec --no-startup-id light -A 40 -s "sysfs/leds/asus
 bindsym XF86KbdBrightnessDown exec --no-startup-id light -U 40 -s "sysfs/leds/asus::kbd_backlight"
 
 # Volume control
-bindsym XF86AudioRaiseVolume exec --no-startup-id "amixer -D pipewire sset Master 5%+"
-bindsym XF86AudioLowerVolume exec --no-startup-id "amixer -D pipewire sset Master 5%-"
+bindsym XF86AudioRaiseVolume exec --no-startup-id "pamixer -i 5"
+bindsym XF86AudioLowerVolume exec --no-startup-id "pamixer -d 5"
 bindsym XF86AudioMute exec --no-startup-id "amixer -D pipewire sset Master toggle"
 bindsym XF86AudioMicMute exec --no-startup-id "amixer -D pipewire sset Capture toggle"
 
