@@ -96,7 +96,9 @@ Do you want to use a safer force push, to prevent remote work being overwritten 
         case ${yn:0:1} in
             Y|y )
                 echo -e ''
-                command git push --force-with-lease --force-if-includes;
+                shift
+                shift
+                command git push --force-with-lease --force-if-includes "$@";
 
                 if [ $? == 0 ]; then
                     echo -e '\n\e[35m\e[1mDone ♥\e[0m';
@@ -126,6 +128,7 @@ if [[ "$1" == "psuh" ]]; then
     # Call the correct command with the rest of the arguments
     command git push $@
 elif [[ $2 == "-f" || $2 == "--force" ]]; then
+    # It would be good to switch the argument checking to named - https://unix.stackexchange.com/a/580258/496695
     safer_force_push_prompt "$@"
 elif [[ $1 == "exdif" || $1 == "exdiff" ]]; then
     # Show the exclusive diff for a commit - i.e. only what that commit changed. Uses the supplied (or current) commit.
