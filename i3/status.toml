@@ -19,6 +19,8 @@ interval = 20
 [[block]]
 block = "sound"
 step_width = 5
+headphones_indicator = true
+natural_mapping = true
 
 [[block]]
 block = "backlight"
