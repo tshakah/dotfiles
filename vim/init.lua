@@ -175,6 +175,8 @@ end
 local servers = {
   "bashls",
   "rust_analyzer",
+  "graphql",
+  "tsserver"
 }
 
 for _, lsp in ipairs(servers) do
