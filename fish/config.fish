@@ -72,6 +72,11 @@ function vpn
     end
 end
 
+function nix-cleanup
+    sudo nix-env -p /nix/var/nix/profiles/system --delete-generations old
+    sudo nix-collect-garbage -d
+end
+
 function ensure
     mkdir -p (dirname $argv)
     touch $argv
