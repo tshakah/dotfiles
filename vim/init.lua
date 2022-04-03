@@ -13,6 +13,11 @@ require('gitsigns').setup()
 require('trouble').setup()
 require('range-highlight').setup{}
 require('whichkey_setup').config{}
+
+require'lightspeed'.setup {
+  ignore_case = true,
+}
+
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 local telescope_actions = require('telescope.actions')
 
