@@ -46,6 +46,7 @@ alias git '~/source/dotfiles/scripts/git.sh'
 alias rgr '~/source/dotfiles/scripts/rgr.sh'
 alias ssh 'env TERM=xterm-256color ssh'
 alias rm 'rm -I --preserve-root'
+alias diff 'batdiff'
 alias gti git
 alias google-chrome google-chrome-stable
 alias dco 'docker compose'
