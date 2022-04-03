@@ -174,6 +174,7 @@ nnoremap <buffer><silent> <C-K> :call g:far#scroll_preview_window(g:far#preview_
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-media-files.nvim'
 Plug 'AckslD/nvim-neoclip.lua'
 
 Plug 'ggandor/lightspeed.nvim'
