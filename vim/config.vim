@@ -221,6 +221,10 @@ set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
 set foldlevel=1
 
+" Stop folding occuring on first edit of a file
+" https://github.com/nvim-telescope/telescope.nvim/issues/559
+autocmd BufRead * autocmd BufWinEnter * ++once normal! zx zR
+
 Plug 'p00f/nvim-ts-rainbow'
 Plug 'andymass/vim-matchup'
 
