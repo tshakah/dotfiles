@@ -22,14 +22,9 @@
 #                                                                              #
 # -m : The message to show to the User                                         #
 #                                                                              #
-# -M : The message to show for high level battery charging                     #
-#                                                                              #
 # -t : The time interval the script waits before checking the battery again.   #
 #      Give this a value in seconds: 5s, 10s, or in minutes: 5m                #
 #      Default: 5m                                                             #
-#                                                                              #
-# -H : High level battery charging limit                                       #
-#      Default: 70%                                                            #
 #                                                                              #
 # -s : Play a sound file. This uses the command 'aplay' and depends on         #
 #      a working pulseaudio installation                                       #
@@ -52,7 +47,7 @@ error () {
     exit "$2"
 }
 
-while getopts 's:v:L:l:m:t:s:F:i:nND:H:M' opt; do
+while getopts 's:v:L:l:m:t:s:F:i:nND' opt; do
     case $opt in
         L)
             [[ $OPTARG =~ ^[0-9]+$ ]] || error "${opt}: ${OPTARG} is not a number" 2
@@ -62,20 +57,9 @@ while getopts 's:v:L:l:m:t:s:F:i:nND:H:M' opt; do
             [[ $OPTARG =~ ^[0-9]+$ ]] || error "${opt}: ${OPTARG} is not a number" 2
             LOWER_LIMIT="${OPTARG}"
             ;;
-
-        H)
-            [[ $OPTARG =~ ^[0-9]+$ ]] || error "${opt}: ${OPTARG} is not a number" 2
-            HIGH_LIMIT="${OPTARG}"
-            ;;
-
-        M)
-            HIGH_MESSAGE="${OPTARG}"
-            ;;
-
         m)
             MESSAGE="${OPTARG}"
             ;;
-
         n)
             USE_NOTIFY_SEND="y"
             ;;
@@ -172,7 +156,7 @@ show_notify(){
         fi
     fi
     [[ -n $NOTIFY_ICON ]] && NOTIFY_OPT="-i ${NOTIFY_ICON}"
-    notify-send -t 5000 -u critical "${1}" ${NOTIFY_OPT}
+    notify-send -u critical "${1}" ${NOTIFY_OPT}
 }
 
 play_sound(){
@@ -201,9 +185,7 @@ main (){
     UPPER_LIMIT="${UPPER_LIMIT:-10}"
     UPPER_HALF=$(( UPPER_LIMIT / 2 ))
     LOWER_LIMIT=${LOWER_LIMIT:-$UPPER_HALF}
-    HIGH_LIMIT="${HIGH_LIMIT:-70}"
     MESSAGE="${MESSAGE:-Warning: Battery is getting low}"
-    HIGH_MESSAGE="${HIGH_MESSAGE:-Warning: Battary is charged}"
     SLEEP_TIME="${SLEEP_TIME:-5m}"
     # Note: BATTERIES is an array
     BATTERIES=( /sys/class/power_supply/BAT*/uevent )
@@ -241,11 +223,6 @@ main (){
                 fi
             fi
         else
-            # message high charging (default 70%)
-            if [[ $PERC -ge HIGH_LIMIT ]]; then
-                show_message "${HIGH_MESSAGE}[${PERC}]"
-            fi
-
             # restart messages, reset limits
             POPUP_CLICKED=""
             if [[ $PERC -gt $UPPER_LIMIT ]]; then
@@ -265,3 +242,4 @@ if [[ -n $LOGFILE ]]; then
 fi
 
 main
+
