@@ -7,7 +7,7 @@ exec xrdb -load ~/.Xresources
 exec --no-startup-id hsetroot -solid "#212529"
 exec --no-startup-id ~/source/dotfiles/scripts/auto-screen-rotate.sh
 exec --no-startup-id ~/source/dotfiles/scripts/distract.sh
-exec --no-startup-id ~/source/dotfiles/scripts/i3-battery-popup.sh -n -L 15 -H 85
+exec --no-startup-id ~/source/dotfiles/scripts/i3-battery-popup.sh -n -L 15
 exec_always --no-startup-id light-locker
 
 exec --no-startup-id nm-applet
