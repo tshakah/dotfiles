@@ -18,7 +18,6 @@ require'lightspeed'.setup {
   ignore_case = true,
 }
 
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 local telescope_actions = require('telescope.actions')
 
 local luasnip = require("luasnip")
@@ -127,7 +126,7 @@ require("telescope").setup {
 
 require('neoclip').setup()
 
-local on_attach = function(client)
+local on_attach = function(client, bufnr)
   lsp_status.register_progress()
   lsp_status.config(
   {
@@ -170,13 +169,18 @@ local on_attach = function(client)
   end
 end
 
+local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+
 -- Use a loop to conveniently both setup defined servers
 -- and map buffer local keybindings when the language server attaches
 local servers = {
   "bashls",
+  "html",
+  "eslint",
   "rust_analyzer",
   "graphql",
-  "tsserver"
+  "tsserver",
+  "rnix"
 }
 
 for _, lsp in ipairs(servers) do
