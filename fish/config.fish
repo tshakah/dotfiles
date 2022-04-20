@@ -48,8 +48,10 @@ alias ssh 'env TERM=xterm-256color ssh'
 alias rm 'rm -I --preserve-root'
 alias diff 'batdiff'
 alias gti git
+alias sudo-git 'GIT_SSH_COMMAND="ssh -i /home/elishahastings/.ssh/id_ed25519 -o IdentitiesOnly=yes" sudo -E git'
 alias google-chrome google-chrome-stable
 alias dco 'docker compose'
+alias lg 'lazygit'
 
 source ~/.config/fish/gnupg.fish
 
