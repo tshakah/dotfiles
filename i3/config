@@ -216,11 +216,12 @@ client.focused_inactive $inactive-bg-color  $inactive-bg-color $inactive-text-co
 client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color          $urgent-bg-color   $urgent-bg-color
 
 for_window [class="Nautilus" instance="file_progress"] floating enable
-for_window [class="Mate-system-monitor"] floating enable; resize shrink righ ppt
+for_window [class="Mate-system-monitor"] floating enable; resize shrink
 for_window [window_role="pop-up"] floating enable
 for_window [window_role="task_dialog"] floating enable
 for_window [title="galculator"] floating enable
 for_window [title="Volume Control"] floating enable
+for_window [title="Pick"] floating enable; resize shrink
 for_window [class="Slack" title="mini panel"] floating disable
 
 exec --no-startup-id syndaemon -i 0.5 -K -R -d
