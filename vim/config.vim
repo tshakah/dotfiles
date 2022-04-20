@@ -36,6 +36,7 @@ Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'weilbith/nvim-code-action-menu'
 autocmd BufWritePre *\(.ex\|.exs\)\@<! lua vim.lsp.buf.formatting_sync(nil, 1000)
+autocmd BufWritePre *.tsx,*.ts,*.jsx,*.js EslintFixAll
 
 Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 let g:prettier#autoformat = 1
