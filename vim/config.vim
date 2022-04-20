@@ -256,6 +256,8 @@ Plug 'tpope/vim-dadbod'
 Plug 'kristijanhusak/vim-dadbod-ui'
 nmap <C-]> :DBUIToggle<CR>
 
+Plug 'gpanders/editorconfig.nvim'
+
 
 call plug#end()
 
