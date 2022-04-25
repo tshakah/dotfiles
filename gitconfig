@@ -13,3 +13,5 @@
 	name = Elisha Hastings
 [core]
   excludesfile = ~/.gitignore_global
+[safe]
+	directory = /etc/nixos
