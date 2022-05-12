@@ -180,7 +180,8 @@ local servers = {
   "rust_analyzer",
   "graphql",
   "tsserver",
-  "rnix"
+  "rnix",
+  "sumneko_lua"
 }
 
 for _, lsp in ipairs(servers) do
@@ -189,6 +190,18 @@ for _, lsp in ipairs(servers) do
     capabilities = capabilities
   }
 end
+
+lspconfig.sumneko_lua.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+  commands = {
+    Format = {
+      function()
+        require("stylua-nvim").format_file()
+      end,
+    },
+  },
+})
 
 lspconfig.elixirls.setup {
   on_attach = on_attach,

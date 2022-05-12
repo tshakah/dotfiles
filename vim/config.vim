@@ -243,6 +243,10 @@ let g:elm_format_autosave = 1
 Plug 'simrat39/rust-tools.nvim'
 
 
+" Lua
+Plug 'ckipp01/stylua-nvim'
+
+
 " REPL(ish)
 augroup replcmds
   autocmd! replcmds
