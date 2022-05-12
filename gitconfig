@@ -1,17 +1,29 @@
-[pull]
-	rebase = true
-	default = current
-[commit]
-	verbose = true
-[push]
-	default = current
-	followTags = true
-[init]
-	defaultBranch = main
+[core]
+  excludesfile = ~/.gitignore_global
+  pager = delta
 [user]
 	email = tshakah@gmail.com
 	name = Elisha Hastings
-[core]
-  excludesfile = ~/.gitignore_global
+[pull]
+	rebase = true
+	default = current
+[push]
+	default = current
+	followTags = true
+[commit]
+	verbose = true
+[init]
+	defaultBranch = main
 [safe]
 	directory = /etc/nixos
+[pager]
+  blame = delta
+[interactive]
+    diffFilter = delta --color-only
+[delta]
+    navigate = true  # use n and N to move between diff sections
+    light = false    # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+[merge]
+    conflictstyle = diff3
+[diff]
+    colorMoved = default
