@@ -17,6 +17,7 @@ set -x FZF_DEFAULT_COMMAND "rg -S --ignore-vcs --files --follow --hidden --glob 
 set -x FZF_DEFAULT_OPTS "
   --color fg:#ebdbb2,bg:#2b3339,hl:#fabd2f,fg+:#ebdbb2,bg+:#3c3836,hl+:#fabd2f
   --color info:#83a598,prompt:#bdae93,spinner:#fabd2f,pointer:#83a598,marker:#fe8019,header:#665c54
+  --bind ctrl-a:select-all,ctrl-d:deselect-all,ctrl-t:toggle-all
 "
 set -x FZF_CTRL_T_OPTS "--height 100% --preview '(bat --style=numbers --color=always {} || cat {}) 2> /dev/null | head -500'"
 
