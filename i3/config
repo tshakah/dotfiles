@@ -222,6 +222,8 @@ for_window [window_role="task_dialog"] floating enable
 for_window [title="galculator"] floating enable
 for_window [title="Volume Control"] floating enable
 for_window [title="Pick"] floating enable; resize shrink
+for_window [class="google-chrome" title="Save File"] floating disable
+for_window [class="firefox" title="Save As"] floating disable
 for_window [class="Slack" title="mini panel"] floating disable
 
 exec --no-startup-id syndaemon -i 0.5 -K -R -d
