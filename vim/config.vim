@@ -178,6 +178,9 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-media-files.nvim'
 Plug 'AckslD/nvim-neoclip.lua'
 
+" Stop Telescope closing and staying in insert mode
+autocmd FileType TelescopePrompt lua require("cmp").setup.buffer({ enabled = false })
+
 Plug 'ggandor/lightspeed.nvim'
 map s <Plug>Lightspeed_omni_s
 map gs <Plug>Lightspeed_omni_gs

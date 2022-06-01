@@ -20,6 +20,17 @@ require'lightspeed'.setup {
 
 local telescope_actions = require('telescope.actions')
 
+-- Stop Telescope closing and staying in insert mode
+vim.g.completion_chain_complete_list = {
+	default = {
+		{ complete_items = { "lsp", "path", "buffers", "snippet" } },
+		{ mode = "<c-p>" },
+		{ mode = "<c-n>" },
+	},
+	TelescopePrompt = {},
+	frecency = {},
+}
+
 local luasnip = require("luasnip")
 local cmp = require'cmp'
 
