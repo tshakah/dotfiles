@@ -5,16 +5,16 @@ end
 
 local lspconfig = require "lspconfig"
 local lsp_status = require("lsp-status")
-local configs = require'lspconfig/configs'
+local configs = require 'lspconfig/configs'
 
-require('dirbuf').setup{}
+require('dirbuf').setup {}
 require('colorizer').setup()
 require('gitsigns').setup()
 require('trouble').setup()
-require('range-highlight').setup{}
-require('whichkey_setup').config{}
+require('range-highlight').setup {}
+require('whichkey_setup').config {}
 
-require'lightspeed'.setup {
+require 'lightspeed'.setup {
   ignore_case = true,
 }
 
@@ -22,17 +22,17 @@ local telescope_actions = require('telescope.actions')
 
 -- Stop Telescope closing and staying in insert mode
 vim.g.completion_chain_complete_list = {
-	default = {
-		{ complete_items = { "lsp", "path", "buffers", "snippet" } },
-		{ mode = "<c-p>" },
-		{ mode = "<c-n>" },
-	},
-	TelescopePrompt = {},
-	frecency = {},
+  default = {
+    { complete_items = { "lsp", "path", "buffers", "snippet" } },
+    { mode = "<c-p>" },
+    { mode = "<c-n>" },
+  },
+  TelescopePrompt = {},
+  frecency = {},
 }
 
 local luasnip = require("luasnip")
-local cmp = require'cmp'
+local cmp = require 'cmp'
 
 cmp.setup({
   snippet = {
@@ -110,23 +110,24 @@ require("telescope").setup {
     preview = {
       mime_hook = function(filepath, bufnr, opts)
         local is_image = function(filepath)
-          local image_extensions = {'png','jpg'}   -- Supported image formats
-          local split_path = vim.split(filepath:lower(), '.', {plain=true})
+          local image_extensions = { 'png', 'jpg' } -- Supported image formats
+          local split_path = vim.split(filepath:lower(), '.', { plain = true })
           local extension = split_path[#split_path]
           return vim.tbl_contains(image_extensions, extension)
         end
         if is_image(filepath) then
           local term = vim.api.nvim_open_term(bufnr, {})
-          local function send_output(_, data, _ )
+          local function send_output(_, data, _)
             for _, d in ipairs(data) do
-              vim.api.nvim_chan_send(term, d..'\r\n')
+              vim.api.nvim_chan_send(term, d .. '\r\n')
             end
           end
+
           vim.fn.jobstart(
             {
-              'viu', '-w', '50', filepath  -- Terminal image viewer command
+              'viu', '-w', '50', filepath -- Terminal image viewer command
             },
-            {on_stdout=send_output, stdout_buffered=true})
+            { on_stdout = send_output, stdout_buffered = true })
         else
           require("telescope.previewers.utils").set_preview_message(bufnr, opts.winid, "Binary cannot be previewed")
         end
@@ -140,19 +141,20 @@ require('neoclip').setup()
 local on_attach = function(client, bufnr)
   lsp_status.register_progress()
   lsp_status.config(
-  {
-    status_symbol = "LSP ",
-    indicator_errors = "E",
-    indicator_warnings = "W",
-    indicator_info = "I",
-    indicator_hint = "H",
-    indicator_ok = "ok"
-  }
+    {
+      status_symbol = "LSP ",
+      indicator_errors = "E",
+      indicator_warnings = "W",
+      indicator_info = "I",
+      indicator_hint = "H",
+      indicator_ok = "ok"
+    }
   )
 
   local function buf_set_keymap(...)
     vim.api.nvim_buf_set_keymap(bufnr, ...)
   end
+
   local function buf_set_option(...)
     vim.api.nvim_buf_set_option(bufnr, ...)
   end
@@ -160,7 +162,7 @@ local on_attach = function(client, bufnr)
   buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
 
   -- Mappings.
-  local opts = {noremap = true, silent = true}
+  local opts = { noremap = true, silent = true }
   buf_set_keymap("n", "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts)
   buf_set_keymap("n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
   buf_set_keymap("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
@@ -222,12 +224,11 @@ lspconfig.elixirls.setup {
       fetchDeps = false
     }
   },
-  cmd = {'elixir-ls'}
+  cmd = { 'elixir-ls' }
 }
 
 -- Enable diagnostics
-vim.lsp.handlers["textDocument/publishDiagnostics"] =
-vim.lsp.with(
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics,
   {
     underline = true,
@@ -238,7 +239,7 @@ vim.lsp.with(
 )
 
 -- Set up treesitter
-require'nvim-treesitter.configs'.setup {
+require 'nvim-treesitter.configs'.setup {
   ensure_installed = "all", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
   ignore_install = { "vue" }, -- List of parsers to ignore installing
   highlight = {
@@ -255,6 +256,6 @@ require'nvim-treesitter.configs'.setup {
   },
   matchup = {
     enable = true, -- mandatory, false will disable the whole extension
-    disable = { }, -- optional, list of language that will be disabled
+    disable = {}, -- optional, list of language that will be disabled
   },
 }
