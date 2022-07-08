@@ -33,3 +33,6 @@ disabled = true
 
 [vagrant]
 disabled = true
+
+[aws]
+disabled = true
