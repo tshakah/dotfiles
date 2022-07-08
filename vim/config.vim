@@ -258,6 +258,10 @@ augroup replcmds
 augroup end
 
 
+" Kitty
+Plug 'fladson/vim-kitty'
+
+
 " Databases
 Plug 'tpope/vim-dadbod'
 Plug 'kristijanhusak/vim-dadbod-ui'
