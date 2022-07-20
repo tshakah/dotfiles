@@ -26,3 +26,7 @@
     light = false    # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
 [diff]
     colorMoved = default
+[includeIf "gitdir:~/source/prima/"]
+  path = ~/source/prima/.gitconfig
+[includeIf "gitdir:~/source/flexibility/"]
+  path = ~/source/flexibility/.gitconfig
