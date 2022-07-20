@@ -93,3 +93,7 @@ end
 function dh -d "Fuzzily delete entries from your history"
   history | fzf | read -l item; and history delete --prefix "$item"
 end
+
+function fish_user_key_bindings
+    bind \cl 'tput reset; clear; commandline -f repaint'
+end
