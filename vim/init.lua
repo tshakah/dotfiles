@@ -78,61 +78,14 @@ cmp.setup({
   }
 })
 
-local previewers = require("telescope.previewers")
-
-local _bad = { ".*%.heex" } -- Put all filetypes that slow you down in this array
-local bad_files = function(filepath)
-  for _, v in ipairs(_bad) do
-    if filepath:match(v) then
-      return false
-    end
-  end
-
-  return true
-end
-
-local new_maker = function(filepath, bufnr, opts)
-  opts = opts or {}
-  if opts.use_ft_detect == nil then opts.use_ft_detect = true end
-  opts.use_ft_detect = opts.use_ft_detect == false and false or bad_files(filepath)
-  previewers.buffer_previewer_maker(filepath, bufnr, opts)
-end
-
 require("telescope").setup {
   defaults = {
-    buffer_previewer_maker = new_maker,
     mappings = {
       i = {
         ["<C-j>"] = telescope_actions.move_selection_next,
         ["<C-k>"] = telescope_actions.move_selection_previous,
       }
     },
-    preview = {
-      mime_hook = function(filepath, bufnr, opts)
-        local is_image = function(filepath)
-          local image_extensions = { 'png', 'jpg' } -- Supported image formats
-          local split_path = vim.split(filepath:lower(), '.', { plain = true })
-          local extension = split_path[#split_path]
-          return vim.tbl_contains(image_extensions, extension)
-        end
-        if is_image(filepath) then
-          local term = vim.api.nvim_open_term(bufnr, {})
-          local function send_output(_, data, _)
-            for _, d in ipairs(data) do
-              vim.api.nvim_chan_send(term, d .. '\r\n')
-            end
-          end
-
-          vim.fn.jobstart(
-            {
-              'viu', '-w', '50', filepath -- Terminal image viewer command
-            },
-            { on_stdout = send_output, stdout_buffered = true })
-        else
-          require("telescope.previewers.utils").set_preview_message(bufnr, opts.winid, "Binary cannot be previewed")
-        end
-      end
-    }
   },
 }
 
