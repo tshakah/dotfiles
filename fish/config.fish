@@ -81,6 +81,12 @@ function nix-cleanup
     sudo nix-collect-garbage -d
 end
 
+function update-all
+    sudo nixos-rebuild switch --upgrade-all
+    nvim --headless +PlugUpgrade +PlugUpdate +qa
+    tldr --update
+end
+
 function ensure
     mkdir -p (dirname $argv)
     touch $argv
