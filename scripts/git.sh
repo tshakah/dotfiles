@@ -122,12 +122,12 @@ Do you want to use a safer force push, to prevent remote work being overwritten 
     done
 }
 
-if [[ "$1" == "psuh" ]]; then
+if [[ $1 == "psuh" ]]; then
     # I frequently mistype `git push` as `git psuh`
     shift # remove the "psuh"
     # Call the correct command with the rest of the arguments
-    command git push $@
-elif [[ $2 == "-f" || $2 == "--force" ]]; then
+    $0 push $@
+elif [[ $1 == "push" && ($2 == "-f" || $2 == "--force") ]]; then
     # It would be good to switch the argument checking to named - https://unix.stackexchange.com/a/580258/496695
     safer_force_push_prompt "$@"
 elif [[ $1 == "exdif" || $1 == "exdiff" ]]; then
