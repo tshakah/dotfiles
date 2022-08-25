@@ -124,6 +124,7 @@ Plug 'tommcdo/vim-exchange'
 Plug 'gregsexton/MatchTag'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'sainnhe/everforest'
+Plug 'RRethy/vim-illuminate'
 
 Plug 'FooSoft/vim-argwrap'
 nnoremap <silent> <leader>a :ArgWrap<CR>
