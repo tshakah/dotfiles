@@ -30,3 +30,5 @@
   path = ~/source/prima/.gitconfig
 [includeIf "gitdir:~/source/flexibility/"]
   path = ~/source/flexibility/.gitconfig
+[help]
+	autocorrect = 10
