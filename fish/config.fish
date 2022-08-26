@@ -64,18 +64,6 @@ function ns
   nix-shell
 end
 
-function vpn
-    systemctl status openvpn-cap >/dev/null 2>&1
-
-    if test $status -eq 0
-        sudo systemctl stop openvpn-cap
-        systemctl status openvpn-cap
-    else
-        sudo systemctl start openvpn-cap
-        systemctl status openvpn-cap
-    end
-end
-
 function nix-cleanup
     sudo nix-env -p /nix/var/nix/profiles/system --delete-generations old
     sudo nix-collect-garbage -d
