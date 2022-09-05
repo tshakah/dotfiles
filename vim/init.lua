@@ -212,3 +212,8 @@ require 'nvim-treesitter.configs'.setup {
     disable = {}, -- optional, list of language that will be disabled
   },
 }
+
+require 'treesitter-context'.setup {
+  enable = true,
+  trim_scope = 'inner'
+}
