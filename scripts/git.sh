@@ -22,8 +22,9 @@ function check_parent_branch {
     # Get the current branch
     branch="$(git rev-parse --abbrev-ref HEAD)"
 
-    # Make sure we actually want to use this branch as the parent of the new one (if we aren't branching off master)
-    if [[ "$branch" != "master" ]]; then
+    # Make sure we actually want to use this branch as the parent of the new one
+    #(if we aren't branching off main/master).
+    if [[ $branch != "master" ]] && [[ $branch != "main" ]]; then
         while read -p "`echo -e '\e[1m'`You are branching off `echo -e '\e[33m'`$branch`echo -e '\e[0m'`.
 Are there any earlier branches that you could use (y/n)?
 `echo -e '\e[0m';`" yn; do
