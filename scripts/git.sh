@@ -133,7 +133,7 @@ elif [[ $1 == "push" && ($2 == "-f" || $2 == "--force") ]]; then
 elif [[ $1 == "exdif" || $1 == "exdiff" ]]; then
     # Show the exclusive diff for a commit - i.e. only what that commit changed. Uses the supplied (or current) commit.
     commit="${2-$(git rev-parse HEAD)}"
-    command git diff "$commit^!"
+    command git diff $commit~ $commit
 elif [[ $1 == "cleanup" ]]; then
     command git fetch -p && for branch in $(git for-each-ref --format '%(refname) %(upstream:track)' refs/heads | awk '$2 == "[gone]" {sub("refs/heads/", "", $1); print $1}'); do git branch -D $branch; done
 elif [[ "$1" == "children" ]]; then
