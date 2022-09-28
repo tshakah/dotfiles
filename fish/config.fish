@@ -37,22 +37,24 @@ bind -M insert \e\[1\;5D backward-word
 bind -M visual \e\[1\;5C forward-word
 bind -M visual \e\[1\;5D backward-word
 
-alias nix-shell "nix-shell --run fish"
-alias rg "rg -S -M 200 --hidden --glob '!vendor' --glob '!data' --glob '!.git'"
-alias vi 'nvim'
-alias du 'dust'
-alias ls '~/source/dotfiles/scripts/lc.sh'
+# `gti` is an alias as if it were an `abbr` it would expand to the git bash script path
+alias gti git
 alias cat '~/source/dotfiles/scripts/lc.sh'
 alias git '~/source/dotfiles/scripts/git.sh'
+alias ls '~/source/dotfiles/scripts/lc.sh'
 alias rgr '~/source/dotfiles/scripts/rgr.sh'
-alias ssh 'env TERM=xterm-256color ssh'
 alias rm 'rm -I --preserve-root'
-alias diff 'batdiff'
-alias gti git
+alias nix-shell "nix-shell --run fish"
+alias ssh 'env TERM=xterm-256color ssh'
+alias rg "rg -S -M 200 --hidden --glob '!vendor' --glob '!data' --glob '!.git'"
 alias sudo-git 'GIT_SSH_COMMAND="ssh -i /home/elishahastings/.ssh/id_ed25519 -o IdentitiesOnly=yes" sudo -E git'
-alias google-chrome google-chrome-stable
-alias dco 'docker compose'
-alias lg 'lazygit'
+
+abbr vi 'nvim'
+abbr du 'dust'
+abbr diff 'batdiff'
+abbr google-chrome google-chrome-stable
+abbr dco 'docker compose'
+abbr lg 'lazygit'
 
 source ~/.config/fish/gnupg.fish
 
