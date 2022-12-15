@@ -46,6 +46,7 @@ alias rgr '~/source/dotfiles/scripts/rgr.sh'
 alias rm 'rm -I --preserve-root'
 alias nix-shell "nix-shell --run fish"
 alias ssh 'env TERM=xterm-256color ssh'
+alias gigalixir 'env TERM=xterm-256color gigalixir'
 alias rg "rg -S -M 200 --hidden --glob '!vendor' --glob '!data' --glob '!.git'"
 alias sudo-git 'GIT_SSH_COMMAND="ssh -i /home/elishahastings/.ssh/id_ed25519 -o IdentitiesOnly=yes" sudo -E git'
 alias vi 'nvim'
