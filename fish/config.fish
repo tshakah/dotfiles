@@ -52,6 +52,7 @@ alias rg "rg -S -M 200 --hidden --glob '!vendor' --glob '!data' --glob '!.git'"
 alias sudo-git 'GIT_SSH_COMMAND="ssh -i /home/elishahastings/.ssh/id_ed25519 -o IdentitiesOnly=yes" sudo -E git'
 alias vi 'nvim'
 alias speedtest 'wget -URL http://cachefly.cachefly.net/200mb.test -O /dev/null'
+alias docker-ports 'docker ps --format "table {{.Names}}\t{{.Ports}}"'
 
 abbr du 'dust'
 abbr diff 'batdiff'
