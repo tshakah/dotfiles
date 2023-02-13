@@ -32,3 +32,5 @@
   path = ~/source/flexibility/.gitconfig
 [help]
 	autocorrect = 10
+[alias]
+	root = rev-parse --show-toplevel --show-superproject-working-tree
