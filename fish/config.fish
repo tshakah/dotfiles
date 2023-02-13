@@ -70,19 +70,19 @@ function ns
 end
 
 function nix-cleanup
-    sudo nix-env -p /nix/var/nix/profiles/system --delete-generations old
-    sudo nix-collect-garbage -d
+  sudo nix-env -p /nix/var/nix/profiles/system --delete-generations old
+  sudo nix-collect-garbage -d
 end
 
 function update-all
-    sudo nixos-rebuild switch --upgrade-all
-    nvim --headless +PlugUpgrade +PlugUpdate +qa
-    tldr --update
+  sudo nixos-rebuild switch --upgrade-all
+  nvim --headless +PlugUpgrade +PlugUpdate +qa
+  tldr --update
 end
 
 function ensure
-    mkdir -p (dirname $argv)
-    touch $argv
+  mkdir -p (dirname $argv)
+  touch $argv
 end
 
 function fish_greeting
@@ -94,5 +94,5 @@ function dh -d "Fuzzily delete entries from your history"
 end
 
 function fish_user_key_bindings
-    bind \cl 'tput reset; clear; commandline -f repaint'
+  bind \cl 'tput reset; clear; commandline -f repaint'
 end
