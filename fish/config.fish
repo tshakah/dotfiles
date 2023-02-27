@@ -71,12 +71,13 @@ function ns
 end
 
 function nix-cleanup
-  sudo nix-env -p /nix/var/nix/profiles/system --delete-generations old
+  sudo nix-env -p /nix/var/nix/profiles/system --delete-generations +2
   sudo nix-collect-garbage -d
 end
 
 function update-all
   sudo nixos-rebuild switch --upgrade-all
+  nix-cleanup
   nvim --headless +PlugUpgrade +PlugUpdate +qa
   tldr --update
 end
