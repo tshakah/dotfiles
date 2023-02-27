@@ -158,7 +158,7 @@ local servers = {
   "graphql",
   "tsserver",
   "rnix",
-  "sumneko_lua"
+  "lua_ls"
 }
 
 for _, lsp in ipairs(servers) do
@@ -168,7 +168,7 @@ for _, lsp in ipairs(servers) do
   }
 end
 
-lspconfig.sumneko_lua.setup({
+lspconfig.lua_ls.setup({
   on_attach = on_attach,
   capabilities = capabilities,
   commands = {
