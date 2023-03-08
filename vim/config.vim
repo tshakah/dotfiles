@@ -251,6 +251,10 @@ Plug 'simrat39/rust-tools.nvim'
 Plug 'ckipp01/stylua-nvim'
 
 
+" Earthly
+Plug 'earthly/earthly.vim', { 'branch': 'main' }
+
+
 " REPL(ish)
 augroup replcmds
   autocmd! replcmds
