@@ -184,10 +184,10 @@ autocmd FileType TelescopePrompt lua require("cmp").setup.buffer({ enabled = fal
 Plug 'ggandor/lightspeed.nvim'
 map s <Plug>Lightspeed_omni_s
 map gs <Plug>Lightspeed_omni_gs
-nmap <expr> f reg_recording() . reg_executing() == "" ? "<Plug>Lightspeed_f" : "f"
-nmap <expr> F reg_recording() . reg_executing() == "" ? "<Plug>Lightspeed_F" : "F"
-nmap <expr> t reg_recording() . reg_executing() == "" ? "<Plug>Lightspeed_t" : "t"
-nmap <expr> T reg_recording() . reg_executing() == "" ? "<Plug>Lightspeed_T" : "T"
+noremap f f
+noremap F F
+noremap t t
+noremap T T
 
 noremap 0 ^ " Go to the first non-blank character of a line
 noremap ^ 0 " Just in case you need to go to the very beginning of a line
