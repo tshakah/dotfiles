@@ -5,12 +5,14 @@
 	email = tshakah@gmail.com
 	name = Elisha Hastings
 [pull]
-	rebase = true
+	rebase = interactive
 	default = current
 [push]
-	default = current
 	followTags = true
 	autoSetupRemote = true
+  useForceIfIncludes = true
+[rebase]
+  autoStash = true
 [commit]
 	verbose = true
 [init]
