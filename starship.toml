@@ -1,38 +1,43 @@
-#format = """
-#[┌───────────────────>](bold green)
-#[│](bold green)$env_var $directory$rust$package
-#[└─>](bold green) """
+format = """
+$env_var\
+$directory\
+$git_branch\
+$git_status\
+$status
+$battery\
+[❯ ](fg:#D699B6)
+"""
 
 [env_var]
+style = "bold fg:#7FBBB3"
 variable = "SHLVL"
-format = "[$env_value](bold yellow)"
-
-[nix_shell]
-disabled = true
-
-[elixir]
-disabled = true
-
-[python]
-disabled = true
-
-[package]
-disabled = true
-
-[rust]
-disabled = true
-
-[nodejs]
-disabled = true
+format = "[$env_value ]($style)"
 
 [directory]
+style = "bold fg:#A7C080"
+format = "[$path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
 truncate_to_repo = false
 
-[gcloud]
-disabled = true
+[git_branch]
+symbol = ""
+style = "bold fg:#DBBC7F"
+format = '[$branch ]($style)'
 
-[vagrant]
-disabled = true
+[git_status]
+style = "bold fg:#E69875"
+format = '[$all_status$ahead_behind ]($style)'
 
-[aws]
-disabled = true
+[status]
+style = "bold fg:#E67E80"
+format = '[$status ]($style)'
+disabled=false
+
+[[battery.display]]
+threshold = 15
+style = 'bold red'
+
+[[battery.display]]
+threshold = 30
+style = 'bold fg:#D699B6'
