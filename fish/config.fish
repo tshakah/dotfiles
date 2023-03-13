@@ -74,7 +74,7 @@ function ns
 end
 
 function nix-cleanup
-  sudo nix-env -p /nix/var/nix/profiles/system --delete-generations +2
+  sudo nix-env -p /nix/var/nix/profiles/system --delete-generations +10
   sudo nix-collect-garbage -d
 end
 
