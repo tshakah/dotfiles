@@ -175,16 +175,6 @@ bar {
   modifier Mod1
   font pango:Inconsolata Bold
   status_command i3status-rs
-  colors {
-    background #212529
-    statusline #fbf1c7
-    separator  #a7c080
-
-    focused_workspace  #323d43 #323d43 #d3c6aa
-    active_workspace   #323d43 #323d43 #a7c080
-    inactive_workspace #212529 #212529 #6a836f
-    urgent_workspace   #212529 #212529 #f85552
-  }
 }
 
 set $bg-color            #d3c6aa
