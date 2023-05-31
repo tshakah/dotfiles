@@ -8,6 +8,7 @@ icons = "awesome6"
 
 [[block]]
 block = "focused_window"
+format = " $title.str(max_w:67) |"
 
 [[block]]
 block = "disk_space"
@@ -41,3 +42,5 @@ format = " $timestamp.datetime(f:'%a %F %R') "
 block = "battery"
 interval = 60
 format = " $percentage $time "
+full_format = " $icon $percentage "
+not_charging_format = " $icon $percentage "

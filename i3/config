@@ -103,12 +103,18 @@ bindsym $mod+e layout toggle split
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
 
+set $ws1 "1: "
+set $ws2 "2: "
+set $ws3 "3: "
+set $ws4 "4: "
+set $ws5 "5:"
+
 # switch to workspace
-bindsym $mod+1 workspace number 1: code
-bindsym $mod+2 workspace number 2: terminal
-bindsym $mod+3 workspace number 3: browser
-bindsym $mod+4 workspace number 4: comms
-bindsym $mod+5 workspace number 5: tasks
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
 bindsym $mod+6 workspace 6
 bindsym $mod+7 workspace 7
 bindsym $mod+8 workspace 8
@@ -116,11 +122,11 @@ bindsym $mod+9 workspace 9
 bindsym $mod+0 workspace 10
 
 # move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace number 1: code
-bindsym $mod+Shift+2 move container to workspace number 2: terminal
-bindsym $mod+Shift+3 move container to workspace number 3: browser
-bindsym $mod+Shift+4 move container to workspace number 4: comms
-bindsym $mod+Shift+5 move container to workspace number 5: tasks
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
 bindsym $mod+Shift+6 move container to workspace 6
 bindsym $mod+Shift+7 move container to workspace 7
 bindsym $mod+Shift+8 move container to workspace 8
@@ -128,11 +134,11 @@ bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 
 # attaching workspaces to outputs
-workspace "1: code" output DP1 DP2 DP3 eDP1
-workspace "2: terminal" output DP1 DP2 DP3 eDP1
-workspace "3: browser" output DP1 DP2 DP3 eDP1
-workspace "4: comms" output eDP1
-workspace "5: tasks" output eDP1
+workspace $ws1 output DP1 DP2 DP3 eDP1
+workspace $ws2 output DP1 DP2 DP3 eDP1
+workspace $ws3 output DP1 DP2 DP3 eDP1
+workspace $ws4 output eDP1
+workspace $ws5 output eDP1
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -167,22 +173,33 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-# Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
-bar {
-  position bottom
-  mode hide
-  modifier Mod1
-  font pango:Inconsolata Bold
-  status_command i3status-rs
-}
-
 set $bg-color            #d3c6aa
 set $inactive-bg-color   #323d43
 set $text-color          #2b3339
 set $inactive-text-color #a7c080
 set $urgent-bg-color     #e67e80
 set $active-bg-color     #a7c080
+
+# Start i3bar to display a workspace bar (plus the system information i3status
+# finds out, if available)
+bar {
+  strip_workspace_numbers yes
+  position bottom
+  mode hide
+  modifier Mod1
+  font pango:Inconsolata Bold
+  status_command i3status-rs
+  colors {
+    background $text-color
+    statusline $bg-color
+    separator  #a7c080
+
+    focused_workspace  #55544A #55544A #DBBC7F
+    active_workspace   #55544A #55544A #DBBC7F
+    inactive_workspace #232A2E #232A2E #3F5865
+    urgent_workspace   #232A2E #232A2E $urgent-bg-color
+  }
+}
 
 # workspace switching
 bindsym $mod+Tab workspace back_and_forth
