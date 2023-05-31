@@ -244,7 +244,9 @@ let g:elm_format_autosave = 1
 
 
 " Rust
+Plug 'rust-lang/rust.vim'
 Plug 'simrat39/rust-tools.nvim'
+Plug 'mfussenegger/nvim-dap'
 
 
 " Lua
