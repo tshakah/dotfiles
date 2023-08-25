@@ -197,8 +197,8 @@ bar {
 
     focused_workspace  #55544A #55544A #DBBC7F
     active_workspace   #55544A #55544A #DBBC7F
-    inactive_workspace #232A2E #232A2E #3F5865
-    urgent_workspace   #232A2E #232A2E $urgent-bg-color
+    inactive_workspace #232A2E #232A2E #7FBBB3
+    urgent_workspace   #3A464C #3A464C $urgent-bg-color
   }
 }
 
