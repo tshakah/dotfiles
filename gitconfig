@@ -36,3 +36,8 @@
 	autocorrect = 10
 [alias]
 	root = rev-parse --show-toplevel --show-superproject-working-tree
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
