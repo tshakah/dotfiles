@@ -49,7 +49,6 @@ alias run-mix-tests '~/source/dotfiles/scripts/run-mix-tests.sh'
 alias rm 'rm -I --preserve-root'
 alias nix-shell "nix-shell --run fish"
 alias scp 'env TERM=xterm-256color scp'
-alias gigalixir 'gigalixir --ssh_cmd "kitty +kitten ssh"'
 alias rg "rg -S -M 200 --hidden --glob '!vendor' --glob '!data' --glob '!.git'"
 alias sudo-git 'GIT_SSH_COMMAND="ssh -i /home/elishahastings/.ssh/id_ed25519 -o IdentitiesOnly=yes" sudo -E git'
 alias vi 'nvim'
@@ -63,6 +62,10 @@ abbr dco 'docker compose'
 abbr lg 'lazygit'
 
 source ~/.config/fish/gnupg.fish
+
+function gigafish --wraps gigalixir --description 'alias gigalixir for SSH'
+    gigalixir $argv --ssh_cmd "kitty +kitten ssh"
+end
 
 function ns
   if count $argv > /dev/null
