@@ -13,6 +13,12 @@ timestamp = fn ->
   |> Enum.join(":")
 end
 
+node_name =
+  node()
+  |> Atom.to_string()
+  |> String.split("@")
+  |> List.first()
+
 IEx.configure(
   colors: [
     syntax_colors: [
@@ -34,7 +40,7 @@ IEx.configure(
       "#{IO.ANSI.green()}%prefix#{IO.ANSI.light_green()}❯#{IO.ANSI.reset()}",
   alive_prompt:
     "[#{IO.ANSI.magenta()}#{timestamp.()}#{IO.ANSI.reset()}] " <>
-      "(#{IO.ANSI.yellow()}%node#{IO.ANSI.reset()}) " <>
+      "#{IO.ANSI.yellow()}#{node_name}#{IO.ANSI.reset()} " <>
       "#{IO.ANSI.green()}%prefix#{IO.ANSI.light_green()}❯#{IO.ANSI.reset()}",
   history_size: 1000,
   inspect: [
