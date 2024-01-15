@@ -5,5 +5,7 @@ if git config --bool hooks.gitleaks; then
     echo -e "Warning: gitleaks has detected sensitive information in your changes.\n"
             "To disable the gitleaks precommit hook run the following command:\n\n"
             "git config hooks.gitleaks false"
+
+    exit 1
   fi
 fi
