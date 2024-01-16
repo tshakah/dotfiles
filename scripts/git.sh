@@ -97,7 +97,7 @@ if [[ "$1" == "psuh" ]]; then
     "$0" push "$@"
 elif [[ $1 == 'push' ]]; then
     # If force pushing, make sure it's with a lease
-    command git "$(echo "$@" | sed -E 's/\s(-f|--force)/ --force-with-lease/g')"
+    command git $(echo "$@" | sed -E 's/\s(-f|--force)/ --force-with-lease/g')
 elif [[ "$1" == "exdif" || "$1" == "exdiff" ]]; then
     # Show the exclusive diff for a commit - i.e. only what that commit changed. Uses the supplied (or current) commit.
     commit="${2-$(git rev-parse HEAD)}"
