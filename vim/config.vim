@@ -83,6 +83,7 @@ nnoremap <silent> <localleader> :<c-u>WhichKey  ','<CR>
 
 " Code reviews
 Plug 'pwntester/octo.nvim'
+Plug 'will133/vim-dirdiff'
 
 " A fancy start screen
 Plug 'mhinz/vim-startify'
