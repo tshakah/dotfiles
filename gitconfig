@@ -1,6 +1,7 @@
 [core]
   excludesfile = ~/.gitignore_global
   pager = delta
+  hooksPath = ~/.config/git/hooks
 [user]
 	email = tshakah@gmail.com
 	name = Elisha Hastings
@@ -41,3 +42,5 @@
 	required = true
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
+[hooks]
+	gitleaks = true
