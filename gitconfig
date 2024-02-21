@@ -47,3 +47,7 @@
   gitleaks = true
 [rerere]
   enabled = true
+[column]
+  ui = auto
+[branch]
+  sort = -committerdate
