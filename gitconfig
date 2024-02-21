@@ -51,3 +51,5 @@
   ui = auto
 [branch]
   sort = -committerdate
+[branchless "next"]
+  interactive = true

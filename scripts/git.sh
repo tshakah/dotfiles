@@ -95,6 +95,9 @@ if [[ "$1" == "psuh" ]]; then
     shift # remove the "psuh"
     # Call the correct command with the rest of the arguments
     "$0" push "$@"
+elif [[ $1 == 'sw' && -z "$2" ]]; then
+    # Interactive switch from git-branchless
+    command git sw -i
 elif [[ $1 == 'brunch' ]]; then
     # Auto create a branch from the current commit title
     # First generate a branch name
