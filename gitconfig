@@ -36,6 +36,7 @@
 [help]
   autocorrect = 1
 [alias]
+  hubpr = "!bash ~/source/dotfiles/scripts/github-request-review"
   root = rev-parse --show-toplevel --show-superproject-working-tree
   blm = "blame -wCCC"
 [filter "lfs"]
