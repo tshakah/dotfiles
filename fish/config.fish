@@ -77,6 +77,10 @@ function ns
   nix-shell
 end
 
+function ni
+  zi && nix-shell
+end
+
 function nix-cleanup
   sudo nix-env -p /nix/var/nix/profiles/system --delete-generations +10
   sudo nix-collect-garbage -d
