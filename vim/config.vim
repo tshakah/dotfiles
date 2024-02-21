@@ -278,6 +278,7 @@ nmap <C-]> :DBUIToggle<CR>
 Plug 'gpanders/editorconfig.nvim'
 
 Plug 'zk-org/zk-nvim'
+Plug 'folke/todo-comments.nvim'
 
 call plug#end()
 

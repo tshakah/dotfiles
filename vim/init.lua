@@ -25,6 +25,7 @@ vim.api.nvim_set_keymap("n", "<leader>zf",
 -- Search for the notes matching the current visual selection.
 vim.api.nvim_set_keymap("v", "<leader>zf", ":'<,'>ZkMatch<CR>", opts)
 
+require('todo-comments').setup {}
 require('dirbuf').setup {}
 require('colorizer').setup()
 require('gitsigns').setup()
@@ -236,9 +237,9 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 -- Set up treesitter
 require 'nvim-treesitter.configs'.setup {
   ensure_installed = "all", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-  ignore_install = {}, -- List of parsers to ignore installing
+  ignore_install = {},      -- List of parsers to ignore installing
   highlight = {
-    enable = true, -- false will disable the whole extension
+    enable = true,          -- false will disable the whole extension
     disable = { "elixir" }, -- list of language that will be disabled
     additional_vim_regex_highlighting = { "elixir" },
   },
@@ -251,11 +252,12 @@ require 'nvim-treesitter.configs'.setup {
   },
   matchup = {
     enable = true, -- mandatory, false will disable the whole extension
-    disable = {}, -- optional, list of language that will be disabled
+    disable = {},  -- optional, list of language that will be disabled
   },
 }
 
 require 'treesitter-context'.setup {
   enable = true,
-  trim_scope = 'inner'
+  trim_scope = 'inner',
+  multiline_threshold = 1
 }
