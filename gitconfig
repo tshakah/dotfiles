@@ -3,44 +3,44 @@
   pager = delta
   hooksPath = ~/.config/git/hooks
 [user]
-	email = tshakah@gmail.com
-	name = Elisha Hastings
+  email = tshakah@gmail.com
+  name = Elisha Hastings
 [pull]
-	rebase = interactive
-	default = current
+  rebase = interactive
+  default = current
 [push]
-	followTags = true
-	autoSetupRemote = true
+  followTags = true
+  autoSetupRemote = true
   useForceIfIncludes = true
 [rebase]
   autoStash = true
 [commit]
-	verbose = true
+  verbose = true
 [init]
-	defaultBranch = main
+  defaultBranch = main
 [safe]
-	directory = /etc/nixos
+  directory = /etc/nixos
 [pager]
   blame = delta
 [interactive]
-    diffFilter = delta --color-only
+  diffFilter = delta --color-only
 [delta]
-    navigate = true  # use n and N to move between diff sections
-    light = false    # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+  navigate = true  # use n and N to move between diff sections
+  light = false    # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
 [diff]
-    colorMoved = default
+  colorMoved = default
 [includeIf "gitdir:~/source/prima/"]
   path = ~/source/prima/.gitconfig
 [includeIf "gitdir:~/source/flexibility/"]
   path = ~/source/flexibility/.gitconfig
 [help]
-	autocorrect = 1
+  autocorrect = 1
 [alias]
-	root = rev-parse --show-toplevel --show-superproject-working-tree
+  root = rev-parse --show-toplevel --show-superproject-working-tree
 [filter "lfs"]
-	process = git-lfs filter-process
-	required = true
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
 [hooks]
-	gitleaks = true
+  gitleaks = true
