@@ -38,7 +38,7 @@ $(echo -e '\e[0m';)" yn; do
                 ;;
                 N|n )
                     echo -e '';
-                    command git "$@";
+                    command git $@;
 
                     # Now ask about tracking origin
                     ask_about_origin_tracking "$newbranch"
@@ -95,6 +95,13 @@ if [[ "$1" == "psuh" ]]; then
     shift # remove the "psuh"
     # Call the correct command with the rest of the arguments
     "$0" push "$@"
+elif [[ $1 == 'brunch' ]]; then
+    # Auto create a branch from the current commit title
+    # First generate a branch name
+    branchname=$(git show -s --format=%s | sed -E 's/^wip:?\s+?//I' | tr '[:upper:]' '[:lower:]')
+    branchname="sha/$(echo "${branchname:0:76}" | tr '[:space:]' '-' | sed -E 's/\-$//')"
+    echo -e "Creating branch \e[33m$branchname\e[0m\e[1m."
+    check_parent_branch "$branchname" "checkout -b $branchname"
 elif [[ $1 == 'push' ]]; then
     # If force pushing, make sure it's with a lease
     command git $(echo "$@" | sed -E 's/\s(-f|--force)/ --force-with-lease/g')
