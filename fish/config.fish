@@ -7,6 +7,7 @@ set -g theme_show_exit_status yes
 set -g theme_color_scheme base16-dark
 set -g theme_display_nix yes
 set -gx BAT_THEME ansi
+set -gx ZK_NOTEBOOK_DIR "$HOME/notes/zk"
 set -gx NODE_PATH "$HOME/.npm"
 set -gx PNPM_HOME "$HOME/.pnpm"
 set -gx ERL_AFLAGS "-kernel shell_history enabled"
@@ -41,6 +42,7 @@ bind -M visual \e\[1\;5D backward-word
 
 # `gti` is an alias as if it were an `abbr` it would expand to the git bash script path
 alias gti git
+alias zk 'zk edit --interactive "$argv"'
 alias cat '~/source/dotfiles/scripts/lc.sh'
 alias git '~/source/dotfiles/scripts/git.sh'
 alias ls '~/source/dotfiles/scripts/lc.sh'

@@ -1,0 +1,7 @@
+[alias]
+recent = "zk edit --sort created- --created-after 'last two weeks' --interactive"
+conf = '$EDITOR "$HOME/.config/zk/config.toml"'
+save = '(cd $HOME/notes && git add . && git commit -m "$(date +"%Y-%m-%d %T") note update" && git push)'
+
+[tool]
+fzf-preview = "zk list --quiet --format full --limit 1 {-1}"

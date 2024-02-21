@@ -277,6 +277,7 @@ nmap <C-]> :DBUIToggle<CR>
 
 Plug 'gpanders/editorconfig.nvim'
 
+Plug 'zk-org/zk-nvim'
 
 call plug#end()
 
