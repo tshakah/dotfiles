@@ -34,7 +34,7 @@
 [includeIf "gitdir:~/source/flexibility/"]
   path = ~/source/flexibility/.gitconfig
 [help]
-	autocorrect = 10
+	autocorrect = 1
 [alias]
 	root = rev-parse --show-toplevel --show-superproject-working-tree
 [filter "lfs"]
