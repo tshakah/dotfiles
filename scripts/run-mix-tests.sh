@@ -29,4 +29,4 @@ run_mix_tests() {
 
 export -f run_mix_tests
 
-watchexec --exts ex,exs --restart --clear run_mix_tests
+watchexec --exts ex,exs --restart --clear reset run_mix_tests
