@@ -23,6 +23,7 @@ call plug#begin("~/.config/nvim/plugged")
 
 " Environment
 Plug 'tpope/vim-dotenv'
+Plug 'stevearc/profile.nvim'
 
 " Autocompletion
 Plug 'Shougo/echodoc.vim'
