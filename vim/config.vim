@@ -145,9 +145,6 @@ Plug 'mhinz/vim-signify'
 
 
 " Search and navigation
-Plug 'Yilin-Yang/vim-markbar'
-nmap <Leader>m <Plug>ToggleMarkbar
-
 Plug 'nvim-pack/nvim-spectre'
 nnoremap <leader>S :lua require('spectre').open()<CR>
 
