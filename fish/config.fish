@@ -66,7 +66,7 @@ abbr lg 'lazygit'
 source ~/.config/fish/gnupg.fish
 
 function gigafish --wraps gigalixir --description 'alias gigalixir for SSH'
-    gigalixir $argv --ssh_cmd "kitty +kitten ssh"
+  gigalixir $argv --ssh_cmd "kitty +kitten ssh"
 end
 
 function ns
