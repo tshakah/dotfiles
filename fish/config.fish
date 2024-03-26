@@ -103,6 +103,7 @@ function ensure
 end
 
 function fish_greeting
+  atuin init fish | source
 end
 
 # https://jordanelver.co.uk/blog/2020/05/29/history-deleting-helper-for-fish-shell/
