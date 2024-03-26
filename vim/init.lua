@@ -217,7 +217,6 @@ local servers = {
   "rust_analyzer",
   "graphql",
   "tsserver",
-  "rnix",
   "lua_ls"
 }
 
@@ -227,6 +226,19 @@ for _, lsp in ipairs(servers) do
     capabilities = capabilities
   }
 end
+
+local lsp_path = vim.env.NIL_PATH or 'nil'
+require('lspconfig').nil_ls.setup {
+  autostart = true,
+  on_attach = on_attach,
+  capabilities = capabilities,
+  cmd = { lsp_path },
+  settings = {
+    ['nil'] = {
+      testSetting = 42,
+    },
+  },
+}
 
 lspconfig.lua_ls.setup({
   on_attach = on_attach,
