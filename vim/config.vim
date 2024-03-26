@@ -219,7 +219,7 @@ Plug 'lewis6991/gitsigns.nvim'
 " Language support
 
 " Treesitter recommend updating the parsers on update
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+"Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-context'
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
