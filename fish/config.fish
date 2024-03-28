@@ -48,6 +48,7 @@ alias git '~/source/dotfiles/scripts/git.sh'
 alias ls '~/source/dotfiles/scripts/lc.sh'
 alias rgr '~/source/dotfiles/scripts/rgr.sh'
 alias run-mix-tests '~/source/dotfiles/scripts/run-mix-tests.sh'
+alias trap-psql '~/source/dotfiles/scripts/trap-psql.sh'
 alias rm 'rm -I --preserve-root'
 alias nix-shell "nix-shell --run fish"
 alias scp 'env TERM=xterm-256color scp'
