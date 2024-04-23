@@ -276,6 +276,7 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 
 -- Set up treesitter
 require 'nvim-treesitter.configs'.setup {
+  auto_install = false,     -- These are managed in NixOS
   ignore_install = {},      -- List of parsers to ignore installing
   highlight = {
     enable = true,          -- false will disable the whole extension
