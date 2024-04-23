@@ -29,13 +29,13 @@ hide_edge_borders smart
 default_border pixel 4
 
 # start a terminal
-bindsym $mod+Return exec kitty -1
+bindsym $mod+Return exec wezterm
 
 # kill focused window
 bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec rofi -show combi -terminal kitty
+bindsym $mod+d exec rofi -show combi -terminal wezterm
 
 # screenshots
 bindsym --release $mod+Shift+s exec "maim -s -D -b 3 ~/$(date +%Y-%m-%d::%T).png"
