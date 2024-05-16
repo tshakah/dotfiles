@@ -43,7 +43,7 @@ do
             # print an error message:
             # bat: xxx: No such file or directory
             #
-            bat -p "$@"
+            bat -p "${@: -1}"
             exit
         fi
     fi
