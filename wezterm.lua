@@ -7,6 +7,7 @@ local config = {
   font_size = 13,
   check_for_updates = false,
   scrollback_lines = 100000,
+  force_reverse_video_cursor = true,
   window_padding = {
     left = 2,
     right = 2,
