@@ -14,7 +14,9 @@
 # session_path = "~/.session"
 
 ## date format used, either "us" or "uk"
-# dialect = "us"
+dialect = "uk"
+
+store_failed = false
 
 ## default timezone to use when displaying time
 ## either "l", "local" to use the system's current local timezone, or an offset
@@ -88,7 +90,7 @@ inline_height = 40
 
 ## use ctrl instead of alt as the shortcut modifier key for numerical UI shortcuts
 ## alt-0 .. alt-9
-# ctrl_n_shortcuts = false
+ctrl_n_shortcuts = true
 
 ## default history list format - can also be specified with the --format arg
 # history_format = "{time}\t{command}\t{duration}"
@@ -154,7 +156,7 @@ enter_accept = true
 ## Timeout (in seconds) for acquiring a local database connection (sqlite)
 # local_timeout = 5
 
-## Set this to true and Atuin will minimize motion in the UI - timers will not update live, etc. 
+## Set this to true and Atuin will minimize motion in the UI - timers will not update live, etc.
 ## Alternatively, set env NO_MOTION=true
 # prefers_reduced_motion = false
 
