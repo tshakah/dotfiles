@@ -15,9 +15,8 @@ $character
 
 #dd_newline = false
 
-[env_var]
+[env_var.SHLVL]
 style = "bold fg:#7FBBB3 bg:#2D353B"
-variable = "SHLVL"
 format = "[$env_value ]($style)"
 
 [directory]
