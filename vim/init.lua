@@ -216,7 +216,7 @@ local servers = {
   "eslint",
   "rust_analyzer",
   "graphql",
-  "tsserver",
+  "ts_ls",
   "lua_ls"
 }
 
