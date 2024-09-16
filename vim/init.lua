@@ -65,6 +65,8 @@ require 'lightspeed'.setup {
   ignore_case = true,
 }
 
+require "octo".setup {}
+
 local telescope_actions = require('telescope.actions')
 
 -- Stop Telescope closing and staying in insert mode
