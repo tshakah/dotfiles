@@ -5,6 +5,7 @@ starship init fish | source
 fzf_configure_bindings --git_log=\cg --directory=\cf --processes=\cp
 
 set -U fish_color_command blue
+set -g sponge_purge_only_on_exit true
 set -g theme_show_exit_status yes
 set -g theme_color_scheme base16-dark
 set -g theme_display_nix yes
