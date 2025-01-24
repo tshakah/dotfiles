@@ -2,6 +2,8 @@ zoxide init fish | source
 direnv hook fish | source
 starship init fish | source
 
+fzf_configure_bindings --git_log=\cg --directory=\cf --processes=\cp
+
 set -U fish_color_command blue
 set -g theme_show_exit_status yes
 set -g theme_color_scheme base16-dark
@@ -15,13 +17,20 @@ set -gx EDITOR nvim
 set -gx NIX_SHELL_PROMPT $SHLVL
 set -g fish_term24bit 1
 
-set -x FZF_DEFAULT_COMMAND "rg -S --ignore-vcs --files --follow --hidden --glob '!.git' --glob '!vendor' --glob '!data' --color=always"
-set -x FZF_DEFAULT_OPTS "
-  --color fg:#ebdbb2,bg:#2b3339,hl:#fabd2f,fg+:#ebdbb2,bg+:#3c3836,hl+:#fabd2f
-  --color info:#83a598,prompt:#bdae93,spinner:#fabd2f,pointer:#83a598,marker:#fe8019,header:#665c54
-  --bind ctrl-a:select-all,ctrl-d:deselect-all,ctrl-t:toggle-all
-"
-set -x FZF_CTRL_T_OPTS "--height 100% --preview '(bat --style=numbers --color=always {} || cat {}) 2> /dev/null | head -500'"
+##set -x FZF_DEFAULT_COMMAND "rg -S --ignore-vcs --files --follow --hidden --glob '!.git' --glob '!vendor' --glob '!data' --color=always"
+##set -x FZF_DEFAULT_OPTS "
+##  --color fg:#ebdbb2,bg:#2b3339,hl:#fabd2f,fg+:#ebdbb2,bg+:#3c3836,hl+:#fabd2f
+##  --color info:#83a598,prompt:#bdae93,spinner:#fabd2f,pointer:#83a598,marker:#fe8019,header:#665c54
+##  --bind ctrl-a:select-all,ctrl-d:deselect-all,ctrl-t:toggle-all
+##"
+##set -x FZF_CTRL_T_OPTS "--height 100% --preview '(bat --style=numbers --color=always {} || cat {}) 2> /dev/null | head -500'"
+##
+##set -x FZF_CTRL_R_OPTS "
+##  --preview 'echo {}' --preview-window up:3:hidden:wrap
+##  --bind 'ctrl-/:toggle-preview'
+##  --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
+##  --color header:italic
+##  --header 'Press CTRL-Y to copy command into clipboard'"
 
 set -e fish_user_paths
 
@@ -104,7 +113,7 @@ function ensure
 end
 
 function fish_greeting
-  fzf --fish | source
+  #fzf --fish | source
 end
 
 # https://jordanelver.co.uk/blog/2020/05/29/history-deleting-helper-for-fish-shell/
