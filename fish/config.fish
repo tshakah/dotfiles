@@ -98,7 +98,7 @@ end
 
 function update-all
   echo -ne "\e[36m\e[1mNeovim: update\e[0m\n"
-  nvim --headless +PlugUpgrade +PlugUpdate +qa
+  nvim --headless +PlugUpgrade +PlugUpdate +PlugDiff -e '+%print' +qa
   echo -ne "\n\n\e[36m\e[1mNixOS: update\e[0m\n"
   sudo nixos-rebuild switch --upgrade-all
   echo -ne "\n\n\e[36m\e[1mNixOS: cleanup\e[0m\n"
