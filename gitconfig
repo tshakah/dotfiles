@@ -33,6 +33,8 @@
   path = ~/source/prima/.gitconfig
 [includeIf "gitdir:~/source/seaweed-generation/"]
   path = ~/source/seaweed-generation/.gitconfig
+[includeIf "gitdir:~/source/seagen/"]
+  path = ~/source/seagen/.gitconfig
 [includeIf "gitdir:~/source/flexibility/"]
   path = ~/source/flexibility/.gitconfig
 [help]
