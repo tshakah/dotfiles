@@ -1,7 +1,6 @@
 [core]
   excludesfile = ~/.gitignore_global
   pager = delta
-  hooksPath = ~/.config/git/hooks
 [user]
   email = tshakah@gmail.com
   name = Elisha Hastings
