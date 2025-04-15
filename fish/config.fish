@@ -75,6 +75,7 @@ abbr dco 'docker compose'
 abbr lg 'lazygit'
 
 source ~/.config/fish/gnupg.fish
+source ~/.config/fish/osc113.fish
 source /run/current-system/sw/share/fish/vendor_conf.d/sponge.fish
 
 function gigafish --wraps gigalixir --description 'alias gigalixir for SSH'

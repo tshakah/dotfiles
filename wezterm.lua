@@ -1,4 +1,6 @@
 local wezterm = require 'wezterm'
+local act = wezterm.action
+
 local config = {
   color_scheme = 'Everforest Dark (Gogh)',
   enable_tab_bar = false,
@@ -14,6 +16,19 @@ local config = {
     top = 0,
     bottom = 0,
   }
+}
+
+config.keys = {
+  { key = 'UpArrow',   mods = 'SHIFT', action = act.ScrollToPrompt(-1) },
+  { key = 'DownArrow', mods = 'SHIFT', action = act.ScrollToPrompt(1) },
+}
+
+config.mouse_bindings = {
+  {
+    event = { Down = { streak = 4, button = 'Left' } },
+    action = wezterm.action.SelectTextAtMouseCursor 'SemanticZone',
+    mods = 'NONE',
+  },
 }
 
 config.ssh_domains = {
