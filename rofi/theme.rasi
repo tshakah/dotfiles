@@ -21,6 +21,8 @@ configuration {
 	tokenize: true;
 	parse-hosts: true;
 	parse-known-hosts: true;
+	ssh-client: "ssh";
+	ssh-command: "wezterm --config 'exit_behavior="Hold"' -e {ssh-client} {host} [-p {port}]";
 }
 
 /*****----- Global Properties -----*****/
