@@ -1,30 +1,3 @@
-/**
- *
- * Author : Aditya Shakya (adi1090x)
- * Github : @adi1090x
- *
- * Rofi Theme File
- * Rofi Version: 1.7.3
- **/
-
-/*****----- Configuration -----*****/
-configuration {
-	modi:                       "combi,window,ssh,clipboard:greenclip print";
-    show-icons:                 false;
-    display-combi:              "";
-    display-window:             "";
-    display-ssh:                "󰞷";
-    display-clipboard:          "";
-	drun-display-format:        "{name}";
-	window-format:              "{w} · {c} · {t}";
-	matching: "fuzzy";
-	tokenize: true;
-	parse-hosts: true;
-	parse-known-hosts: true;
-	ssh-client: "ssh";
-	ssh-command: "wezterm --config 'exit_behavior="Hold"' -e {ssh-client} {host} [-p {port}]";
-}
-
 /*****----- Global Properties -----*****/
 * {
     font:                        "Inconsolata Nerd Font 13";
@@ -47,14 +20,13 @@ window {
     x-offset:                    0px;
     y-offset:                    0px;
     padding: 0;
+    background-color:            #454A4D;
     background-image:            url("~/source/dotfiles/rofi/background.jpeg", width);
-    background-position: center;
 
     /* properties for all widgets */
     enabled:                     true;
     border-radius:               8px;
     cursor:                      "default";
-    background-color:            @background;
 }
 
 /*****----- Main Box -----*****/
@@ -84,10 +56,10 @@ inputbar {
     background-color:            transparent;
     text-color:                  @foreground;
     orientation:                 horizontal;
-    children:                    [ "entry", "dummy", "mode-switcher" ];
+    children:                    [ "entry", "mode-switcher" ];
 }
 textbox-prompt-colon {
-    enabled:                     true;
+    enabled:                     false;
     expand:                      false;
     str:                         "";
     padding:                     12px 15px;
@@ -97,14 +69,14 @@ textbox-prompt-colon {
 }
 entry {
     enabled:                     true;
-    expand:                      false;
+    expand:                      true;
     width:                       250px;
     padding:                     12px 16px;
     border-radius:               8px;
     background-color:            @background-alt;
     text-color:                  inherit;
     cursor:                      text;
-    placeholder:                 "Search";
+    placeholder:                 "";
     placeholder-color:           inherit;
 }
 dummy {
@@ -205,7 +177,7 @@ message {
 }
 textbox {
     padding:                     12px;
-    border-radius:               100%;
+    border-radius:               4px;
     background-color:            @background-alt;
     text-color:                  @foreground;
     vertical-align:              0.5;
@@ -217,4 +189,3 @@ error-message {
     background-color:            @background;
     text-color:                  @foreground;
 }
-
