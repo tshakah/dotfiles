@@ -9,7 +9,7 @@
 
 /*****----- Configuration -----*****/
 configuration {
-	modi:                       "combi,calc,ssh,clipboard:greenclip print";
+	modi:                       "combi,ssh,clipboard:greenclip print,calc";
     show-icons:                 false;
     display-combi:              "";
     display-calc:               "󱖦";
@@ -32,6 +32,8 @@ configuration {
   kb-remove-to-eol: "";
   kb-remove-char-back: "BackSpace,Shift+BackSpace";
   kb-accept-entry: "Control+m,Return,KP_Enter";
+  kb-move-front: "Super+Left";
+  kb-move-end: "Super+Right";
 }
 
 @theme "theme"
