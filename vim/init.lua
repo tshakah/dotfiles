@@ -25,15 +25,49 @@ end
 vim.keymap.set("", "<f3>", toggle_profile)
 
 require("stcursorword").setup()
+vim.keymap.set({'n', 'x', 'o'}, 's', '<Plug>(leap)')
+vim.keymap.set('n',             'S', '<Plug>(leap-from-window)')
+vim.keymap.set({'n', 'x', 'o'}, 'gs', function ()
+  require('leap.remote').action()
+end)
+vim.keymap.set({'x', 'o'}, 'R',  function ()
+  require('leap.treesitter').select {
+    opts = require('leap.user').with_traversal_keys('R', 'r')
+  }
+end)
+
+require('leap').opts.preview = function (ch0, ch1, ch2)
+  return not (
+    ch1:match('%s')
+    or (ch0:match('%a') and ch1:match('%a') and ch2:match('%a'))
+  )
+end
+
+-- Define equivalence classes for brackets and quotes, in addition to
+-- the default whitespace group:
+require('leap').opts.equivalence_classes = { ' \t\r\n', '([{', ')]}', '\'"`' }
+
+-- Use the traversal keys to repeat the previous motion without
+-- explicitly invoking Leap:
+require('leap.user').set_repeat_keys('<enter>', '<backspace>')
+
+-- Automatic paste after remote yank operations:
+vim.api.nvim_create_autocmd('User', {
+  pattern = 'RemoteOperationDone',
+  group = vim.api.nvim_create_augroup('LeapRemote', {}),
+  callback = function (event)
+    if vim.v.operator == 'y' and event.data.register == '"' then
+      vim.cmd('normal! p')
+    end
+  end,
+})
 
 local has_words_before = function()
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
   return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
 
-local lspconfig = require "lspconfig"
 local lsp_status = require("lsp-status")
-local configs = require 'lspconfig/configs'
 
 require("zk").setup()
 
@@ -58,12 +92,21 @@ require('dirbuf').setup {}
 require('colorizer').setup()
 require('gitsigns').setup()
 require('trouble').setup()
-require('range-highlight').setup {}
-require('whichkey_setup').config {}
+require("statuscol").setup()
 
-require 'lightspeed'.setup {
-  ignore_case = true,
-}
+vim.diagnostic.config({
+  virtual_text = {
+    prefix = '●',
+    source = "if_many",
+  },
+  float = {
+    source = "always",
+    border = "rounded",
+  },
+  severity_sort = true,
+})
+
+require('whichkey_setup').config {}
 
 require "octo".setup {}
 
@@ -133,7 +176,7 @@ require("telescope").setup {
       i = {
         ["<C-j>"] = telescope_actions.move_selection_next,
         ["<C-k>"] = telescope_actions.move_selection_previous,
-      }
+      },
     },
     file_ignore_patterns = { "^.git/" }
   },
@@ -148,6 +191,9 @@ require("telescope").setup {
     },
   },
 }
+
+require("inc_rename").setup()
+vim.keymap.set("n", "<leader>in", ":IncRename ")
 
 require('neoclip').setup()
 
@@ -183,9 +229,8 @@ local on_attach = function(client, bufnr)
   buf_set_keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
   buf_set_keymap("n", "<space>k", "<cmd>CodeActionMenu<CR>", opts)
   buf_set_keymap("n", "<space>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
-  buf_set_keymap("n", "<space>e", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
-  buf_set_keymap("n", "[d", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", opts)
-  buf_set_keymap("n", "]d", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", opts)
+  buf_set_keymap("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
+  buf_set_keymap("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
 
   -- Set some keybinds conditional on server capabilities
   if client.server_capabilities.document_formatting then
@@ -195,42 +240,73 @@ local on_attach = function(client, bufnr)
   end
 end
 
-local rt = require("rust-tools")
-
-rt.setup({
-  server = {
-    on_attach = function(_, bufnr)
-      -- Hover actions
-      vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
-      -- Code action groups
-      vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
-    end,
-  },
-})
-
 local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
--- Use a loop to conveniently both setup defined servers
--- and map buffer local keybindings when the language server attaches
+require("crates").setup {
+    lsp = {
+        enabled = true,
+        on_attach = function(client, bufnr)
+            -- the same on_attach function as for your other language servers
+            -- can be ommited if you're using the `LspAttach` autocmd
+        end,
+        actions = true,
+        completion = true,
+        hover = true,
+    },
+}
+
+default_opts = { noremap = true, silent = true }
+vim.keymap.set('n', '<Leader>e', '<cmd>lua vim.diagnostic.open_float({ border = "single" })<CR>', default_opts)
+
+vim.keymap.set('n', '<C-space>', '<Plug>RustHoverAction')
+vim.keymap.set('n', '<Leader>ca', ':RustLsp codeAction')
+
+vim.g.rustaceanvim = {
+  tools = {},
+  server = {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    default_settings = {
+      ['rust-analyzer'] = {
+        cargo = {
+          allFeatures = true,
+          loadOutDirsFromCheck = true,
+          buildScripts = {
+            enable = true,
+          },
+        },
+        check = {
+          command = "clippy",
+        },
+        checkOnSave = true,
+        procMacro = {
+          enable = true,
+        },
+      },
+    },
+  },
+  dap = {},
+}
+
+local lspconfig = require('lspconfig')
 local servers = {
   "bashls",
   "html",
   "eslint",
-  "rust_analyzer",
   "graphql",
   "ts_ls",
   "lua_ls"
 }
 
 for _, lsp in ipairs(servers) do
-  lspconfig[lsp].setup {
+  vim.lsp.config(lsp, {
     on_attach = on_attach,
     capabilities = capabilities
-  }
+  })
 end
 
 local lsp_path = vim.env.NIL_PATH or 'nil'
-require('lspconfig').nil_ls.setup {
+vim.lsp.config('nil_ls', {
   autostart = true,
   on_attach = on_attach,
   capabilities = capabilities,
@@ -240,9 +316,9 @@ require('lspconfig').nil_ls.setup {
       testSetting = 42,
     },
   },
-}
+})
 
-lspconfig.lua_ls.setup({
+vim.lsp.config('lua_ls', {
   on_attach = on_attach,
   capabilities = capabilities,
   commands = {
@@ -254,16 +330,29 @@ lspconfig.lua_ls.setup({
   },
 })
 
-lspconfig.elixirls.setup {
-  on_attach = on_attach,
-  capabilities = capabilities,
-  settings = {
-    elixirLS = {
-      fetchDeps = false
-    }
+vim.env.ELIXIR_ERL_OPTIONS = "+B -kernel prevent_overlapping_partitions false"
+local elixir = require("elixir")
+local elixirls = require("elixir.elixirls")
+
+elixir.setup({
+  nextls = {
+    enable = false, -- Deprecated, replaced by Expert
   },
-  cmd = { 'elixir-ls' }
-}
+  elixirls = {
+    enable = true,
+    cmd = "elixir-ls",
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = elixirls.settings({
+      dialyzerEnabled = true,
+      enableTestLenses = true,
+      suggestSpecs = false,
+    }),
+  },
+  projectionist = {
+    enable = true,
+  },
+})
 
 -- Enable diagnostics
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
@@ -276,30 +365,35 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   }
 )
 
--- Set up treesitter
-require 'nvim-treesitter.configs'.setup {
-  auto_install = false,     -- These are managed in NixOS
-  ignore_install = {},      -- List of parsers to ignore installing
-  highlight = {
-    enable = true,          -- false will disable the whole extension
-    disable = { "elixir" }, -- list of language that will be disabled
-    additional_vim_regex_highlighting = { "elixir" },
-  },
-  rainbow = {
-    enable = true,
-    extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
-    max_file_lines = nil, -- Do not enable for files with more than n lines, int
-    -- colors = {}, -- table of hex strings
-    -- termcolors = {} -- table of colour name strings
-  },
-  matchup = {
-    enable = true, -- mandatory, false will disable the whole extension
-    disable = {},  -- optional, list of language that will be disabled
-  },
-}
+require('rainbow-delimiters.setup').setup {}
 
-require 'treesitter-context'.setup {
+require('treesitter-context').setup {
   enable = true,
   trim_scope = 'inner',
   multiline_threshold = 1
 }
+
+local harpoon = require('harpoon')
+harpoon:setup({})
+
+-- basic telescope configuration
+local conf = require("telescope.config").values
+local function toggle_telescope(harpoon_files)
+  local file_paths = {}
+  for _, item in ipairs(harpoon_files.items) do
+    table.insert(file_paths, item.value)
+  end
+
+  require("telescope.pickers").new({}, {
+    prompt_title = "Harpoon",
+    finder = require("telescope.finders").new_table({
+      results = file_paths,
+    }),
+    previewer = conf.file_previewer({}),
+    sorter = conf.generic_sorter({}),
+  }):find()
+end
+vim.keymap.set("n", "<leader>ha", function() harpoon:list():add() end)
+
+vim.keymap.set("n", "<C-S-e>", function() toggle_telescope(harpoon:list()) end,
+  { desc = "Open harpoon window" })

@@ -26,9 +26,6 @@ Plug 'tpope/vim-dotenv'
 Plug 'stevearc/profile.nvim'
 
 " Autocompletion
-Plug 'Shougo/echodoc.vim'
-let g:echodoc#enable_at_startup = 1
-let g:echodoc#type = "floating"
 
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/lsp-status.nvim'
@@ -69,6 +66,7 @@ Plug 'rafamadriz/friendly-snippets'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'folke/lsp-colors.nvim'
 
+Plug 'luukvbaal/statuscol.nvim'
 Plug 'folke/trouble.nvim'
 nnoremap <leader>xx <cmd>TroubleToggle<cr>
 nnoremap <leader>xw <cmd>TroubleToggle lsp_workspace_diagnostics<cr>
@@ -77,7 +75,7 @@ nnoremap <leader>xq <cmd>TroubleToggle quickfix<cr>
 nnoremap <leader>xl <cmd>TroubleToggle loclist<cr>
 nnoremap gR <cmd>TroubleToggle lsp_references<cr>
 
-Plug 'liuchengxu/vim-which-key'
+Plug 'folke/which-key.nvim'
 Plug 'AckslD/nvim-whichkey-setup.lua'
 nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
 nnoremap <silent> <localleader> :<c-u>WhichKey  ','<CR>
@@ -127,14 +125,12 @@ Plug 'gregsexton/MatchTag'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'sainnhe/everforest'
 Plug 'sontungexpt/stcursorword'
+Plug 'ThePrimeagen/harpoon', { 'branch': 'harpoon2' }
 
 Plug 'FooSoft/vim-argwrap'
 nnoremap <silent> <leader>a :ArgWrap<CR>
 
-Plug 'jeffkreeftmeijer/vim-numbertoggle'
-" Fix for C-c not resetting the numbers
-inoremap <C-c> <Esc>
-set number
+set number relativenumber
 
 Plug 'simnalamburt/vim-mundo'
 nnoremap <F1> :MundoToggle<CR>
@@ -158,8 +154,7 @@ Plug 'chrisbra/NrrwRgn'
 Plug 'tpope/tpope-vim-abolish'
 Plug 'tpope/vim-commentary'
 
-Plug 'winston0410/cmd-parser.nvim' " Required for range-highlight
-Plug 'winston0410/range-highlight.nvim'
+Plug 'smjonas/inc-rename.nvim'
 
 Plug 'elihunter173/dirbuf.nvim'
 
@@ -180,13 +175,7 @@ Plug 'AckslD/nvim-neoclip.lua'
 " Stop Telescope closing and staying in insert mode
 autocmd FileType TelescopePrompt lua require("cmp").setup.buffer({ enabled = false })
 
-Plug 'ggandor/lightspeed.nvim'
-map s <Plug>Lightspeed_omni_s
-map gs <Plug>Lightspeed_omni_gs
-noremap f f
-noremap F F
-noremap t t
-noremap T T
+Plug 'https://codeberg.org/andyg/leap.nvim'
 
 noremap 0 ^ " Go to the first non-blank character of a line
 noremap ^ 0 " Just in case you need to go to the very beginning of a line
@@ -223,18 +212,18 @@ Plug 'lewis6991/gitsigns.nvim'
 Plug 'nvim-treesitter/nvim-treesitter-context'
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
-set foldlevel=1
+set foldlevel=99
 
 " Stop folding occuring on first edit of a file
 " https://github.com/nvim-telescope/telescope.nvim/issues/559
-autocmd BufRead * autocmd BufWinEnter * ++once normal! zx zR
+autocmd BufRead * autocmd BufWinEnter * ++once normal! zx
 
-Plug 'p00f/nvim-ts-rainbow'
 Plug 'andymass/vim-matchup'
 
 
 " Elixir
 Plug 'elixir-editors/vim-elixir'
+Plug 'elixir-tools/elixir-tools.nvim', { 'tag': 'stable' }
 
 
 " Elm
@@ -244,8 +233,9 @@ let g:elm_format_autosave = 1
 
 " Rust
 Plug 'rust-lang/rust.vim'
-Plug 'simrat39/rust-tools.nvim'
+Plug 'mrcjkb/rustaceanvim'
 Plug 'mfussenegger/nvim-dap'
+Plug 'saecki/crates.nvim', { 'tag': 'stable' }
 
 
 " Lua
