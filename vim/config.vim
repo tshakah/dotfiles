@@ -26,6 +26,7 @@ Plug 'tpope/vim-dotenv'
 Plug 'stevearc/profile.nvim'
 
 " Autocompletion
+Plug 'ray-x/lsp_signature.nvim'
 
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/lsp-status.nvim'

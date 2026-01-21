@@ -198,6 +198,18 @@ vim.keymap.set("n", "<leader>in", ":IncRename ")
 require('neoclip').setup()
 
 local on_attach = function(client, bufnr)
+  require "lsp_signature".on_attach({
+    bind = true,
+    floating_window = true,
+    hint_prefix = {
+      above = "↙ ",  -- when the hint is on the line above the current line
+      current = "← ",  -- when the hint is on the same line
+      below = "↖ "  -- when the hint is on the line below the current line
+    },
+    handler_opts = {
+      border = "none"
+    }
+  }, bufnr)
   lsp_status.register_progress()
   lsp_status.config(
     {
@@ -245,10 +257,7 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protoc
 require("crates").setup {
     lsp = {
         enabled = true,
-        on_attach = function(client, bufnr)
-            -- the same on_attach function as for your other language servers
-            -- can be ommited if you're using the `LspAttach` autocmd
-        end,
+        on_attach = on_attach,
         actions = true,
         completion = true,
         hover = true,
