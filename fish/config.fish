@@ -87,7 +87,13 @@ function ns
     z $argv
   end
 
-  nix-shell
+  if test -e ./devenv.nix
+    devenv shell fish
+  else if not test -e ./flake.nix
+    nix-shell
+  else if test -e ./flake.nix
+    nix develop --command fish
+  end
 end
 
 function ni
