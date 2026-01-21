@@ -10,7 +10,7 @@ set -g theme_show_exit_status yes
 set -g theme_color_scheme base16-dark
 set -g theme_display_nix yes
 set -gx BAT_THEME ansi
-set -gx ZK_NOTEBOOK_DIR "$HOME/notes/zk"
+set -gx ZK_NOTEBOOK_DIR "$HOME/shared/notes/zk"
 set -gx NODE_PATH "$HOME/.npm"
 set -gx PNPM_HOME "$HOME/.pnpm"
 set -gx ERL_AFLAGS "-kernel shell_history enabled"
