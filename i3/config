@@ -21,7 +21,7 @@ exec --no-startup-id srandrd autorandr -c
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below. ISO 10646 = Unicode
-font pango:Inconsolata
+font pango:Inconsolata Regular 13
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier Mod4
