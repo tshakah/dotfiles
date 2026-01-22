@@ -353,8 +353,9 @@ au BufRead,BufNewFile *.nix set filetype=nix
 
 " IO
 set confirm " confirm changed files
-set noautowrite " never autowrite
-set nobackup " disable backups
+"set noautowrite " never autowrite
+"set nobackup " disable backups
+set backupcopy=yes
 
 " Persistent undo
 set undodir=$HOME/.config/nvim/undo/ " where to store undofiles
