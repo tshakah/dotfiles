@@ -200,7 +200,8 @@ require('neoclip').setup()
 local on_attach = function(client, bufnr)
   require "lsp_signature".on_attach({
     bind = true,
-    floating_window = true,
+    floating_window = false,
+    floating_window_above_cur_line = false,
     hint_prefix = {
       above = "↙ ",  -- when the hint is on the line above the current line
       current = "← ",  -- when the hint is on the same line
