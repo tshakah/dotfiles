@@ -64,15 +64,15 @@ alias nix-shell "nix-shell --run fish"
 alias scp 'env TERM=xterm-256color scp'
 alias rg "rg -S -M 200 --hidden --glob '!vendor' --glob '!data' --glob '!.git'"
 alias sudo-git 'GIT_SSH_COMMAND="ssh -i /home/elishahastings/.ssh/id_ed25519 -o IdentitiesOnly=yes" sudo -E git'
-alias vi 'nvim'
+alias vi nvim
 alias speedtest 'wget -URL http://cachefly.cachefly.net/200mb.test -O /dev/null'
 alias docker-ports 'docker ps --format "table {{.Names}}\t{{.Ports}}"'
 
-abbr du 'dust'
-abbr diff 'batdiff'
+abbr du dust
+abbr diff batdiff
 abbr google-chrome google-chrome-stable
 abbr dco 'docker compose'
-abbr lg 'lazygit'
+abbr lg lazygit
 
 source ~/.config/fish/gnupg.fish
 source ~/.config/fish/osc113.fish
@@ -83,53 +83,53 @@ function gigafish --wraps gigalixir --description 'alias gigalixir for SSH'
 end
 
 function ns
-  if count $argv > /dev/null
-    z $argv
-  end
+    if count $argv >/dev/null
+        z $argv
+    end
 
-  if test -e ./devenv.nix
-    devenv shell fish
-  else if not test -e ./flake.nix
-    nix-shell
-  else if test -e ./flake.nix
-    nix develop --command fish
-  end
+    if test -e ./devenv.nix
+        devenv shell fish
+    else if not test -e ./flake.nix
+        nix-shell
+    else if test -e ./flake.nix
+        nix develop --command fish
+    end
 end
 
 function ni
-  zi && nix-shell
+    zi && nix-shell
 end
 
 function nix-cleanup
-  sudo nix-env -p /nix/var/nix/profiles/system --delete-generations +10
-  sudo nix-collect-garbage -d
+    sudo nix-env -p /nix/var/nix/profiles/system --delete-generations +10
+    sudo nix-collect-garbage -d
 end
 
 function update-all
-  echo -ne "\e[36m\e[1mNeovim: update\e[0m\n"
-  nvim --headless +PlugUpgrade +PlugUpdate +PlugDiff -e '+%print' +qa
-  echo -ne "\n\n\e[36m\e[1mNixOS: update\e[0m\n"
-  sudo nixos-rebuild switch --upgrade-all
-  echo -ne "\n\n\e[36m\e[1mNixOS: cleanup\e[0m\n"
-  nix-cleanup
-  echo -ne "\n\n\e[36m\e[1mTLDR: update\e[0m\n"
-  tldr --update
+    echo -ne "\e[36m\e[1mNeovim: update\e[0m\n"
+    nvim --headless +PlugUpgrade +PlugUpdate +PlugDiff -e '+%print' +qa
+    echo -ne "\n\n\e[36m\e[1mNixOS: update\e[0m\n"
+    sudo nixos-rebuild switch --upgrade-all
+    echo -ne "\n\n\e[36m\e[1mNixOS: cleanup\e[0m\n"
+    nix-cleanup
+    echo -ne "\n\n\e[36m\e[1mTLDR: update\e[0m\n"
+    tldr --update
 end
 
 function ensure
-  mkdir -p (dirname $argv)
-  touch $argv
+    mkdir -p (dirname $argv)
+    touch $argv
 end
 
 function fish_greeting
-  #fzf --fish | source
+    #fzf --fish | source
 end
 
 # https://jordanelver.co.uk/blog/2020/05/29/history-deleting-helper-for-fish-shell/
 function dh -d "Fuzzily delete entries from your history"
-  history | fzf | read -l item; and history delete --prefix "$item"
+    history | fzf | read -l item; and history delete --prefix "$item"
 end
 
 function fish_user_key_bindings
-  bind \cl 'tput reset; clear; commandline -f repaint'
+    bind \cl 'tput reset; clear; commandline -f repaint'
 end
