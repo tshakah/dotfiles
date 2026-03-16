@@ -126,7 +126,6 @@ Plug 'gregsexton/MatchTag'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'sainnhe/everforest'
 Plug 'sontungexpt/stcursorword'
-Plug 'ThePrimeagen/harpoon', { 'branch': 'harpoon2' }
 
 Plug 'FooSoft/vim-argwrap'
 nnoremap <silent> <leader>a :ArgWrap<CR>
