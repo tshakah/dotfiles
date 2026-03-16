@@ -77,10 +77,7 @@ abbr lg lazygit
 source ~/.config/fish/gnupg.fish
 source ~/.config/fish/osc113.fish
 source /run/current-system/sw/share/fish/vendor_conf.d/sponge.fish
-
-function gigafish --wraps gigalixir --description 'alias gigalixir for SSH'
-  gigalixir $argv --ssh_cmd "kitty +kitten ssh"
-end
+#source "$WEZTERM_EXECUTABLE_DIR/../share/fish/vendor_completions.d/wezterm.fish"
 
 function ns
     if count $argv >/dev/null

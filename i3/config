@@ -33,13 +33,13 @@ hide_edge_borders smart
 default_border pixel 4
 
 # start a terminal
-bindsym $mod+Return exec wezterm
+bindsym $mod+Return exec ghostty
 
 # kill focused window
 bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec rofi -show combi -terminal wezterm -theme "~/.config/rofi/config.rasi"
+bindsym $mod+d exec rofi -show combi -terminal ghostty -theme "~/.config/rofi/config.rasi"
 
 # screenshots
 bindsym --release $mod+Shift+s exec "maim -s -D -b 3 ~/$(date +%Y-%m-%d::%T).png"
@@ -237,8 +237,7 @@ for_window [title="Pick"] floating enable; resize shrink
 for_window [class="google-chrome" title="Save File"] floating disable
 for_window [class="firefox" title="Save As"] floating disable
 for_window [class="Slack" title="mini panel"] floating disable
-
-exec --no-startup-id syndaemon -i 0.5 -K -R -d
+for_window [class="ghostty"] border pixel 2
 
 set $Locker light-locker-command --lock
 
