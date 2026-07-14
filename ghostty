@@ -1,10 +1,9 @@
 shell-integration = fish
-command = /run/current-system/sw/bin/fish
+shell-integration-features = ssh-env,no-cursor,no-title
 
 font-family = Inconsolata Nerd Font
 font-size = 13
 custom-shader-animation = false
-shell-integration-features = ssh-env
 
 # Everforest Dark
 background = 2d353b
@@ -12,7 +11,6 @@ foreground = d3c6aa
 cursor-color = d3c6aa
 cursor-style = block
 cursor-style-blink = false
-shell-integration-features = no-cursor,no-title
 selection-background = 425047
 selection-foreground = d3c6aa
 
@@ -52,3 +50,9 @@ keybind = ctrl+n=navigate_search:next
 keybind = ctrl+m=navigate_search:previous
 keybind = ctrl+j=text:\x0a
 keybind = ctrl+k=text:\x0b
+
+# macOS: Ctrl-Shift-C/V for copy/paste (matches the terminal-emulator
+# exception in the karabiner-windows-mode ruleset elsewhere in this repo).
+# No-op on Linux, which has no default binding on these keys.
+keybind = ctrl+shift+c=copy_to_clipboard
+keybind = ctrl+shift+v=paste_from_clipboard
