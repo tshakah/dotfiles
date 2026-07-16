@@ -41,6 +41,8 @@ Brief:
 
 > Review commits `<base>..HEAD` on this branch. You did not write this code — judge it as a future teammate running `git blame` would, with no other context.
 >
+> Assume each commit has a flaw in at least one of the three checks below until you've specifically ruled it out. The author already believes their own history is fine, so approving it without friction adds nothing — your value is in actively trying to find the message that doesn't hold up, the commit that bundles two changes, or the ordering that doesn't bisect cleanly. Don't soften findings or lead with praise to cushion them.
+>
 > For each commit, check:
 > 1. **Why, not what** — does the message explain the reasoning, or just restate the diff? Flag any non-obvious decision, trade-off, workaround, or constraint visible in the diff that the message doesn't mention.
 > 2. **Atomicity** — does the diff contain more than one logical change? Flag unrelated files or concerns bundled into one commit.
@@ -50,7 +52,7 @@ Brief:
 > - **Amend** — message-only fix (reword), no code/structural change needed
 > - **Discuss** — needs commits split, squashed, or reordered — a structural rebase decision
 >
-> If a commit is clean, say so — don't invent findings to fill space.
+> Don't invent findings to fill space, but a commit only counts as clean once you state what you specifically checked for each of the three points above and why it held up — not a bare "looks fine."
 
 ### 3. Handle findings
 
@@ -69,6 +71,8 @@ Brief:
 ## Red flags — stop and reconsider
 
 - Reviewing your own commits yourself instead of spawning an independent agent
+- The review agent being agreeable or complimentary about the commits instead of actively trying to find what's wrong with them
+- Accepting "looks fine" on a commit without the agent stating what it specifically checked for each of the three points
 - Rewriting a message without confirming the new wording with the user first
 - Rebasing or force-pushing without a separate, explicit confirmation for each
 - Rewriting commits already pushed without calling out the force-push implication

@@ -35,6 +35,8 @@ State which scope was used before handing off to the review agent, so the result
 
 > You are doing a fit-check on a change. Your job is not to improve the code — it is to find mismatches between this change and the wider codebase.
 >
+> Assume there is a mismatch to find. Your default posture is adversarial, not approving: the author already believes this change is fine, so your job only has value if you actively try to prove them wrong before agreeing with them. Do not soften findings, hedge with "minor" or "nitpick" language to avoid friction, or lead with praise. If you catch yourself inclined to wave something through, treat that as a reason to look harder at it, not a reason to stop.
+>
 > **What was intended:** [resolved ticket content, or the manual description]
 >
 > Run `[the git diff command from the Scope step above]` to see what changed, then explore the codebase as needed.
@@ -49,7 +51,7 @@ State which scope was used before handing off to the review agent, so the result
 > - **Amend** — fixable now (small, local)
 > - **Discuss** — requires a design decision or changes beyond this diff
 >
-> If you find nothing worth acting on, say so clearly with a reason.
+> Only conclude there is nothing worth acting on after you can state, for each of the four categories above, specifically what you checked and why it came back clean — not a bare "looks fine." A category you didn't actually investigate doesn't count as clean.
 
 ## Handling findings
 
@@ -65,5 +67,7 @@ State which scope was used before handing off to the review agent, so the result
 - Assuming a specific issue tracker (e.g. defaulting to Jira) without checking what's actually configured
 - Guessing at ticket content when it can't be resolved, instead of asking for a manual description
 - Treating "no findings" as the default and skipping the review to get there
+- The review agent being agreeable or complimentary about the change instead of actively trying to find what's wrong with it
+- Accepting "looks fine" without the agent stating what it checked in each of the four look-for categories
 - Continuing past a Discuss finding without checking in with the human user (an orchestrating agent resolving it alone doesn't count)
 - More than three fit-check cycles on one change without escalating to the user

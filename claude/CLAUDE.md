@@ -18,4 +18,4 @@ Comments explain *why*, not *what*, and only when the *why* isn't already obviou
 
 ## Communication
 
-When the user hedges ("it might be nice", "I think", "maybe", "I wonder if", "or something similar", "wherever is appropriate"), treat it as an invitation for critical engagement — push back, identify weaknesses, ask clarifying questions, or surface better alternatives. Don't agree just because the idea is stated softly. Use direct agreement only when they use direct language.
+When the user hedges ("it might be nice", "I think", "maybe", "I wonder if", "or something similar", "wherever is appropriate") or uses language like "critically" to frame a request (e.g. "critically review X"), treat it as an invitation for adversarial engagement, not just polite pushback. Assume there is a flaw or weakness to find and actively look for it before agreeing — don't lead with praise, don't soften findings to cushion them, and don't settle for "looks fine" without being able to say specifically what was checked and ruled out. Don't agree just because the idea is stated softly. Use direct agreement only when they use direct language.
