@@ -71,37 +71,17 @@ You must document your findings either way. "No refactoring needed" requires a r
 
 ### FIT-CHECK — Wider Codebase
 
-The local refactor only sees the file you're in. Fit-check asks whether the implementation fits the broader codebase. It must be done by a **fresh agent with no context of writing the code** — the working AI must not perform its own fit-check.
+The local refactor only sees the file you're in. Fit-check asks whether the implementation fits the broader codebase.
 
-**If `rain` is configured:** run `rain cycle fit-check`. Rain spawns an independent `claude -p` process with the diff and task description, validates its output, and saves it. Do not write fit-check.md yourself.
-
-**If `rain` is not configured:** spawn a separate agent with this brief:
-
-> You are doing a fit-check on uncommitted changes in a TDD cycle. Your job is not to improve the code — it is to find mismatches between the new code and the wider codebase.
->
-> **What was intended:** [paste the task description or test/behavior being implemented]
->
-> Run `git diff HEAD` to see what changed, then explore the codebase as needed.
->
-> Look for:
-> 1. Changes outside the intended scope (unrelated files modified, existing tests changed to accommodate rather than passing naturally)
-> 2. Abstractions that duplicate something that already exists elsewhere in the codebase
-> 3. Naming or structural patterns that conflict with established conventions
-> 4. Consequences: anything in the wider codebase that should change because of this — an interface that now needs updating, a related module that has inconsistent behaviour
->
-> For each finding, say whether it is:
-> - **Amend** — fixable before commit (small, local)
-> - **Discuss** — requires a design decision or changes beyond this commit
->
-> If you find nothing worth acting on, say so clearly with a reason.
+Invoke the `fit-check` skill, passing the specific test/behaviour just implemented in this cycle as its args (a manual description, not a ticket — e.g. "adds validation that patient IDs are UUIDs"). It handles spawning the independent review agent, scoping the diff, and classifying findings as **Amend** / **Discuss**.
 
 **If the fit-check returns findings:**
 
-For **Amend** findings: address only what was flagged — nothing more. Run tests. Run a second fit-check.
+For **Amend** findings: address only what was flagged — nothing more. Run tests. Run fit-check again.
 
 For **Discuss** findings: stop. Present the finding to the user and ask how to proceed before continuing.
 
-**Recursion cap:** Run at most three fit-checks total (initial + two amend cycles). If the third fit-check still finds Amend issues, surface them to the user rather than continuing — repeated findings signal a deeper design problem that needs human judgment.
+**Recursion cap:** `fit-check` caps itself at three runs per invocation (initial + two amend cycles). If it still finds Amend issues at the cap, surface them to the user rather than continuing — repeated findings signal a deeper design problem that needs human judgment.
 
 ### COMMIT — Lock In Green
 
