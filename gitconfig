@@ -36,6 +36,8 @@
   path = ~/source/seagen/.gitconfig
 [includeIf "gitdir:~/source/flexibility/"]
   path = ~/source/flexibility/.gitconfig
+[includeIf "gitdir:~/source/doccla/"]
+  path = ~/source/doccla/.gitconfig
 [help]
   autocorrect = 1
 [alias]
