@@ -59,3 +59,5 @@
   sort = -committerdate
 [branchless "next"]
   interactive = true
+[merge]
+	ff = only
