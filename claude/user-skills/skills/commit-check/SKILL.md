@@ -13,6 +13,8 @@ description: Use before opening a PR or merging a branch to review its full comm
 
 Not for single-commit branches — a single commit's message quality is already covered by `better-tdd`'s commit step. This skill is about the sequence.
 
+Checks commit messages only. For comments left in the code itself, run `comment-check` alongside this before a PR.
+
 ## What it checks
 
 Three things, per commit and across the branch as a whole:
