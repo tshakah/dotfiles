@@ -17,11 +17,12 @@ Checks commit messages only. For comments left in the code itself, run `comment-
 
 ## What it checks
 
-Three things, per commit and across the branch as a whole:
+Four things, per commit and across the branch as a whole:
 
 1. **Explains why** — the message states the reasoning, not just a restatement of the diff. Any non-obvious decision, trade-off, or workaround a future `git blame` reader would need is called out.
-2. **Atomic** — each commit is one coherent logical change. No unrelated changes bundled together, no "and also fixed a typo" riders that belong in their own commit.
-3. **Ordered** — commits form a sensible, bisectable sequence: dependencies before dependents, no later commit that should have been folded into an earlier one.
+2. **Accurate** — the message's description of what changed matches what the diff actually does. No claim in the message left unsupported by the diff, no diff content the message doesn't mention.
+3. **Atomic** — each commit is one coherent logical change. No unrelated changes bundled together, no "and also fixed a typo" riders that belong in their own commit.
+4. **Ordered** — commits form a sensible, bisectable sequence: dependencies before dependents, no later commit that should have been folded into an earlier one.
 
 ## Process
 
@@ -43,18 +44,19 @@ Brief:
 
 > Review commits `<base>..HEAD` on this branch. You did not write this code — judge it as a future teammate running `git blame` would, with no other context.
 >
-> Assume each commit has a flaw in at least one of the three checks below until you've specifically ruled it out. The author already believes their own history is fine, so approving it without friction adds nothing — your value is in actively trying to find the message that doesn't hold up, the commit that bundles two changes, or the ordering that doesn't bisect cleanly. Don't soften findings or lead with praise to cushion them.
+> Assume each commit has a flaw in at least one of the four checks below until you've specifically ruled it out. The author already believes their own history is fine, so approving it without friction adds nothing — your value is in actively trying to find the message that doesn't hold up, the message that misdescribes its own diff, the commit that bundles two changes, or the ordering that doesn't bisect cleanly. Don't soften findings or lead with praise to cushion them.
 >
 > For each commit, check:
 > 1. **Why, not what** — does the message explain the reasoning, or just restate the diff? Flag any non-obvious decision, trade-off, workaround, or constraint visible in the diff that the message doesn't mention.
-> 2. **Atomicity** — does the diff contain more than one logical change? Flag unrelated files or concerns bundled into one commit.
-> 3. **Ordering** — read the commits in sequence. Flag any commit that fixes, reverts, or reworks something from an earlier commit in a way that should have been folded into it instead. Flag any commit that only makes sense once a later commit lands.
+> 2. **Accuracy** — does the message's description of what changed match what the diff actually does? Flag any claim in the message not borne out by the diff, and any diff content the message doesn't mention.
+> 3. **Atomicity** — does the diff contain more than one logical change? Flag unrelated files or concerns bundled into one commit.
+> 4. **Ordering** — read the commits in sequence. Flag any commit that fixes, reverts, or reworks something from an earlier commit in a way that should have been folded into it instead. Flag any commit that only makes sense once a later commit lands.
 >
 > For each finding, classify it:
 > - **Amend** — message-only fix (reword), no code/structural change needed
 > - **Discuss** — needs commits split, squashed, or reordered — a structural rebase decision
 >
-> Don't invent findings to fill space, but a commit only counts as clean once you state what you specifically checked for each of the three points above and why it held up — not a bare "looks fine."
+> Don't invent findings to fill space, but a commit only counts as clean once you state what you specifically checked for each of the four points above and why it held up — not a bare "looks fine."
 
 ### 3. Handle findings
 
@@ -74,7 +76,7 @@ Brief:
 
 - Reviewing your own commits yourself instead of spawning an independent agent
 - The review agent being agreeable or complimentary about the commits instead of actively trying to find what's wrong with them
-- Accepting "looks fine" on a commit without the agent stating what it specifically checked for each of the three points
+- Accepting "looks fine" on a commit without the agent stating what it specifically checked for each of the four points
 - Rewriting a message without confirming the new wording with the user first
 - Rebasing or force-pushing without a separate, explicit confirmation for each
 - Rewriting commits already pushed without calling out the force-push implication
