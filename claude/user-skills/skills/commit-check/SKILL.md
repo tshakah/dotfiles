@@ -11,8 +11,6 @@ description: Use before opening a PR or merging a branch to review its full comm
 - Before merging a branch
 - Any time you've made a string of commits and want to sanity-check the resulting history
 
-Not for single-commit branches — a single commit's message quality is already covered by `better-tdd`'s commit step. This skill is about the sequence.
-
 Checks commit messages only. For comments left in the code itself, run `comment-check` alongside this before a PR.
 
 ## What it checks
@@ -30,7 +28,7 @@ Four things, per commit and across the branch as a whole:
 
 Find the branch's base with `git merge-base <default-branch> HEAD`. Detect the default branch (`git remote show origin`, or the repo's own convention); if genuinely ambiguous, ask the user which ref to diff against rather than guessing.
 
-List the commits: `git log <base>..HEAD --oneline`. If there's only one commit, say so and stop — nothing for this skill to do.
+List the commits: `git log <base>..HEAD --oneline`.
 
 ### 2. Spawn an independent review agent
 
