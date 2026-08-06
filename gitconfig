@@ -44,6 +44,24 @@
   hubpr = "!bash ~/source/dotfiles/scripts/github-request-review"
   root = rev-parse --show-toplevel --show-superproject-working-tree
   blm = "blame -wCCC"
+	append = town append
+	compress = town compress
+	continue = town continue
+	contribute = town contribute
+	delete = town delete
+	diff-parent = town diff-parent
+	down = town down
+	hack = town hack
+	observe = town observe
+	park = town park
+	prepend = town prepend
+	propose = town propose
+	rename = town rename
+	repo = town repo
+	set-parent = town set-parent
+	ship = town ship
+	sync = town sync
+	up = town up
 [filter "lfs"]
   process = git-lfs filter-process
   required = true
@@ -61,3 +79,5 @@
   interactive = true
 [merge]
 	ff = only
+[git-town]
+  sync-feature-strategy = rebase
