@@ -1,54 +1,122 @@
 ---
 name: pr-review
-description: Use to review someone else's pull request across comments, commit messages, and wider-codebase fit — without touching their branch history or posting anything. Spawns three independent agents, one per dimension, reusing the same adversarial briefs as comment-check, commit-check, and fit-check, then lists findings for the user to work through and post themselves. Takes a PR reference (number or URL) as args.
+disable-model-invocation: true
+description: Use to review someone else's pull request across correctness, security, test coverage, comments, commit messages, and wider-codebase fit — without touching their branch history or posting anything. Checks the PR out into a throwaway worktree, resolves what was intended from the ticket and PR description, then spawns one adversarial agent per dimension and hands the user a severity-grouped list to post themselves. Takes a PR reference (number or URL) as args.
 ---
 
 # PR Review
 
 ## Purpose
 
-Reviewing someone else's PR needs the same adversarial rigor as `comment-check`, `commit-check`, and `fit-check` — but none of the "fix it yourself" machinery those skills use, since you don't own the branch. This skill runs the same three check dimensions as independent parallel agents, then lists the findings for the user instead of applying local edits, rebases, force-pushes, or posting anything to the PR.
+Reviewing someone else's PR needs the same adversarial rigor as `comment-check`, `commit-check`, and `fit-check` — but none of the "fix it yourself" machinery those skills use, since you don't own the branch. It also needs dimensions those skills deliberately leave out: they assume correctness was already established by whoever wrote the code. On someone else's PR that assumption doesn't hold, so this skill adds correctness, security, and test-coverage dimensions alongside them.
 
-Never rewrite, rebase, or force-push someone else's branch. If a finding needs a structural fix (split/squash/reorder a commit, restructure a change), say so in the review comment and let the author decide — don't offer to do it for them.
+Never rewrite, rebase, or force-push someone else's branch. If a finding needs a structural fix (split/squash/reorder a commit, restructure a change), say so in the finding and let the author decide — don't offer to do it for them.
 
 ## Input
 
 Supplied via `args`: a PR number, URL, or enough to resolve one with `gh pr view`. If ambiguous or missing, ask which PR.
 
-## Scope
+## Step 1: Check the PR out into a worktree
 
-- Resolve the PR's diff: `gh pr diff <number>`.
-- Resolve the PR's commit range: `gh pr view <number> --json commits`, or `git log <base>..<head>` if the branch is checked out locally via `gh pr checkout <number>`.
-- Resolve "what was intended": the PR's own description/title (`gh pr view <number> --json body,title`), falling back to a linked ticket if referenced, falling back to asking the user.
+Review agents must read surrounding code at the PR's head, not at whatever is in the user's working tree. Reviewing from `gh pr diff` alone gives every agent the wrong codebase to explore, and makes `HEAD`-relative commands in the extracted briefs silently wrong.
 
-State the resolved scope (diff, commit range, intent source) before spawning agents.
+```bash
+gh pr view <n> --json number,title,body,author,baseRefName,headRefName,additions,deletions,changedFiles
+git fetch origin "pull/<n>/head" "<baseRefName>"
+git worktree add --detach "/tmp/pr-review-<n>" FETCH_HEAD
+```
 
-## Process
+Fetching the pull ref rather than `gh pr checkout` avoids creating a local branch in the user's repo, and works for fork PRs. Run every subsequent command, and every agent, with `/tmp/pr-review-<n>` as the working directory.
 
-Before spawning any agent, read the current `SKILL.md` of `comment-check`, `commit-check`, and `fit-check` (read-only — do not edit them) and extract each one's quoted agent brief verbatim. Do not paraphrase or reconstruct a brief from memory: the point is to pick up whatever each skill currently says, including any changes made to it since this skill was written.
+Record the base: `BASE=$(git merge-base origin/<baseRefName> HEAD)`. The PR's diff is `git diff $BASE HEAD`; its commit range is `$BASE..HEAD`.
 
-Spawn three agents in parallel — one per dimension. Do not merge them into a single agent: a single reviewer covering all three dimensions at once dilutes the "assume a flaw exists" posture per-dimension, and an easy "looks fine" on one axis tends to bleed into how hard it looks at the next.
+If the worktree can't be created (dirty state, no write access, shallow clone), say so and fall back to `gh pr diff` — but state explicitly in the final report that the fit and correctness dimensions ran without codebase context and are therefore weaker.
 
-1. **Comments** — the brief extracted from `comment-check`, scoped to comment lines added/changed in the PR diff.
-2. **Commits** — the brief extracted from `commit-check`, scoped to the PR's commit range.
-3. **Fit** — the brief extracted from `fit-check`, using the PR's resolved intent as "what was intended."
+## Step 2: Resolve what was intended
 
-Each agent classifies findings **Amend** (small, clearly actionable) or **Discuss** (needs the author's judgment) — same classification as the underlying skills. Both classes become review comments here; there is no "apply Amend automatically" step, because you don't have (or want) write access to apply it to.
+Three sources, in priority order:
 
-## Reporting findings
+1. **The ticket.** Look for a ticket reference in the PR body or branch name. Resolve it against whichever tracker is actually configured — Jira via the Atlassian MCP tools if authenticated, `gh issue view` for GitHub. Don't assume a tracker or hardcode a workspace ID; check what's available. If it doesn't resolve, say so and carry on rather than guessing at its contents.
+2. **Linked material.** If the ticket body or comments link further tickets or wiki pages, fetch up to 5 of them as *supplementary* context, clearly labelled as such. Don't treat them as primary requirements. Skip any that fail; don't block the review.
+3. **The PR description** (`gh pr view <n> --json body,title`).
+
+State the resolved intent, and its source, before spawning agents. If neither a ticket nor a substantive PR description exists, say so — that absence is itself a finding, and it means the alignment check below can't run.
+
+## Step 3: Alignment check
+
+Do this inline, before spawning agents — it's cheap and its output feeds the fit dimension. Compare the three sources against each other:
+
+| Source | What it tells you |
+|---|---|
+| Ticket | What was asked for |
+| PR description | What the author claims they did |
+| Diff | What actually changed |
+
+Flag: **scope creep** (changes in the diff that neither source accounts for), **missing work** (acceptance criteria the diff doesn't address), **description drift** (the description describes something the diff doesn't do), **silent changes** (functional changes explained nowhere).
+
+## Step 4: Read what has already been said
+
+`gh pr view <n> --comments`, plus review threads via `gh api repos/{owner}/{repo}/pulls/<n>/comments`.
+
+Summarise unresolved threads and blocking feedback, and pass the list of already-raised points to every agent with the instruction not to re-raise them. Re-reporting a point a human made two days ago wastes the author's time and makes the whole review look automated.
+
+## Step 5: Spawn one agent per dimension, in parallel
+
+Do not merge dimensions into a single agent: one reviewer covering everything at once dilutes the "assume a flaw exists" posture per-dimension, and an easy "looks fine" on one axis bleeds into how hard it looks at the next.
+
+Every agent gets: the worktree path as its working directory, the diff and commit-range commands from Step 1, the resolved intent from Step 2, and the already-raised list from Step 4.
+
+**Three dimensions reuse the sibling skills' briefs.** Before spawning, read the current `SKILL.md` of `comment-check`, `commit-check`, and `fit-check` (read-only — do not edit them) and extract each one's quoted agent brief **verbatim**. Do not paraphrase or reconstruct from memory: the point is to pick up whatever each skill currently says, including changes made since this skill was written. Where a brief contains a bracketed placeholder for the diff command, substitute `git diff $BASE HEAD`. Because the agent runs in the checked-out worktree, the briefs' `HEAD`-relative commands resolve to the PR's head, which is what they mean.
+
+1. **Comments** — `comment-check`'s brief, scoped to comment lines the PR diff adds or changes.
+2. **Commits** — `commit-check`'s brief, scoped to `$BASE..HEAD`.
+3. **Fit** — `fit-check`'s brief, using Step 2's resolved intent as "what was intended" and Step 3's alignment findings as a starting point rather than a conclusion.
+
+**Three dimensions are specific to reviewing code you didn't write.** Each gets the shared preamble below plus its own body.
+
+> Shared preamble: You are reviewing a pull request you did not write. Assume there is a defect of your dimension's kind in this diff, and that your job is to find it. The author already believes this change is correct — agreeing with them adds nothing. Do not lead with praise, do not soften a finding with "minor" or "nitpick" hedging, and do not filter findings by a confidence threshold: report what you found and state your uncertainty in words. Read the surrounding code before flagging anything — at least the whole file, and the callers, for any change you intend to call out. Do not score anything out of 10. These points have already been raised on the PR; don't repeat them: [list].
+
+4. **Correctness** — Trace each changed function's behaviour for the inputs the diff makes newly reachable. Look for: logic that's inverted or off-by-one; null/nil/undefined and empty-collection paths; error paths that swallow, log-and-continue, or return a plausible-looking default instead of failing; concurrency and ordering assumptions; resource cleanup; behaviour changes for existing callers the diff didn't update. For each, give the concrete input or state that produces the wrong result. Only conclude a changed function is sound after stating, for that function, which of these you checked and why each held.
+
+5. **Security** — Focus on code-level patterns automated scanners miss. Look for: authentication and authorization gaps on newly reachable paths (including "the caller already checked" assumptions the diff makes); input that reaches a query, shell, filesystem path, template, or deserializer without validation; secrets or credentials in code, config, logs, or error messages; data exposed to a wider audience than before; changes to session, token, or crypto handling. State the attacker, the entry point, and what they get. If a path looks safe because of a check elsewhere, name the check and the file it's in.
+
+6. **Test coverage** — Judge behavioural coverage, not line coverage. For each behaviour the diff adds or changes, ask whether a test would fail if that behaviour regressed — and if a test exists, whether it asserts the behaviour or merely exercises it. Look for: new branches and error paths with no test; validation added with no invalid-input case; tests changed to accommodate the new behaviour rather than passing naturally; tests coupled to implementation detail such that a refactor breaks them without a behaviour change. Name the specific untested behaviour and the failure it would let through, not a coverage percentage.
+
+A dimension may be skipped only when the diff plainly can't contain that class of defect (e.g. no test dimension on a pure documentation PR). State any skip and its reason in the report.
+
+## Step 6: Report
 
 This skill never posts to the PR. Its job ends at handing the user a list to work through themselves.
 
-- Group findings by file/line (comments, fit) or by commit (commit messages).
-- Present every finding — Amend and Discuss both — with enough detail to act on: file/commit, the specific issue, and which dimension (comments/commits/fit) raised it.
-- Do not draft PR comment text, do not call `gh pr review`/`gh pr comment`/`gh api`, and do not offer to post on the user's behalf. Posting, if it happens, is the user's action alone.
+Group by severity, not by agent — the author doesn't care which agent found it:
+
+- **Blocking** — bugs, security vulnerabilities, data-loss risk, missing work against the ticket's acceptance criteria
+- **Important** — untested new behaviour, error handling that hides failures, misleading comments or commit messages, fit problems that will cause drift
+- **Minor** — style, redundant comments, wording
+- **Question** — needs the author's judgment; a `Discuss` finding from any dimension lands here
+
+`Amend` findings from the comment/commit/fit dimensions are Minor unless the finding is that something states something untrue — a comment that misdescribes the code, or a commit message that misdescribes its diff — which is Important.
+
+Each finding: file:line (or commit sha), what's wrong, and why — one to three lines. Drafting the text the user could paste as a review comment is fine and useful. Omit empty sections. End with the unresolved-thread summary from Step 4 if there is one.
+
+Do not call `gh pr review`, `gh pr comment`, or `gh api` with a write method, and do not offer to post on the user's behalf. Posting, if it happens, is the user's action alone.
+
+## Step 7: Clean up
+
+Offer to remove the worktree: `git worktree remove /tmp/pr-review-<n>`. Ask first — the user may want to keep poking at the branch.
 
 ## Red flags — stop and reconsider
 
+- Reviewing from `gh pr diff` alone when a worktree checkout was possible — the fit and correctness dimensions then explore the wrong codebase
+- `gh pr checkout` in the user's main working tree instead of a detached worktree — this skill must not disturb their branch state
 - Rebasing, rewording, or force-pushing the PR branch — that's the author's call, not the reviewer's
-- Running the three checks as one agent instead of three independent ones
+- Running the dimensions as one agent instead of independent ones
 - Editing `comment-check`, `commit-check`, or `fit-check`'s `SKILL.md` while extracting their brief — this skill only reads them
 - Paraphrasing a brief from memory instead of reading the current file — the whole point is picking up whatever it says now
-- Posting, or offering to post, anything to the PR — this skill only produces a list for the user
+- An agent filtering by a confidence threshold, or scoring anything out of 10 — both are ways of producing a quiet review without saying what was ruled out
+- Any agent being agreeable or complimentary instead of trying to find what's wrong
+- Accepting "looks fine" from a dimension without it stating what it specifically checked
 - Treating "no findings" as the default and skipping the review to get there
-- Skipping the "what was intended" resolution and inventing scope for the fit-check dimension
+- Skipping the intent resolution and inventing scope for the fit dimension
+- Re-raising a point an existing PR comment already made
+- Posting anything to the PR — this skill only produces a list for the user
