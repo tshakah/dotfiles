@@ -69,6 +69,8 @@ Make targeted improvements. Run tests after each change — if they go red, undo
 
 You must document your findings either way. "No refactoring needed" requires a reason. A one-line dismissal is not acceptable.
 
+Acting on a finding carries the same burden as declining to. Any extraction, helper, or new abstraction must name the specific test or duplication instance that forces it. If you can't name one, don't make it.
+
 ### FIT-CHECK — Wider Codebase
 
 The local refactor only sees the file you're in. Fit-check asks whether the implementation fits the broader codebase.
