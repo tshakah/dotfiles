@@ -1,6 +1,7 @@
 ---
 name: comment-check
-description: Use before opening a PR or merging a branch to review comments added or changed in the diff against the "why, not what" rule — flags comments that restate what well-named code already shows, reference prior/old behaviour instead of describing the current state, or over-explain something a reader wouldn't actually need. Spawns an independent agent with no authorship context, since whoever wrote the comment already believed it was warranted. Run alongside commit-check before a PR, not as part of fit-check — this is local comment quality, not a wider-codebase fit concern.
+disable-model-invocation: true
+description: Reviews comments added or changed in a diff against the "why, not what" rule — restating what the code shows, referencing prior behaviour, or over-explaining. Use alongside commit-check before a PR.
 ---
 
 # Comment Check

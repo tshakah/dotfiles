@@ -1,6 +1,7 @@
 ---
 name: commit-check
-description: Use before opening a PR or merging a branch to review its full commit history. Checks that each commit's message explains why (not just what) and captures any decision a future `git blame` reader would need, and that commits are atomic and correctly ordered. Spawns an independent agent with no authorship context to judge the messages/diffs, since the author already knows the reasoning and can't judge whether it reads clearly to a stranger. Can offer to fix findings via rebase, with per-action confirmation.
+disable-model-invocation: true
+description: Reviews a branch's commit history — whether each message explains why, matches its own diff, is atomic, and sits in a bisectable order. Can fix findings by rebase, with confirmation. Use before opening a PR or merging.
 ---
 
 # Commit Check

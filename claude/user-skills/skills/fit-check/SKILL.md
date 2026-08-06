@@ -1,6 +1,6 @@
 ---
 name: fit-check
-description: Use to check whether a diff fits the wider codebase — not whether it's well-written internally, but whether it duplicates an existing abstraction, breaks convention, drifts outside its intended scope, or leaves something else in the codebase inconsistent. Spawns an independent agent with no authorship context, since whoever wrote the change already believes it's fine. Takes a ticket ID or a manual task description as args describing what was intended; resolves ticket IDs against whatever issue tracker is configured, or accepts free text directly. Used standalone before a commit/PR, or as the FIT-CHECK step inside better-tdd.
+description: Checks whether a diff fits the wider codebase — duplicated abstractions, broken conventions, scope creep, missed consequences elsewhere. Takes a ticket ID or task description as args. Invoked by better-tdd, or on request before a commit or PR.
 ---
 
 # Fit Check
