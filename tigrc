@@ -1,2 +1,4 @@
 bind status a !git commit --amend
 bind status D !@?rm %(file)
+
+set diff-highlight = true
