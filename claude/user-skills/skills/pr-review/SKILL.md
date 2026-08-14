@@ -23,10 +23,11 @@ Review agents must read surrounding code at the PR's head, not at whatever is in
 ```bash
 gh pr view <n> --json number,title,body,author,baseRefName,headRefName,additions,deletions,changedFiles
 git fetch origin "pull/<n>/head" "<baseRefName>"
-git worktree add --detach "/tmp/pr-review-<n>" FETCH_HEAD
+ROOT=$(git rev-parse --show-toplevel)
+git worktree add --detach "$ROOT/.claude/worktrees/pr-review-<n>" FETCH_HEAD
 ```
 
-Fetching the pull ref rather than `gh pr checkout` avoids creating a local branch in the user's repo, and works for fork PRs. Run every subsequent command, and every agent, with `/tmp/pr-review-<n>` as the working directory.
+Fetching the pull ref rather than `gh pr checkout` avoids creating a local branch in the user's repo, and works for fork PRs. Always place the worktree under the current repo's `.claude/worktrees/` directory — never `/tmp` or a sibling directory — so every checkout ends up in one predictable, already-gitignored location. Run every subsequent command, and every agent, with `$ROOT/.claude/worktrees/pr-review-<n>` as the working directory.
 
 Record the base: `BASE=$(git merge-base origin/<baseRefName> HEAD)`. The PR's diff is `git diff $BASE HEAD`; its commit range is `$BASE..HEAD`.
 
@@ -103,7 +104,7 @@ Do not call `gh pr review`, `gh pr comment`, or `gh api` with a write method, an
 
 ## Step 7: Clean up
 
-Offer to remove the worktree: `git worktree remove /tmp/pr-review-<n>`. Ask first — the user may want to keep poking at the branch.
+Offer to remove the worktree: `git worktree remove "$ROOT/.claude/worktrees/pr-review-<n>"`. Ask first — the user may want to keep poking at the branch.
 
 ## Red flags — stop and reconsider
 
