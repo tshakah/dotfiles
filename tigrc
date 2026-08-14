@@ -1,4 +1,5 @@
 bind status a !git commit --amend
 bind status D !@?rm %(file)
 
-set diff-highlight = true
+bind generic <Ctrl-d> !sh -c 'git show %(commit) | delta'
+bind status <Ctrl-d> !sh -c 'git diff HEAD | delta'
