@@ -11,6 +11,26 @@ description: Use when you have a spec or requirements for a multi-step task and 
 
 If you find yourself writing code — even pseudocode, even "something like" code — stop. That decision belongs to the implementing agent, who will discover the right shape through TDD. A plan that pre-writes the implementation bypasses the design feedback that TDD is meant to provide.
 
+## Output: write the plan to a file, don't print it
+
+The finished plan is a deliverable the user will hand to an implementing agent later — it must survive after this turn ends, so it does not belong solely in chat scrollback.
+
+- Plans live outside the project entirely, in the `~/shared/notes/zk` zk notebook (synced by Syncthing) — never under the project's own `.claude/plans/` or anywhere inside its git repo.
+- Derive the org folder from the project's path: the path segment immediately after `source/` (e.g. `~/source/doccla/opentele` → org `doccla`; on another machine, `~/source/sadzaco/whatever` → org `sadzaco`). If the project isn't under a `source/` directory, fall back to the repo's top-level folder name as the org.
+- Write the plan with the Write tool to `~/shared/notes/zk/plans/<org>/<repo>/<slug>.md`, where `<repo>` is the project repo's directory name and `<slug>` is a short descriptive kebab-case name (e.g. `~/shared/notes/zk/plans/doccla/opentele/patient-order-by-dispatch.md`). Create the `plans/<org>/<repo>/` directory if it doesn't exist yet.
+- Give the file zk frontmatter so it's queryable with `zk list --tag`:
+  ```
+  ---
+  title: <human-readable title>
+  date: <today, YYYY-MM-DD>
+  tags: [plan, <org>, <repo>]
+  status: draft
+  ---
+  ```
+- Do not also paste the full plan into your chat response. Reply with the file path and a one-or-two-sentence summary of what the plan covers (task count, what's parallelisable) — enough for the user to decide whether to open it.
+- If you're revising a plan already written this session, edit that same file rather than creating a new one, unless the user asks for a distinct alternative plan.
+- This applies whether the plan was requested standalone or via `EnterPlanMode` — the file is the artifact; anything shown on screen is just a pointer to it.
+
 ## Why This Matters
 
 When a plan includes implementation code, the agent transcribes rather than designs. The failing test can't push back on a bad abstraction because the abstraction is already decided. Refactor has nothing to discover because the structure arrived pre-formed. The whole point of TDD — letting the tests reveal the right design — is lost.
