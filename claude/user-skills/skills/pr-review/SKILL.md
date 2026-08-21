@@ -20,18 +20,22 @@ Supplied via `args`: a PR number, URL, or enough to resolve one with `gh pr view
 
 Review agents must read surrounding code at the PR's head, not at whatever is in the user's working tree. Reviewing from `gh pr diff` alone gives every agent the wrong codebase to explore, and makes `HEAD`-relative commands in the extracted briefs silently wrong.
 
+Use `wt` (worktrunk) rather than raw `git worktree`/`git fetch` — it resolves a PR reference to its ref directly, handling same-repo and fork PRs with one command:
+
 ```bash
 gh pr view <n> --json number,title,body,author,baseRefName,headRefName,additions,deletions,changedFiles
-git fetch origin "pull/<n>/head" "<baseRefName>"
-ROOT=$(git rev-parse --show-toplevel)
-git worktree add --detach "$ROOT/.claude/worktrees/pr-review-<n>" FETCH_HEAD
+wt --config-set 'worktree-path="{{ repo_path }}/.claude/worktrees/pr-{{ branch | sanitize }}"' switch pr:<n> --no-cd --no-hooks --format json
 ```
 
-Fetching the pull ref rather than `gh pr checkout` avoids creating a local branch in the user's repo, and works for fork PRs. Always place the worktree under the current repo's `.claude/worktrees/` directory — never `/tmp` or a sibling directory — so every checkout ends up in one predictable, already-gitignored location. Run every subsequent command, and every agent, with `$ROOT/.claude/worktrees/pr-review-<n>` as the working directory.
+The JSON result's `path` field is the worktree — run every subsequent command, and every agent, there. `--no-cd` keeps this from trying to change the orchestrating shell's directory (which doesn't carry between tool calls anyway); `--format json` is what makes the path reliably parseable instead of scraped from human-readable output. `--no-hooks` skips any project `pre-start`/`post-start` hooks (dependency installs, a dev server) — this skill does static review, not a running app.
+
+For a same-repo PR, `wt` checks out a local branch tracking `origin/<branch>`. For a fork PR, it fetches the ref without a tracking branch and points `pushRemote` at the fork. Neither case is a reason to push, rebase, or rewrite anything from this worktree — see the rule above.
+
+Always place the worktree under the current repo's `.claude/worktrees/` directory — never `/tmp` or a sibling directory — via the `--config-set worktree-path=...` override above, so every checkout ends up in one predictable, already-gitignored location regardless of the caller's own `~/.config/worktrunk/config.toml`.
 
 Record the base: `BASE=$(git merge-base origin/<baseRefName> HEAD)`. The PR's diff is `git diff $BASE HEAD`; its commit range is `$BASE..HEAD`.
 
-If the worktree can't be created (dirty state, no write access, shallow clone), say so and fall back to `gh pr diff` — but state explicitly in the final report that the fit and correctness dimensions ran without codebase context and are therefore weaker.
+If `wt` isn't installed, or the worktree can't be created (dirty state, no write access, shallow clone), say so and fall back to `gh pr diff` — but state explicitly in the final report that the fit and correctness dimensions ran without codebase context and are therefore weaker.
 
 ## Step 2: Resolve what was intended
 
@@ -104,12 +108,13 @@ Do not call `gh pr review`, `gh pr comment`, or `gh api` with a write method, an
 
 ## Step 7: Clean up
 
-Offer to remove the worktree: `git worktree remove "$ROOT/.claude/worktrees/pr-review-<n>"`. Ask first — the user may want to keep poking at the branch.
+Offer to remove the worktree: `wt remove --format json <path>` (the path from Step 1's JSON result). Ask first — the user may want to keep poking at the branch. Pass `--no-delete-branch` if they want to keep it after the worktree goes.
 
 ## Red flags — stop and reconsider
 
 - Reviewing from `gh pr diff` alone when a worktree checkout was possible — the fit and correctness dimensions then explore the wrong codebase
-- `gh pr checkout` in the user's main working tree instead of a detached worktree — this skill must not disturb their branch state
+- `gh pr checkout` in the user's main working tree instead of a worktree — this skill must not disturb their branch state
+- `wt switch` without `--no-cd --format json` — without `--format json` the resulting path isn't reliably parseable, and `--no-cd` is what keeps a non-interactive tool call from trying to change a shell that isn't there
 - Rebasing, rewording, or force-pushing the PR branch — that's the author's call, not the reviewer's
 - Running the dimensions as one agent instead of independent ones
 - Editing `comment-check`, `commit-check`, or `fit-check`'s `SKILL.md` while extracting their brief — this skill only reads them
