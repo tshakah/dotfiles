@@ -102,6 +102,8 @@ Group by severity, not by agent — the author doesn't care which agent found it
 
 `Amend` findings from the comment/commit/fit dimensions are Minor unless the finding is that something states something untrue — a comment that misdescribes the code, or a commit message that misdescribes its diff — which is Important.
 
+Number every finding within its section, prefixed with the section's initial: `B1`, `B2`, ... under Blocking, `I1`, `I2`, ... under Important, `M1`, `M2`, ... under Minor, `Q1`, `Q2`, ... under Question. Restart the count at 1 in each section. This gives the user a stable short handle (e.g. "M2") to reference when responding to a specific finding, instead of quoting it back.
+
 Each finding: file:line (or commit sha), what's wrong, and why — one to three lines. Drafting the text the user could paste as a review comment is fine and useful. Omit empty sections. End with the unresolved-thread summary from Step 4 if there is one.
 
 Do not call `gh pr review`, `gh pr comment`, or `gh api` with a write method, and do not offer to post on the user's behalf. Posting, if it happens, is the user's action alone.
@@ -123,6 +125,7 @@ Offer to remove the worktree: `wt remove --format json <path>` (the path from St
 - Any agent being agreeable or complimentary instead of trying to find what's wrong
 - Accepting "looks fine" from a dimension without it stating what it specifically checked
 - Treating "no findings" as the default and skipping the review to get there
+- Listing findings without the per-section `B1`/`I1`/`M1`/`Q1`-style numbering — the user relies on it to reference a specific finding
 - Skipping the intent resolution and inventing scope for the fit dimension
 - Re-raising a point an existing PR comment already made
 - Posting anything to the PR — this skill only produces a list for the user
