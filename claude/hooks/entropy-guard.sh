@@ -7,7 +7,7 @@ findings=$(jq -r '
   def prefixes:
     {"ts":"//","tsx":"//","js":"//","jsx":"//","groovy":"//","java":"//","gradle":"//",
      "rs":"//",
-     "ex":"#","exs":"#","py":"#","sh":"#","fish":"#","yml":"#","yaml":"#","toml":"#",
+     "ex":"#","exs":"#","py":"#","sh":"#","fish":"#","yml":"#","yaml":"#","toml":"#","nix":"#",
      "elm":"--","sql":"--"};
 
   # Prose, not code: plans/specs routinely run long and have no comment syntax to check.
