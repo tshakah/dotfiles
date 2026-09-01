@@ -6,6 +6,10 @@ Never create merge commits. Use fast-forward merges or rebases only (`--ff-only`
 
 Prefer `git commit --amend` over creating new commits when fixing up work on non-trunk (feature/topic) branches. This overrides Claude Code's default "always create new commits" protocol, except immediately after a failed pre-commit hook — there, the commit didn't actually happen, so amending would silently rewrite the previous commit instead; fix the issue and commit fresh in that specific case.
 
+## Task Tracking
+
+Never use Claude Code's internal todo/task tracking. Use Taskwarrior (the `task` CLI) for all task creation and tracking instead.
+
 ## Planning
 
 When writing implementation plans, use the `better-plans` skill, not `writing-plans`. When implementing features or bugfixes, use the `better-tdd` skill, not `test-driven-development`. Plans must describe observable behaviours and outcomes — not implementation code.
