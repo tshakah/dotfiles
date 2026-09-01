@@ -64,6 +64,10 @@ Read the **full module or file**, not just the code just written. Look for:
 - Patterns emerging across multiple functions that suggest an abstraction
 - Private helpers worth extracting
 - Structural fit within the module
+- Control flow that could flatten — guard clauses over nested conditionals
+- Complexity that doesn't earn its keep — cleverness where the boring version reads just as clearly
+- Mixed abstraction levels — a function juggling high-level intent and low-level detail in the same block
+- Speculative generality — config, flags, or parameters serving no caller that exists yet
 
 Make targeted improvements. Run tests after each change — if they go red, undo and try a smaller step. Don't change behaviour.
 
