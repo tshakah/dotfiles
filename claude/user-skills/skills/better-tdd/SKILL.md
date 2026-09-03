@@ -71,9 +71,11 @@ Read the **full module or file**, not just the code just written. Look for:
 
 Make targeted improvements. Run tests after each change — if they go red, undo and try a smaller step. Don't change behaviour.
 
-You must document your findings either way. "No refactoring needed" requires a reason. A one-line dismissal is not acceptable.
+This is self-review: you already believe the code you just wrote is fine — the exact condition FIT-CHECK exists to route around for codebase-wide concerns. REFACTOR doesn't get an independent pass, so the discipline has to come from you. For each item in the list above, state specifically what you checked in the code just written and why it did or didn't apply — not a bare "no duplication" or "fits fine." A category you didn't actually check against the code doesn't count as clean, and "no refactoring needed" is not a one-line dismissal.
 
 Acting on a finding carries the same burden as declining to. Any extraction, helper, or new abstraction must name the specific test or duplication instance that forces it. If you can't name one, don't make it.
+
+If FIT-CHECK — the very next step — finds something REFACTOR should have caught (duplicated state, a convention the module already establishes elsewhere, an isolation pattern broken by new mutable state), that means REFACTOR was performed as a formality rather than an actual check. Say so explicitly before continuing, don't just fix it and move on.
 
 ### FIT-CHECK — Wider Codebase
 
@@ -126,6 +128,7 @@ This skill assumes single-stream operation. If multiple agents are committing on
 - Test passes immediately without implementation
 - Can't explain why the test failed
 - Refactor step skipped or dismissed without justification
+- Fit-check finds something in the same code the refactor step just declared clean — the refactor step was rubber-stamped, not performed
 - Fit-check skipped or dismissed without running it
 - Working AI writing its own fit-check artifact (self-reporting defeats the purpose)
 - Test only asserts surface signals (redirect happened, element present, function called)
