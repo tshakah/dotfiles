@@ -23,7 +23,7 @@ Review agents must read surrounding code at the PR's head, not at whatever is in
 Use `wt` (worktrunk) rather than raw `git worktree`/`git fetch` — it resolves a PR reference to its ref directly, handling same-repo and fork PRs with one command:
 
 ```bash
-gh pr view <n> --json number,title,body,author,baseRefName,headRefName,additions,deletions,changedFiles
+gh pr view <n> --json number,title,body,author,baseRefName,headRefName,additions,deletions,changedFiles,statusCheckRollup
 wt --config-set 'worktree-path="{{ repo_path }}/.claude/worktrees/pr-{{ branch | sanitize }}"' switch pr:<n> --no-cd --no-hooks --format json
 ```
 
@@ -35,7 +35,20 @@ Always place the worktree under the current repo's `.claude/worktrees/` director
 
 Record the base: `BASE=$(git merge-base origin/<baseRefName> HEAD)`. The PR's diff is `git diff $BASE HEAD`; its commit range is `$BASE..HEAD`.
 
+Note the CI result from `statusCheckRollup` (pass/fail/pending). Step 5's test-coverage dimension uses it to avoid re-verifying what CI already confirmed.
+
 If `wt` isn't installed, or the worktree can't be created (dirty state, no write access, shallow clone), say so and fall back to `gh pr diff` — but state explicitly in the final report that the fit and correctness dimensions ran without codebase context and are therefore weaker.
+
+## Step 1b: Flag high-churn files
+
+Cheap, deterministic, no LLM involved — a prioritization hint for Step 5, not a finding in itself. For each file in `git diff --name-only $BASE HEAD`:
+
+```bash
+git log --oneline --since="1 year ago" -- <file> | wc -l
+git log --oneline --since="1 year ago" --grep='fix\|bug' -i -- <file> | wc -l
+```
+
+Files with high commit counts, and higher still with fix-labeled commits, are hotspots — historically more likely to be where defects surface. Keep a short list (file, churn count, fix-labeled count) to hand to the correctness and security agents in Step 5. This is context for where to look harder, not a verdict — a hotspot file with no findings isn't itself a problem, and a file that wasn't flagged still gets full scrutiny.
 
 ## Step 2: Resolve what was intended
 
@@ -81,17 +94,21 @@ Every agent gets: the worktree path as its working directory, the diff and commi
 
 > Shared preamble: You are reviewing a pull request you did not write. Assume there is a defect of your dimension's kind in this diff, and that your job is to find it. The author already believes this change is correct — agreeing with them adds nothing. Do not lead with praise, do not soften a finding with "minor" or "nitpick" hedging, and do not filter findings by a confidence threshold: report what you found and state your uncertainty in words. Read the surrounding code before flagging anything — at least the whole file, and the callers, for any change you intend to call out. Do not score anything out of 10. These points have already been raised on the PR; don't repeat them: [list].
 
+Correctness and security additionally get the Step 1b hotspot list, as a hint for where to look hardest — not a filter on what gets checked.
+
 4. **Correctness** — Trace each changed function's behaviour for the inputs the diff makes newly reachable. Look for: logic that's inverted or off-by-one; null/nil/undefined and empty-collection paths; error paths that swallow, log-and-continue, or return a plausible-looking default instead of failing; concurrency and ordering assumptions; resource cleanup; behaviour changes for existing callers the diff didn't update. For each, give the concrete input or state that produces the wrong result. Only conclude a changed function is sound after stating, for that function, which of these you checked and why each held.
 
 5. **Security** — Focus on code-level patterns automated scanners miss. Look for: authentication and authorization gaps on newly reachable paths (including "the caller already checked" assumptions the diff makes); input that reaches a query, shell, filesystem path, template, or deserializer without validation; secrets or credentials in code, config, logs, or error messages; data exposed to a wider audience than before; changes to session, token, or crypto handling. State the attacker, the entry point, and what they get. If a path looks safe because of a check elsewhere, name the check and the file it's in.
 
-6. **Test coverage** — Judge behavioural coverage, not line coverage. For each behaviour the diff adds or changes, ask whether a test would fail if that behaviour regressed — and if a test exists, whether it asserts the behaviour or merely exercises it. Look for: new branches and error paths with no test; validation added with no invalid-input case; tests changed to accommodate the new behaviour rather than passing naturally; tests coupled to implementation detail such that a refactor breaks them without a behaviour change. Name the specific untested behaviour and the failure it would let through, not a coverage percentage.
+6. **Test coverage** — Judge behavioural coverage, not line coverage. CI's pass/fail (from Step 1's `statusCheckRollup`) already tells you whether the suite runs green — don't re-run it wholesale to confirm that. What CI doesn't tell you is whether a new or changed test actually asserts the behaviour it's supposed to cover, versus merely exercising it. For each behaviour the diff adds or changes, ask whether a test would fail if that behaviour regressed. When a specific test looks suspiciously weak, confirm it directly: revert just the production-code hunk in the worktree, leave the test as-is, and run that one test — if it still passes, the test isn't covering the behaviour it claims to; restore the hunk afterward. Look for: new branches and error paths with no test; validation added with no invalid-input case; tests changed to accommodate the new behaviour rather than passing naturally; tests coupled to implementation detail such that a refactor breaks them without a behaviour change. Name the specific untested behaviour and the failure it would let through, not a coverage percentage. If CI is still pending or failed outright, say so rather than treating the diff as verified.
 
 A dimension may be skipped only when the diff plainly can't contain that class of defect (e.g. no test dimension on a pure documentation PR). State any skip and its reason in the report.
 
 ## Step 6: Report
 
 This skill never posts to the PR. Its job ends at handing the user a list to work through themselves.
+
+Open with a brief context line: CI status from Step 1, and the Step 1b hotspot list if it wasn't empty. These are context, not findings — don't number them.
 
 Group by severity, not by agent — the author doesn't care which agent found it:
 
@@ -129,3 +146,5 @@ Offer to remove the worktree: `wt remove --format json <path>` (the path from St
 - Skipping the intent resolution and inventing scope for the fit dimension
 - Re-raising a point an existing PR comment already made
 - Posting anything to the PR — this skill only produces a list for the user
+- Re-running the full test suite locally to confirm what CI already reported clean
+- Treating the Step 1b hotspot list as a finding rather than a scrutiny hint, or skipping full review of files it didn't flag

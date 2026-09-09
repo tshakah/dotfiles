@@ -54,6 +54,13 @@ That field has rejected a plain string in the past, reporting it needs an Atlass
 - **Summary** — plain English. What's wrong or wanted, and why it matters, in terms someone outside the codebase can follow. A sentence or two. No jargon, no restating the ticket title.
 - **Technical detail** — what actually needs to change: affected files, services, or approach. Only what's needed to act on it — not a design doc.
 
+When drafting from an existing rich source — a plan document, an investigation earlier in the conversation, a PR description — the failure mode is transcription: carrying that source's detail into the ticket instead of compressing it. Concretely, if the "Technical detail" draft contains any of these, cut them:
+- Literal code, SQL, or pseudocode fragments
+- A list of every function/file that changes and how (more than one file/function pointer plus a one-sentence shape of the fix)
+- Implementation caveats a competent engineer would discover themselves while doing the work (a gotcha to preserve during refactoring, an existing helper to reuse, an ordering constraint)
+
+One or two sentences: name the entry point (file/function) and the shape of the fix. If there's a plan document with the full design, that document is where the detail belongs — the ticket points at the problem, not at the plan's contents.
+
 **Acceptance criteria** — a bullet list, drafted separately for the field from Step 2, not duplicated into the description. Each bullet is one observable pass/fail condition. If the subject doesn't yield a real done-state, that's a sign to ask rather than pad the list with restated requirements.
 
 Cut anything that doesn't survive these checks:
