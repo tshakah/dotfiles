@@ -81,3 +81,4 @@
 	ff = only
 [git-town]
   sync-feature-strategy = rebase
+  push-branches = false
