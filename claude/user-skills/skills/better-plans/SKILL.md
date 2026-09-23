@@ -27,7 +27,7 @@ The finished plan is a deliverable the user will hand to an implementing agent l
   status: draft
   ---
   ```
-- Do not also paste the full plan into your chat response. Reply with the file path and a one-or-two-sentence summary of what the plan covers (task count, what's parallelisable) — enough for the user to decide whether to open it.
+- Do not also paste the full plan into your chat response. Reply with the file path and a one-or-two-sentence summary of what the plan covers (task count, ordering) — enough for the user to decide whether to open it.
 - If you're revising a plan already written this session, edit that same file rather than creating a new one, unless the user asks for a distinct alternative plan.
 - This applies whether the plan was requested standalone or via `EnterPlanMode` — the file is the artifact; anything shown on screen is just a pointer to it.
 
@@ -95,14 +95,9 @@ Before finalising the plan, read the relevant parts of the codebase and ask:
 
 If yes: flag it in the fit note, or raise it with the user before writing the plan. It is cheaper to resolve a design mismatch at plan time than after implementation.
 
-## Parallelism
+## Task Ordering
 
-Tasks that don't share state can be parallelised across agents. Mark them explicitly:
-
-```
-[PARALLEL] Task 1 and Task 2 can run concurrently — they touch different modules.
-[SEQUENTIAL] Task 3 depends on Task 2 completing first.
-```
+Tasks are executed one at a time, in listed order. State dependencies as plain prose in a task's Fit note or Files section when one task's output is needed by another (e.g. "depends on Task 2's persisted field") — do not label tasks as parallel-safe or invent a concurrency plan.
 
 ## The Executing Agent's Contract
 

@@ -8,7 +8,7 @@ Prefer `git commit --amend` over creating new commits when fixing up work on non
 
 ## Task Tracking
 
-Never use Claude Code's internal todo/task tracking. Use Vikunja (via the `vikunja` MCP server) for all task creation and tracking instead.
+Never use Claude Code's internal todo/task tracking. Use the Vikunja MCP for all task creation and tracking instead.
 
 ## Planning
 

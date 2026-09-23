@@ -116,12 +116,6 @@ Check CLAUDE.md for:
 
 Project CLAUDE.md takes precedence over this skill for context-specific rules.
 
-## Parallel-Agent Operation
-
-This skill assumes single-stream operation. If multiple agents are committing on the same branch, **the orchestrator owns coordination** — typically by carving non-overlapping work or serialising agents on overlapping work.
-
-**Running in parallel does not authorise skipping any step.** RED, GREEN, REFACTOR, FIT-CHECK, and COMMIT are non-negotiable regardless of how the agent was dispatched.
-
 ## Red Flags — Stop and Reconsider
 
 - Writing code before a test exists
