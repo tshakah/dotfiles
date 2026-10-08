@@ -38,6 +38,8 @@
   path = ~/source/flexibility/.gitconfig
 [includeIf "gitdir:~/source/doccla/"]
   path = ~/source/doccla/.gitconfig
+[includeIf "gitdir:~/source/doccla-experiments/"]
+  path = ~/source/doccla-experiments/.gitconfig
 [help]
   autocorrect = 1
 [alias]
@@ -82,3 +84,5 @@
 [git-town]
   sync-feature-strategy = rebase
   push-branches = false
+[submodule]
+	recurse = true
