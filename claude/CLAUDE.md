@@ -4,7 +4,7 @@
 
 Never create merge commits. Use fast-forward merges or rebases only (`--ff-only` or `--rebase`). If a fast-forward is not possible, rebase first, then merge.
 
-Prefer `git commit --amend` over creating new commits when fixing up work on non-trunk (feature/topic) branches. This overrides Claude Code's default "always create new commits" protocol, except immediately after a failed pre-commit hook — there, the commit didn't actually happen, so amending would silently rewrite the previous commit instead; fix the issue and commit fresh in that specific case.
+Prefer amending over creating new commits when fixing up work on non-trunk (feature/topic) branches. Amend the commit that introduced the code being fixed, not necessarily the last one: find it with `git log --follow -- <file>` or `git blame`, then `git checkout <sha>`, stage the fix, `git commit --amend`, `git restack` (git-branchless) to re-apply the descendant commits, and check the branch back out. Never use fixup commits with `rebase --autosquash`. This overrides Claude Code's default "always create new commits" protocol, except immediately after a failed pre-commit hook — there, the commit didn't actually happen, so amending would silently rewrite the previous commit instead; fix the issue and commit fresh in that specific case.
 
 ## Task Tracking
 
