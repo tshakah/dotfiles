@@ -68,6 +68,7 @@ Read the **full module or file**, not just the code just written. Look for:
 - Complexity that doesn't earn its keep — cleverness where the boring version reads just as clearly
 - Mixed abstraction levels — a function juggling high-level intent and low-level detail in the same block
 - Speculative generality — config, flags, or parameters serving no caller that exists yet
+- Code and tests that could be deleted — for each function, field, clause and test case, ask what breaks if it is removed and which behaviour requires it. Code that isn't written is best, code that can be removed is second, code kept because it's needed is third, and only if it doesn't overcomplicate the solution. Redundant checks, validation nothing downstream uses, and tests that pin layout or duplicate other tests go.
 
 Make targeted improvements. Run tests after each change — if they go red, undo and try a smaller step. Don't change behaviour.
 
@@ -77,9 +78,11 @@ Acting on a finding carries the same burden as declining to. Any extraction, hel
 
 If FIT-CHECK — the very next step — finds something REFACTOR should have caught (duplicated state, a convention the module already establishes elsewhere, an isolation pattern broken by new mutable state), that means REFACTOR was performed as a formality rather than an actual check. Say so explicitly before continuing, don't just fix it and move on.
 
+FIT-CHECK is briefed to find what you left in that didn't need to be there, and to be adversarial about it. Assume it will find something to delete or simplify, and look for that first. Every overcomplication or missed simplification it finds is a refactor you skipped, and is reported that way. A refactor that cut nothing and never asked what could be cut is the one most likely to have been a formality.
+
 ### FIT-CHECK — Wider Codebase
 
-The local refactor only sees the file you're in. Fit-check asks whether the implementation fits the broader codebase.
+The local refactor only sees the file you're in, and is done by the one reviewer who believes the code is fine. Fit-check asks whether the implementation fits the broader codebase, and whether it is as simple as it can be.
 
 Invoke the `fit-check` skill, passing the specific test/behaviour just implemented in this cycle as its args (a manual description, not a ticket — e.g. "adds validation that patient IDs are UUIDs"). It handles spawning the independent review agent, scoping the diff, and classifying findings as **Amend** / **Discuss**.
 
