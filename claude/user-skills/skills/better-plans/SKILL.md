@@ -11,6 +11,10 @@ description: Use when you have a spec or requirements for a multi-step task and 
 
 If you find yourself writing code — even pseudocode, even "something like" code — stop. That decision belongs to the implementing agent, who will discover the right shape through TDD. A plan that pre-writes the implementation bypasses the design feedback that TDD is meant to provide.
 
+## Stance: KISS, YAGNI, POLA
+
+Hold these three while planning. Every task and behaviour has to be needed today: by a requirement, an acceptance criterion, or code that already exists. A consequence chain ("this needs X, which needs Y, which needs a check on Y") is followed only as far as the requirement at its head is real. If the head is a feature that doesn't exist yet, the chain is not planned. The plan is better when it is the smaller one that still meets every criterion.
+
 ## Output: write the plan to a file, don't print it
 
 The finished plan is a deliverable the user will hand to an implementing agent later — it must survive after this turn ends, so it does not belong solely in chat scrollback.
@@ -44,6 +48,8 @@ When a plan includes implementation code, the agent transcribes rather than desi
 
 **Files:** [files that will be touched, with a one-line reason why each one]
 
+**Needed now:** [the requirement, acceptance criterion or existing caller that needs this task today. "A future X might need it" does not count; with no answer, cut the task]
+
 **Fit note:** [does this imply changes to existing abstractions? name them, or write "none"]
 
 **Behaviours:**
@@ -51,8 +57,10 @@ When a plan includes implementation code, the agent transcribes rather than desi
 - Given [setup], when [action], [observable outcome]
 
 **Edge cases:**
-- [stated as a behaviour, not as code]
+- [stated as a behaviour, not as code; only those a requirement or a real caller makes reachable]
 ```
+
+End the plan with a **Non-goals** list: the things a thorough plan might include that this one deliberately leaves out, each with the reason (no current requirement, no caller yet).
 
 ### Behaviours are assertions, not instructions
 

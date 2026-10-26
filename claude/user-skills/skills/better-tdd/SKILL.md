@@ -45,7 +45,9 @@ If the test only asserts surface signals, it is incomplete. Fix it before procee
 
 ### GREEN — Minimal Code
 
-Write the simplest code that makes the test pass. Nothing more.
+KISS, YAGNI, POLA. Write the simplest code that makes the test pass. Nothing more.
+
+Before adding a second test, name the requirement or caller that needs it today. A test whose only purpose is to cover another case, to test a fixture the test made up, or to guard a feature that doesn't exist yet is not written.
 
 - No extra features
 - No edge cases the test doesn't cover
