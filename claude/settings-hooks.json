@@ -1,0 +1,33 @@
+{
+  "PostToolUse": [
+    {
+      "matcher": "Edit|Write",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "$HOME/.claude/hooks/entropy-guard.sh"
+        }
+      ]
+    }
+  ],
+  "WorktreeCreate": [
+    {
+      "hooks": [
+        {
+          "type": "command",
+          "command": "$HOME/.claude/hooks/worktree-create.sh"
+        }
+      ]
+    }
+  ],
+  "WorktreeRemove": [
+    {
+      "hooks": [
+        {
+          "type": "command",
+          "command": "$HOME/.claude/hooks/worktree-remove.sh"
+        }
+      ]
+    }
+  ]
+}
