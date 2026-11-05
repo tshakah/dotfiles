@@ -60,9 +60,10 @@
   ui = auto
 [branch]
   sort = -committerdate
+  autoSetupMerge = simple
 [branchless "next"]
   interactive = true
 [merge]
-	ff = only
+  ff = only
 [submodule]
-	recurse = true
+  recurse = true
