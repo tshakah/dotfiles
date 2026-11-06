@@ -1,13 +1,29 @@
 ---
 name: git-branchless
-description: Use for any history-changing or stack-navigating git work in a repo where git-branchless is initialised — fixing up an earlier commit on a topic branch, restacking, publishing a stack, or using worktrees. Encodes the amend-then-restack workflow and the worktree rules that avoid phantom staged changes.
+description: Use for any history-changing or stack-navigating version-control work — fixing up an earlier commit on a topic branch, restacking, publishing a stack, or using worktrees. Uses jj when the repo has a .jj directory; otherwise encodes the git-branchless amend-then-restack workflow and the worktree rules that avoid phantom staged changes.
 ---
+
+# jj or git-branchless
+
+If the repo root has a `.jj` directory, use jj for history changes and stack navigation, and skip the git-branchless sections below. Don't run git-branchless commands in a `.jj` repo, and don't run `git branchless init` there: the two tools fight over refs and HEAD.
+
+## jj
+
+Work on changes, not branches. A change keeps its change-id when it is rewritten, and jj rebases its descendants automatically.
+
+- `jj log` shows the stack. `jj new <change>` starts a change on top of another.
+- Fix up an earlier change with `jj edit <change>`, make the fix, then `jj new` or `jj edit` back to the tip. Or move working-copy edits into an ancestor with `jj squash --into <change>`.
+- Resolve conflicts in the conflicted change; descendants are already rebased. `jj undo` reverts the last operation.
+- Publishing: `jj git push -c <change>` creates a bookmark per change and pushes it. Push only when asked.
+- Never create merge commits.
+
+Tangled stacked PRs need the change-id header from `git.write-change-id-header`. Set it per repo with `jj config set --repo`, never `--user`.
 
 # git-branchless
 
 Work on commits, not branches. Fix up history by amending the commit that owns the change, then let `git restack` re-apply everything above it. Never write a script to do this.
 
-Applies where `git branchless` has been initialised (`git sl` works). If it hasn't been, say so and ask before running `git branchless init`.
+Applies where `git branchless` has been initialised (`git sl` works) and there is no `.jj` directory. If it hasn't been initialised, say so and ask before running `git branchless init`.
 
 ## Fixing up an earlier commit
 
