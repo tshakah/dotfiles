@@ -6,6 +6,13 @@ Never create merge commits. Use fast-forward merges or rebases only (`--ff-only`
 
 Prefer amending over creating new commits when fixing up work on non-trunk (feature/topic) branches. Amend the commit that introduced the code being fixed, not necessarily the last one: find it with `git log --follow -- <file>` or `git blame`, then `git checkout <sha>`, stage the fix, `git commit --amend`, `git restack` (git-branchless) to re-apply the descendant commits, and check the branch back out. Never use fixup commits with `rebase --autosquash`. This overrides Claude Code's default "always create new commits" protocol, except immediately after a failed pre-commit hook — there, the commit didn't actually happen, so amending would silently rewrite the previous commit instead; fix the issue and commit fresh in that specific case.
 
+In a git-branchless repo, work on PR branches from a worktree and follow this routine:
+
+1. Before starting, run `git sync --pull` so the stack is current with the remote. It restacks the whole repo, so run it at the start of a task, not in the middle of the user's own rebase.
+2. After finishing, run `git restack`, then `git submit`, with no extra arguments. The only exception is `git restack --merge` when there are conflicts, which you resolve yourself.
+
+Never pass a revset or flags to `git submit`, except `--create` for a branch that has never been pushed, and never substitute `git push` for it. If `git restack` does not move a stack, or `git submit` skips a branch, you broke git state: look for two branches on one commit, a branch checked out in another worktree, or a stray temporary branch, remove the cause, and run the plain commands again. Don't leave temporary fix branches next to the PR branch; move the real branch with `git branch -f` or amend in place. Afterwards verify every local branch equals its `origin/` counterpart and report what moved.
+
 ## Task Tracking
 
 Never use Claude Code's internal todo/task tracking. Use the Vikunja MCP for all task creation and tracking instead.
