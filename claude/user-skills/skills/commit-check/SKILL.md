@@ -1,7 +1,7 @@
 ---
 name: commit-check
 disable-model-invocation: true
-description: Reviews a branch's commit history — whether each message explains why, matches its own diff, is atomic, and sits in a bisectable order. Can fix findings by rebase, with confirmation. Use before opening a PR or merging.
+description: Reviews a branch's commit history — whether each message explains why, matches its diff, is atomic, and sits in bisectable order. Can fix findings by rebase, with confirmation. Use before opening a PR or merging.
 ---
 
 # Commit Check
@@ -10,46 +10,46 @@ description: Reviews a branch's commit history — whether each message explains
 
 - Before opening a PR
 - Before merging a branch
-- Any time you've made a string of commits and want to sanity-check the resulting history
+- Any time you've made a string of commits and want to sanity-check the history
 
-Checks commit messages only. For comments left in the code itself, run `comment-check` alongside this before a PR.
+Checks commit messages only. For comments in the code, run `comment-check` alongside this before a PR.
 
 ## What it checks
 
-Four things, per commit and across the branch as a whole:
+Four things, per commit and across the branch:
 
 1. **Explains why** — the message states the reasoning, not just a restatement of the diff. Any non-obvious decision, trade-off, or workaround a future `git blame` reader would need is called out.
 2. **Accurate** — the message's description of what changed matches what the diff actually does. No claim in the message left unsupported by the diff, no diff content the message doesn't mention.
 3. **Atomic** — each commit is one coherent logical change. No unrelated changes bundled together, no "and also fixed a typo" riders that belong in their own commit.
-4. **Ordered** — commits form a sensible, bisectable sequence: dependencies before dependents, no later commit that should have been folded into an earlier one.
+4. **Ordered** — commits form a sensible, bisectable sequence: dependencies before dependents, no later commit that should've been folded into an earlier one.
 
 ## Process
 
 ### 1. Determine the range
 
-Find the branch's base with `git merge-base <default-branch> HEAD`. Detect the default branch (`git remote show origin`, or the repo's own convention); if genuinely ambiguous, ask the user which ref to diff against rather than guessing.
+Find the branch's base with `git merge-base <default-branch> HEAD`. Detect the default branch (`git remote show origin`, or the repo's own convention); if genuinely ambiguous, ask which ref to diff against rather than guessing.
 
 List the commits: `git log <base>..HEAD --oneline`.
 
 ### 2. Spawn an independent review agent
 
-Same rationale as `better-tdd`'s fit-check: whoever wrote the commits already knows why they made each decision, so they cannot judge whether the message actually communicates it to someone who wasn't there. A fresh agent with no memory of authoring the change must do the review — the working AI must not review its own commits.
+Same rationale as `better-tdd`'s fit-check: whoever wrote the commits already knows why they made each decision, so they can't judge whether the message communicates it to someone who wasn't there. A fresh agent with no memory of authoring the change must do the review — the working AI must not review its own commits.
 
 Give the agent:
 - The commit list, and for each commit `git show <sha>` (message + diff)
-- No other context about the task/ticket beyond what's in the messages themselves — if a message only makes sense with a ticket number the agent wasn't given, that's itself a finding
+- No other context about the task/ticket beyond what's in the messages — if a message only makes sense with a ticket number the agent wasn't given, that's itself a finding
 
 Brief:
 
 > Review commits `<base>..HEAD` on this branch. You did not write this code — judge it as a future teammate running `git blame` would, with no other context.
 >
-> Assume each commit has a flaw in at least one of the four checks below until you've specifically ruled it out. The author already believes their own history is fine, so approving it without friction adds nothing — your value is in actively trying to find the message that doesn't hold up, the message that misdescribes its own diff, the commit that bundles two changes, or the ordering that doesn't bisect cleanly. Don't soften findings or lead with praise to cushion them.
+> Assume each commit has a flaw in at least one of the four checks below until you've specifically ruled it out. The author already believes their history is fine, so approving it without friction adds nothing — your value is in actively trying to find the message that doesn't hold up, the message that misdescribes its own diff, the commit that bundles two changes, or the ordering that doesn't bisect cleanly. Don't soften findings or lead with praise to cushion them.
 >
 > For each commit, check:
 > 1. **Why, not what** — does the message explain the reasoning, or just restate the diff? Flag any non-obvious decision, trade-off, workaround, or constraint visible in the diff that the message doesn't mention.
 > 2. **Accuracy** — does the message's description of what changed match what the diff actually does? Flag any claim in the message not borne out by the diff, and any diff content the message doesn't mention.
 > 3. **Atomicity** — does the diff contain more than one logical change? Flag unrelated files or concerns bundled into one commit.
-> 4. **Ordering** — read the commits in sequence. Flag any commit that fixes, reverts, or reworks something from an earlier commit in a way that should have been folded into it instead. Flag any commit that only makes sense once a later commit lands.
+> 4. **Ordering** — read the commits in sequence. Flag any commit that fixes, reverts, or reworks something from an earlier commit in a way that should've been folded into it instead. Flag any commit that only makes sense once a later commit lands.
 >
 > For each finding, classify it:
 > - **Amend** — message-only fix (reword), no code/structural change needed
@@ -64,7 +64,7 @@ Brief:
 **Discuss findings** (split/squash/reorder): present the finding and a concrete rebase plan (which commits, what new order, what gets squashed, which hunks move where for a split) and get explicit confirmation before running anything. Never guess at a split — show the proposed hunk division first.
 
 **Before touching history at all:**
-- Check whether the branch is pushed and tracked (`git rev-parse --abbrev-ref @{u}`). If it has an upstream, rewriting requires a force-push afterward — say so explicitly and get confirmation for the force-push separately from the confirmation for the rebase itself.
+- Check whether the branch is pushed and tracked (`git rev-parse --abbrev-ref @{u}`). If it has an upstream, rewriting requires a force-push afterward — say so explicitly and confirm the force-push separately from the rebase itself.
 - Never rewrite a commit authored by someone else (compare `git log --format='%an'` against the current git user) without flagging it first.
 - Never run this against `main`/`master` or any shared/protected branch directly — only feature branches.
 - Follow the global git rule: no merge commits: rebase, not merge, when incorporating upstream changes during this process.
@@ -73,11 +73,11 @@ Brief:
 
 ## Red flags — stop and reconsider
 
-- Reviewing your own commits yourself instead of spawning an independent agent
+- Reviewing your own commits instead of spawning an independent agent
 - The review agent being agreeable or complimentary about the commits instead of actively trying to find what's wrong with them
-- Accepting "looks fine" on a commit without the agent stating what it specifically checked for each of the four points
+- Accepting "looks fine" on a commit without the agent stating what it checked for each of the four points
 - Rewriting a message without confirming the new wording with the user first
 - Rebasing or force-pushing without a separate, explicit confirmation for each
 - Rewriting commits already pushed without calling out the force-push implication
 - Splitting a commit by guessing rather than showing the proposed hunk split first
-- Treating "ordered" as just chronological — the check is whether the sequence is *logical* (bisectable, dependencies before dependents), not merely the order they happened to be written in
+- Treating "ordered" as just chronological — the check is whether the sequence is *logical* (bisectable, dependencies before dependents), not merely the order they were written in

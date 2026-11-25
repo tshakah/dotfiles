@@ -16,6 +16,14 @@ Creating a ticket is a write action. Draft it, show it, and wait for explicit go
 
 Supplied via `args`: the subject of the ticket — a bug report, feature ask, task description, or a pointer to conversation context to turn into a ticket. If the subject is too thin to write acceptance criteria from (no clear done-state), ask what "done" looks like rather than inventing criteria.
 
+## Step 0: Check for a prior rejection
+
+Before resolving anything in Jira, read `.out-of-scope/*.md` in the repo, if the directory exists. Match the ticket's subject against each file by concept, not keyword — "night theme" matches `dark-mode.md`.
+
+If a match exists, surface it: name the file, quote its decision and reason, and ask whether it still applies. Don't silently create a duplicate of something already rejected, and don't silently proceed past an old rejection either — ask.
+
+If the user confirms the rejection still holds, skip Jira entirely and go to the out-of-scope branch below instead of Step 1.
+
 ## Step 1: Resolve the project and cloud
 
 Resolve `cloudId` via `getAccessibleAtlassianResources` if not already known this session.
@@ -63,6 +71,8 @@ One or two sentences: name the entry point (file/function) and the shape of the 
 
 **Acceptance criteria** — a bullet list, drafted separately for the field from Step 2, not duplicated into the description. Each bullet is one observable pass/fail condition. If the subject doesn't yield a real done-state, that's a sign to ask rather than pad the list with restated requirements.
 
+**Out of scope** — a short bullet list of what this ticket deliberately doesn't cover: adjacent features that might seem related but aren't, things explicitly deferred. Omit the section if there's genuinely nothing to exclude; don't pad it to look thorough.
+
 Cut anything that doesn't survive these checks:
 - Would deleting this sentence lose information? If not, cut it.
 - Is this adjective doing work ("intermittent", "read-only") or decoration ("robust", "comprehensive", "seamless")? Cut decoration.
@@ -71,7 +81,7 @@ Cut anything that doesn't survive these checks:
 
 ## Step 4: Show the draft and confirm
 
-Print the summary, both description sections, and the acceptance criteria bullets exactly as they will be created. Ask for edits or go-ahead. Do not call `createJiraIssue` until the user confirms.
+Print the summary, both description sections, the acceptance criteria bullets, and the out-of-scope bullets (if any) exactly as they will be created. Ask for edits or go-ahead. Do not call `createJiraIssue` until the user confirms.
 
 ## Step 5: Create
 
@@ -81,8 +91,14 @@ Print the summary, both description sections, and the acceptance criteria bullet
 
 Give the ticket key and URL. Nothing else — the user already saw the content in Step 4.
 
+## Alternate flow: recording a rejection instead of a ticket
+
+If the subject shouldn't be built — the user decides this partway through drafting, or Step 0 surfaces a prior rejection the user reaffirms — write or update `.out-of-scope/<concept-slug>.md` instead of creating anything in Jira. Use the format in [OUT-OF-SCOPE.md](OUT-OF-SCOPE.md). Create `.out-of-scope/` lazily if it doesn't exist yet. Nothing gets created in Jira on this path.
+
 ## Red flags — stop and reconsider
 
+- Creating a ticket for a subject already recorded in `.out-of-scope/` without confirming the rejection still holds
+- Writing to `.out-of-scope/` for something closed because it's already implemented — that's a shipped feature, not a rejection, and recording it there poisons the dedup check
 - Creating anything other than a Story
 - Acceptance criteria only in the description, not in the dedicated field
 - Passing a plain string to the Acceptance Criteria field without checking whether it needs ADF

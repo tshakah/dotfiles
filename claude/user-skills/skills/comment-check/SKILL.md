@@ -8,20 +8,20 @@ description: Reviews comments added or changed in a diff against the "why, not w
 
 ## Purpose
 
-Comments are easy to over-write: an explanation that felt necessary while writing the code often turns out to just restate what the code already shows once someone else reads it cold. This skill checks comments added or changed in a diff against a specific, fixed rule — it is not a general code-quality review and not a fit-check concern (no wider-codebase exploration needed).
+Comments are easy to over-write: an explanation that felt necessary while writing code often turns out to just restate what the code already shows once someone else reads it cold. This skill checks comments added or changed in a diff against one fixed rule — not a general code-quality review, not a fit-check concern (no wider-codebase exploration needed).
 
 The rule being checked (from the global CLAUDE.md):
 
 > Comments explain *why*, not *what*, and only when the *why* isn't already obvious from the code. Never reference previous behaviour, old implementations, or prior code — git is the historical record. This also rules out phrasing that implies a change without naming one (e.g. "no longer needs...", "now resolves...", "instead of doing X"). If a comment would just restate what well-named code already shows, delete it rather than rephrase it.
 
-It must be done by a fresh agent with no context of writing the diff. Whoever wrote a comment already believed it was needed at the time — that's not a useful signal on its own.
+Must be done by a fresh agent with no context of writing the diff. Whoever wrote a comment already believed it was needed at the time — not a useful signal on its own.
 
 ## Scope: what diff to check
 
 - If there are uncommitted changes (`git status --porcelain` is non-empty), check those: `git diff HEAD`.
 - Otherwise, check the whole branch: diff against `git merge-base <default-branch> HEAD`.
 
-Only comment lines that are added or modified by the diff are in scope — pre-existing comments the change didn't touch are not this skill's concern.
+Only comment lines the diff adds or modifies are in scope — pre-existing comments the change didn't touch aren't this skill's concern.
 
 State which scope was used before handing off to the review agent.
 
