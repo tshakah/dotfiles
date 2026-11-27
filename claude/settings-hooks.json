@@ -36,6 +36,10 @@
         {
           "type": "command",
           "command": "$HOME/.claude/hooks/caveman-mode-tracker.sh"
+        },
+        {
+          "type": "command",
+          "command": "$HOME/.claude/hooks/stls-screenshot.sh"
         }
       ]
     }
