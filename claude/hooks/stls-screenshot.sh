@@ -20,9 +20,16 @@ else
 fi
 [ -n "$files" ] || exit 0
 
-printf '%s\n' "$files" | jq -R . | jq -s --arg n "$n" '{
+# Staged copies live in one fixed folder so a single Read permission rule covers them
+# and no shell deletion (which needs its own prompt) is required afterwards.
+stash="$HOME/.cache/stls"
+rm -rf "$stash"
+mkdir -p "$stash"
+printf '%s\n' "$files" | while IFS= read -r f; do mv "$f" "$stash/"; done
+
+ls -t "$stash"/* | jq -R . | jq -s --arg n "$n" '{
   hookSpecificOutput: {
     hookEventName: "UserPromptSubmit",
-    additionalContext: ("Latest \($n) screenshot(s) found at: \(map("\"\(.)\"") | join(", ")) — read these files with the Read tool, then delete them with Bash rm.")
+    additionalContext: ("Latest \($n) screenshot(s) found at: \(map("\"\(.)\"") | join(", ")) — read these files with the Read tool.")
   }
 }'
