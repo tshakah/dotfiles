@@ -1,6 +1,6 @@
 #!/bin/sh
-# Hook events listed in settings-hooks.json are owned by dotfiles and replaced wholesale.
-# Every other settings key belongs to Claude Code and the user.
+# Hook events in settings-hooks.json replace their local versions wholesale; allow rules in
+# settings-permissions.json are appended, so "don't ask again" rules saved locally survive.
 
 set -eu
 
@@ -12,5 +12,10 @@ mkdir -p "$(dirname "$settings")"
 
 tmp=$(mktemp "$settings.XXXXXX")
 trap 'rm -f "$tmp"' EXIT
-jq --slurpfile hooks "$here/settings-hooks.json" '.hooks = ((.hooks // {}) + $hooks[0])' "$settings" >"$tmp"
+jq --slurpfile hooks "$here/settings-hooks.json" \
+  --slurpfile perms "$here/settings-permissions.json" '
+  .hooks = ((.hooks // {}) + $hooks[0])
+  | .permissions.allow = reduce $perms[0].allow[] as $rule (.permissions.allow // [];
+      if index([$rule]) then . else . + [$rule] end)
+' "$settings" >"$tmp"
 cat "$tmp" >"$settings"

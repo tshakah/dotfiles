@@ -1,0 +1,8 @@
+{
+  "allow": [
+    "Bash(git push --force-with-lease:*)",
+    "Bash(git submit:*)",
+    "Read(~/.cache/stls/**)",
+    "Read(~/*_grim.png)"
+  ]
+}
