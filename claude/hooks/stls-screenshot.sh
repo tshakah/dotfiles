@@ -11,10 +11,18 @@ match=$(printf '%s' "$prompt" | grep -oiE 'stl[0-9]*s' | head -1)
 n=$(printf '%s' "$match" | grep -oE '[0-9]+' | head -1)
 n=${n:-1}
 
-files=$(ls -t "$HOME"/*_grim.png 2>/dev/null | head -n "$n") || true
+if [ "$(uname)" = Darwin ]; then
+  dir=$(defaults read com.apple.screencapture location 2>/dev/null) || dir="$HOME/Desktop"
+  case $dir in "~"*) dir="$HOME${dir#\~}" ;; esac
+  files=$(ls -t "$dir"/Screenshot*.png "$dir"/"Screen Shot"*.png 2>/dev/null | head -n "$n") || true
+else
+  files=$(ls -t "$HOME"/*_grim.png 2>/dev/null | head -n "$n") || true
+fi
 [ -n "$files" ] || exit 0
 
-list=$(printf '%s' "$files" | tr '\n' ' ')
-context="Latest $n screenshot(s) found at: $list — read these files with the Read tool, then delete them with Bash rm."
-
-jq -n --arg ctx "$context" '{hookSpecificOutput: {hookEventName: "UserPromptSubmit", additionalContext: $ctx}}'
+printf '%s\n' "$files" | jq -R . | jq -s --arg n "$n" '{
+  hookSpecificOutput: {
+    hookEventName: "UserPromptSubmit",
+    additionalContext: ("Latest \($n) screenshot(s) found at: \(map("\"\(.)\"") | join(", ")) — read these files with the Read tool, then delete them with Bash rm.")
+  }
+}'
